@@ -17,7 +17,7 @@ def build_site(*, root_directory: Path) -> None:
     # 3. Django render
     # 4. Minify
     # 5. Add copyright if needed
-    # 6. write to file
+    # 6. output to stdout
 
 
 if __name__ == "__main__":
