@@ -15,6 +15,7 @@ jobs:
               uses: CarrotManMatt/action-install-python-project@v2
               with:
                   python-version: 3.12
+                  directory: "./.build"
 
             - name: Run mypy
               run: poetry run mypy .build
@@ -27,6 +28,7 @@ jobs:
               uses: CarrotManMatt/action-install-python-project@v2
               with:
                   python-version: 3.12
+                  directory: "./.build"
 
             - name: Run Ruff
               run: poetry run ruff check . --no-fix
