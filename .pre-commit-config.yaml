@@ -49,10 +49,12 @@ repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v4.6.0
       hooks:  # yamllint disable-line rule:key-ordering
-          - id: check-added-large-files
           - id: trailing-whitespace
           - id: check-executables-have-shebangs
           - id: end-of-file-fixer
+
+          - id: check-added-large-files
+            args: ["--maxkb=2000"]
 
           - id: check-json
             stages: [pre-commit, pre-merge-commit, manual]

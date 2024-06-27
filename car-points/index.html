@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+        <link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+        <link rel="apple-touch-icon" sizes="180x180"
+              href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32"
+              href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16"
+              href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" color="#1d80ae"
+              href="/safari-pinned-tab.svg">
+
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="theme-color" content="#b4e7ff">
+
+        <link rel="stylesheet"
+              href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css">
+
+        <title>Car Points Game | CarrotManMatt.com</title>
+
+        <style>
+            .btn:focus:not(:focus-visible) {
+                outline: 0;
+                box-shadow: none;
+                background-color: var(--bs-btn-bg);
+            }
+            :focus,
+            .btn.focus-visible:focus:not(:focus-visible) {
+                outline: 0;
+                box-shadow:
+                    0 0 0 .2rem #fff,
+                    0 0 0 .35rem #069;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="row mx-0 mt-4">
+            <div class="w-auto mx-auto">
+                <div class="col col-auto">
+                    <a href="" class="text-reset text-decoration-none">
+                        <img src="/static/images/Logo.png" height="100vh"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="text-center fs-1 my-0 pb-1">Car Points Game</h1>
+
+        <h1 class="text-center fs-3 mb-0" id="counter">0</h1>
+
+        <div class="row mx-0">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold" onclick="increase(1)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="One">Motorbike</p>
+                <button type="button" disabled onclick="decrease(1)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(2)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Two">
+                    Sports-car/Smartcar
+                </p>
+                <button type="button" disabled onclick="decrease(2)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(3)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Three">Medium Car</p>
+                <button type="button" disabled onclick="decrease(3)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(4)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Four">
+                    Family Car/SUV
+                </p>
+                <button type="button" disabled onclick="decrease(4)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(5)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Five">
+                    Van/Single Decker Bus
+                </p>
+                <button type="button" disabled onclick="decrease(5)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(6)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Six">
+                    Small Lorry/Double Decker Bus/Special Van
+                </p>
+                <button type="button" disabled onclick="decrease(6)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(7)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Seven">
+                    Lorry/Special Small Lorry/Coach
+                </p>
+                <button type="button" disabled onclick="decrease(7)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(8)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Eight">
+                    Special Lorry
+                </p>
+                <button type="button" disabled onclick="decrease(8)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="w-auto mx-auto">
+                <button type="button" class="btn btn-success fw-bold"
+                        onclick="increase(9)">
+                    +
+                </button>
+                <p class="d-inline fs-5 align-middle" id="Nine">
+                    Working Vehicle
+                </p>
+                <button type="button" disabled onclick="decrease(9)"
+                        class="btn btn-danger fw-bold decrease">
+                    -
+                </button>
+            </div>
+        </div>
+
+        <div class="row mx-0 mt-4">
+            <div class="w-auto mx-auto">
+                <div onclick="names()">
+                    <input class="form-check-input" type="radio"
+                           name="namesOrPoints" id="names" checked>
+                    <label class="ms-1 form-check-label" for="names">
+                        Category Names
+                    </label>
+                </div>
+                <div class="mt-2" onclick="points()">
+                    <input class="form-check-input" type="radio"
+                           name="namesOrPoints" id="points">
+                    <label class="ms-1 form-check-label" for="points">
+                        Points Rewarded
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="text-center fs-5 my-3">
+            <a class="text-secondary text-decoration-none"
+               href="https://carrotmanmatt.com">
+                Ⓒ CarrotManMatt.com
+            </a>
+        </p>
+
+        <script>
+            function increase(amount) {
+                let counter = Number(document.getElementById("counter").innerHTML);
+                if (counter == 0) {
+                    for (let button of document.getElementsByClassName("decrease")) {
+                        button.disabled = false;
+                    };
+                };
+                document.getElementById("counter").innerHTML = counter + amount;
+            };
+
+            function decrease(amount) {
+                let counter = Number(document.getElementById("counter").innerHTML);
+                if (counter - amount <= 0) {
+                    document.getElementById("counter").innerHTML = 0;
+                    for (let button of document.getElementsByClassName("decrease")) {
+                        button.disabled = true;
+                    };
+                } else {
+                    document.getElementById("counter").innerHTML = counter - amount;
+                };
+            }
+
+            function names() {
+                document.getElementById("One").innerHTML = "Motorbike";
+                document.getElementById("Two").innerHTML = "Sports-car/Smartcar";
+                document.getElementById("Three").innerHTML = "Medium Car";
+                document.getElementById("Four").innerHTML = "Family Car/SUV";
+                document.getElementById("Five").innerHTML = "Van/Single Decker Bus";
+                document.getElementById("Six").innerHTML = "Small Lorry/Double Decker Bus/Special Van";
+                document.getElementById("Seven").innerHTML = "Lorry/Special Small Lorry/Coach";
+                document.getElementById("Eight").innerHTML = "Special Lorry";
+                document.getElementById("Nine").innerHTML = "Working Vehicle";
+            }
+
+            function points() {
+                document.getElementById("One").innerHTML = "1 Point";
+                document.getElementById("Two").innerHTML = "2 Points";
+                document.getElementById("Three").innerHTML = "3 Points";
+                document.getElementById("Four").innerHTML = "4 Points";
+                document.getElementById("Five").innerHTML = "5 Points";
+                document.getElementById("Six").innerHTML = "6 Points";
+                document.getElementById("Seven").innerHTML = "7 Points";
+                document.getElementById("Eight").innerHTML = "8 Points";
+                document.getElementById("Nine").innerHTML = "9 Points";
+            }
+        </script>
+    </body>
+</html>
