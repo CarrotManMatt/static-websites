@@ -1,0 +1,11 @@
+name: Build Website
+
+on:
+    workflow_run:
+        workflows:
+            - Check Build Script
+        branches:
+            - main
+        type:
+            - completed
+    workflow_dispatch:
