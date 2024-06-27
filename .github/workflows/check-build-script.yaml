@@ -18,7 +18,7 @@ jobs:
                   directory: "./.build"
 
             - name: Run mypy
-              run: poetry run mypy .build
+              run: poetry -C "./.build" run mypy .build
 
     ruff:
         runs-on: ubuntu-latest
@@ -31,4 +31,4 @@ jobs:
                   directory: "./.build"
 
             - name: Run Ruff
-              run: poetry run ruff check . --no-fix
+              run: poetry -C "./.build" run ruff check .build --no-fix
