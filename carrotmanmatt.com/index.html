@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+{% extends ".common/base.html" %}
 
 <!--
     Spectral by HTML5 UP
@@ -6,35 +6,20 @@
     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 
-<html lang="en-GB">
-    <head>
-        <title>CarrotManMatt.com</title>
+{% block stylesheets %}
+    {{ block.super }}
+    <noscript>
+        <link rel="stylesheet" href="/static/css/noscript.css" />
+    </noscript>
+{% endblock %}
 
-        <meta charset="utf-8" />
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1, user-scalable=no" />
-
-        <link rel="stylesheet" href="/static/css/main.css" />
-        <noscript>
-            <link rel="stylesheet" href="/static/css/noscript.css" />
-        </noscript>
-
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9f0e">
-
-        <meta name="msapplication-TileColor" content="#ff9f0e">
-        <meta name="theme-color" content="#ffbb56">
-    </head>
-
+{% block content %}
     <body class="landing is-preload">
 
-        <!-- Page Wrapper -->
+        {# Page Wrapper #}
         <div id="page-wrapper">
 
-            <!-- Header -->
+            {# Header #}
             <header id="header" class="alt">
                 <h1>
                     <a href="">
@@ -43,7 +28,7 @@
                 </h1>
             </header>
 
-            <!-- Banner -->
+            {# Banner #}
             <section id="banner">
                 <div class="inner">
                     <h2 style="text-shadow: 2px 2px #1c1001;">
@@ -51,7 +36,7 @@
                     </h2>
 
                     <ul class="icons" style="font-size: 20px; text-shadow: 2px 2px #1c1001;">
-                        <li>
+                        <li>  {# TODO: Convert icons to for loop #}
                             <a href="https://github.carrotmanmatt.com"
                                class="icon brands fa-github">
                                 <span class="label">
@@ -124,7 +109,7 @@
                 </a>
             </section>
 
-            <!-- One -->
+            {# One #}
             <section id="one" class="wrapper style1 special">
                 <div class="inner">
                     <header class="major">
@@ -134,7 +119,8 @@
 
                         <p>
                             I'm CarrotManMatt.
-                            19, from the UK and absolutely gosh darn crazy.
+                            {{ carrotmanmatt_dob|timesince|make_list|first }},
+                            from the UK and absolutely gosh darn crazy.
                             <br/>
                             Welcome to my small corner of the internet
                             (hosted on an old office PC),
@@ -150,7 +136,7 @@
                 </div>
             </section>
 
-            <!-- Two -->
+            {# Two #}
             <section id="two" class="wrapper alt style2">
                 <section class="spotlight">
                     <div class="image">
@@ -231,7 +217,7 @@
                 </section>
             </section>
 
-            <!-- Three -->
+            {# Three #}
             <section id="three" class="wrapper style3 special">
                 <div class="inner">
                     <header class="major">
@@ -344,10 +330,10 @@
                 </div>
             </section>
 
-            <!-- Footer -->
+            {# Footer #}
             <footer id="footer">
                 <ul class="icons">
-                    <li>
+                    <li>  {# TODO: Convert icons to for loop #}
                         <a href="https://github.carrotmanmatt.com"
                            class="icon brands fa-github">
                             <span class="label">
@@ -413,7 +399,7 @@
                 <ul class="copyright">
                     <li>
                         <a href="" style="border: none;">
-                            &copy;&nbsp;CarrotManMatt&nbsp;2022-2024
+                            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% now "Y" %}
                             &nbsp;
                             <span class="icon solid fa-carrot"></span>
                         </a>
@@ -442,7 +428,7 @@
             </footer>
         </div>
 
-        <!-- Scripts -->
+        {# Scripts #}
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/jquery.scrollex.min.js"></script>
         <script src="/static/js/jquery.scrolly.min.js"></script>
@@ -452,4 +438,4 @@
         <script src="/static/js/main.js"></script>
 
     </body>
-</html>
+{% endblock content %}
