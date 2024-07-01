@@ -24,10 +24,10 @@ repos:
       rev: v0.19.1
       hooks:  # yamllint disable-line rule:key-ordering
           - id: gitlint
-            args: [--ignore=body-is-missing, --msg-filename]
+            args: [--ignore=body-is-missing, -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+", --msg-filename]
 
           - id: gitlint-ci
-            args: [--ignore=body-is-missing, --msg-filename]
+            args: [--ignore=body-is-missing, -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+", --msg-filename]
 
     - repo: https://github.com/gitleaks/gitleaks
       rev: v8.18.4
