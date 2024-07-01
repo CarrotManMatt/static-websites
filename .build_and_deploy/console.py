@@ -4,6 +4,7 @@ from collections.abc import Sequence
 
 __all__: Sequence[str] = ("run",)
 
+
 from argparse import ArgumentParser, Namespace
 
 import build

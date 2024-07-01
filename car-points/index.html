@@ -1,5 +1,7 @@
 {% extends ".common/base.html" %}
 
+{% load simple_dates %}
+
 {% block title %}Car Points Game | {{ block.super }}{% endblock title %}
 
 {% block stylesheets %}
@@ -80,7 +82,7 @@
     <p class="text-center fs-5 my-3">
         <a class="text-secondary text-decoration-none"
            href="https://carrotmanmatt.com">
-            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% now "Y" %}
+            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
         </a>
     </p>
 {% endblock footer %}

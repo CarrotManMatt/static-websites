@@ -1,8 +1,10 @@
 {% extends ".common/base.html" %}
 
-{% load copyright_comments %}
+{% load simple_dates %}
 
-{% html5up_copyright_comment %}
+{% block copyright_comments %}
+    {# COPYRIGHT_COMMENT "HTML5 UP" #}
+{% endblock copyright_comments %}
 
 {% block stylesheets %}
     {{ block.super }}
@@ -117,7 +119,7 @@
 
                         <p>
                             I'm CarrotManMatt.
-                            {{ carrotmanmatt_dob|timesince|make_list|first }},
+                            {% carrotmanmatt_age %},
                             from the UK and absolutely gosh darn crazy.
                             <br/>
                             Welcome to my small corner of the internet
@@ -397,7 +399,7 @@
                 <ul class="copyright">
                     <li>
                         <a href="" style="border: none;">
-                            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% now "Y" %}
+                            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
                             <span class="icon solid fa-carrot"></span>
                         </a>
                     </li>
