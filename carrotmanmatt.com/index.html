@@ -1,10 +1,8 @@
 {% extends ".common/base.html" %}
 
-<!--
-    Spectral by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+{% load copyright_comments %}
+
+{% html5up_copyright_comment %}
 
 {% block stylesheets %}
     {{ block.super }}
@@ -400,7 +398,6 @@
                     <li>
                         <a href="" style="border: none;">
                             &copy;&nbsp;CarrotManMatt&nbsp;2022-{% now "Y" %}
-                            &nbsp;
                             <span class="icon solid fa-carrot"></span>
                         </a>
                     </li>

@@ -41,12 +41,12 @@ repos:
       hooks:  # yamllint disable-line rule:key-ordering
           - id: poetry-check
             name: check poetry config in pyproject.toml is valid
-            args: ["-C", "./.build", --no-interaction]  # yamllint disable-line rule:key-ordering
+            args: ["-C", "./.build_and_deploy", --no-interaction]  # yamllint disable-line rule:key-ordering
             stages: [pre-commit, pre-merge-commit, manual]
 
           - id: poetry-check
             name: check poetry.lock file is valid
-            args: ["-C", "./.build", --lock, --no-interaction]  # yamllint disable-line rule:key-ordering
+            args: ["-C", "./.build_and_deploy", --lock, --no-interaction]  # yamllint disable-line rule:key-ordering
             stages: [pre-commit, pre-merge-commit, manual]
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
