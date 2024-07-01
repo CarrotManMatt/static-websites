@@ -15,13 +15,14 @@ from pathlib import Path
 from typing import Final
 
 import minify_html
-from django.template import Context as TemplateContext, Template
+from django.template import Context as TemplateContext
+from django.template import Template
 from django.template.engine import Engine as TemplateEngine
 
 from utils import PROJECT_ROOT
 
 TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
-    dirs=[PROJECT_ROOT],
+    dirs=[str(PROJECT_ROOT)],
     app_dirs=False,
     libraries={
         "simple_dates": "custom_template_tags.simple_dates",
@@ -37,9 +38,9 @@ def build_single_page(*, html_file_path: Path) -> str:
         )
         raise ValueError(INVALID_FILE_PATH_MESSAGE)
 
-    template: Template = TEMPLATE_ENGINE.get_template(html_file_path)
+    template: Template = TEMPLATE_ENGINE.get_template(str(html_file_path))
 
-    copyright_comment_match: re.Match | None = re.search(
+    copyright_comment_match: re.Match[str] | None = re.search(
         r"{# ?COPYRIGHT_COMMENT \"(?P<copyright_type>[A-Za-z0-9 +!?'£$^&*\-_=@;:~.,¬]+)\" ?#}",
         template.source,
     )

@@ -11,7 +11,7 @@
     <noscript>
         <link rel="stylesheet" href="/static/css/noscript.css" />
     </noscript>
-{% endblock %}
+{% endblock stylesheets %}
 
 {% block content %}
     <body class="landing is-preload">
@@ -101,6 +101,7 @@
                     </ul>
 
                     <img src="static/images/Avatar.png" alt="Smiling carrot avatar"
+                         width="1174" height="1160"
                          style="width: 170px; padding-top: 25px; shadow: 2px 2px #1c1001;"/>
                 </div>
 
@@ -140,7 +141,8 @@
             <section id="two" class="wrapper alt style2">
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic02.png" alt="" />
+                        <img src="/static/images/pic02.png" width="2000" height="2000"
+                             alt="Three people sat on stools around a table in a cafe, talking and eating cake, sandwiches & pastries." />
                     </div>
 
                     <div class="content">
@@ -160,7 +162,8 @@
 
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic01.png" alt="" />
+                        <img src="/static/images/pic01.png" width="2000" height="2000"
+                             alt="Woman leaning against a counter, eating a bowl of salad. A plastic bottle of water and a bowl of apples are on the counter." />
                     </div>
 
                     <div class="content">
@@ -196,7 +199,8 @@
 
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic03.png" alt="" />
+                        <img src="/static/images/pic03.png" width="2000" height="2000"
+                             alt="Two people practising a theatre dialogue script in front of a white background, with two rows of theatre lights behind them." />
                     </div>
 
                     <div class="content">
@@ -399,7 +403,7 @@
                 <ul class="copyright">
                     <li>
                         <a href="" style="border: none;">
-                            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
+                            ©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
                             <span class="icon solid fa-carrot"></span>
                         </a>
                     </li>
@@ -412,7 +416,7 @@
 
                     <li>
                         Design:
-                        <a href="http://html5up.net">
+                        <a href="https://html5up.net">
                             HTML5&nbsp;UP
                         </a>
                     </li>

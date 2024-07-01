@@ -15,12 +15,12 @@ register: template.Library = template.Library()
 
 @register.simple_tag
 def current_year() -> int:
-    return datetime.date.today().year
+    return datetime.datetime.now(tz=datetime.UTC).year
 
 
 @register.simple_tag
 def carrotmanmatt_age() -> int:
     return relativedelta(
-        datetime.date.today(),
-        datetime.date(2004, 8, 7),
+        datetime.datetime.now(tz=datetime.UTC),
+        datetime.datetime(year=2004, month=8, day=7, tzinfo=datetime.UTC),
     ).years
