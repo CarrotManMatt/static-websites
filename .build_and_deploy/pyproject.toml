@@ -1,7 +1,7 @@
 [tool.poetry]
 package-mode = false
 license ="Apache-2.0"
-description = "My own personal website. Available at https://carrotmanmatt.com"
+description = "My own personal static websites. Available at https://carrotmanmatt.com & subdomains."
 authors = ["Matt Norton <matt@carrotmanmatt.com>"]
 repository = "https://github.com/CarrotManMatt/website.git"
 keywords = ["website", "html", "HTML5up", "carrot"]

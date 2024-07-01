@@ -27,23 +27,26 @@
         <meta name="msapplication-TileColor" content="#ff9f0e">
         <meta name="theme-color" content="#ffbb56">
 
-        <style>
-            {% block extra_styles %}{% endblock extra_styles %}
-        </style>
+        {% block extra_styles %}{% endblock extra_styles %}
     </head>
 
-    <body class="{% block extra_body_classes %}{% endblock extra_body_classes %}">
-        {% block content %}
+    {% block body %}
+        <body>
             <header>
                 {% block header %}{% endblock header %}
             </header>
+
             <main>
                 {% block main %}{% endblock main %}
             </main>
+
             <footer>
                 {% block footer %}{% endblock footer %}
             </footer>
-        {% endblock content %}
-        {% block scripts %}{% endblock scripts %}
-    </body>
+
+            {% block scripts %}{% endblock scripts %}
+        </body>
+    {% endblock body %}
+
+    {% block after_body %}{% endblock after_body %}
 </html>

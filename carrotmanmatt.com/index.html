@@ -13,9 +13,12 @@
     </noscript>
 {% endblock stylesheets %}
 
-{% block content %}
-    <body class="landing is-preload">
+{% block extra_body_classes %}
+    landing is-preload
+{% endblock extra_body_classes %}
 
+{% block body %}
+    <body class="landing is-preload">
         {# Page Wrapper #}
         <div id="page-wrapper">
 
@@ -100,7 +103,7 @@
                         </li>
                     </ul>
 
-                    <img src="static/images/Avatar.png" alt="Smiling carrot avatar"
+                    <img src="/static/images/Avatar.png" alt="Smiling carrot avatar"
                          width="1174" height="1160"
                          style="width: 170px; padding-top: 25px; shadow: 2px 2px #1c1001;"/>
                 </div>
@@ -141,8 +144,9 @@
             <section id="two" class="wrapper alt style2">
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic02.png" width="2000" height="2000"
-                             alt="Three people sat on stools around a table in a cafe, talking and eating cake, sandwiches & pastries." />
+                        <img src="/static/images/pic01.png"
+                             width="100%" height="100%"
+                             alt="Woman leaning against a counter, eating a bowl of salad. A plastic bottle of water and a bowl of apples are on the counter." />
                     </div>
 
                     <div class="content">
@@ -162,8 +166,9 @@
 
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic01.png" width="2000" height="2000"
-                             alt="Woman leaning against a counter, eating a bowl of salad. A plastic bottle of water and a bowl of apples are on the counter." />
+                        <img src="/static/images/pic02.png"
+                             width="100%" height="100%"
+                             alt="Three people sat on stools around a table in a cafe, talking and eating cake, sandwiches & pastries." />
                     </div>
 
                     <div class="content">
@@ -199,7 +204,8 @@
 
                 <section class="spotlight">
                     <div class="image">
-                        <img src="/static/images/pic03.png" width="2000" height="2000"
+                        <img src="/static/images/pic03.png"
+                             width="100%" height="100%"
                              alt="Two people practising a theatre dialogue script in front of a white background, with two rows of theatre lights behind them." />
                     </div>
 
@@ -439,6 +445,9 @@
         <script src="/static/js/breakpoints.min.js"></script>
         <script src="/static/js/util.js"></script>
         <script src="/static/js/main.js"></script>
-
     </body>
-{% endblock content %}
+{% endblock body %}
+
+{% block after_body %}
+    <style type="text/css" id="custom-page-zoom-css"></style>
+{% endblock after_body %}
