@@ -6,6 +6,10 @@
     {# COPYRIGHT_COMMENT "HTML5 UP" #}
 {% endblock copyright_comments %}
 
+{% block site_meta_image %}https://carrotmanmatt.com/static/carrot_icon.png{% endblock site_meta_image %}
+
+{% block site_content_type %}profile{% endblock site_content_type %}
+
 {% block stylesheets %}
     {{ block.super }}
     <noscript>
@@ -449,5 +453,5 @@
 {% endblock body %}
 
 {% block after_body %}
-    <style type="text/css" id="custom-page-zoom-css"></style>
+    <style id="custom-page-zoom-css"></style>
 {% endblock after_body %}

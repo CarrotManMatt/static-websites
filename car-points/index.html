@@ -4,12 +4,25 @@
 
 {% block title %}Car Points Game | {{ block.super }}{% endblock title %}
 
+{% block embed_title %}Car Points Game | {{ block.super }}{% endblock embed_title %}
+
+{% block site_description %}CarrotManMatt's web car points counting game.{% endblock site_description %}
+
+{% block site_url %}https://car-points.carrotmanmatt.com{% endblock site_url %}
+
+{% block site_meta_image %}https://car-points.carrotmanmatt.com/static/Logo.png{% endblock site_meta_image %}
+
+{% block site_content_type %}game{% endblock site_content_type %}
+
+{% block site_keywords %}{{ block.super }},game,car-points,overtaking,undertaking,vehicles,video game{% endblock site_keywords %}
+
 {% block stylesheets %}
     <link rel="stylesheet"
           href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css" />
 {% endblock stylesheets %}
 
 {% block extra_styles %}
+    <!--suppress CssUnusedSymbol -->
     <style>
         .btn:focus:not(:focus-visible) {
             outline: 0;

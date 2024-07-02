@@ -50,8 +50,10 @@ def build_single_page(*, html_file_path: Path) -> str:
         do_not_minify_doctype=True,
         keep_html_and_head_opening_tags=True,
         ensure_spec_compliant_unquoted_attribute_values=True,
+        keep_spaces_between_attributes=True,
         minify_js=True,
         minify_css=True,
+        keep_comments=False,
     ).replace("<!doctype html>", "<!DOCTYPE HTML>")
 
     if copyright_comment_match:
