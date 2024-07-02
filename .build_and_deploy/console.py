@@ -8,6 +8,7 @@ __all__: Sequence[str] = ("run",)
 from argparse import ArgumentParser, Namespace
 
 import build
+import deploy
 
 
 def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
@@ -71,6 +72,13 @@ def run(argv: Sequence[str] | None = None) -> int:
 
     parsed_args: Namespace = arg_parser.parse_args(argv)
 
-    build.build_all_sites()
+    deploy.deploy_all_sites(
+        build.build_all_sites(),
+        remote_ip=parsed_args.remote_ip,
+        remote_ssh_key=parsed_args.remote_ssh_key,
+        remote_directory=parsed_args.remote_directory,
+        remote_user_name=parsed_args.remote_user,
+        dry_run=parsed_args.dry_run,
+    )
 
     return 0

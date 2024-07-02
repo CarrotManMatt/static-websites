@@ -11,6 +11,8 @@ __all__: Sequence[str] = (
 
 import re
 import shutil
+import sys
+from collections.abc import Set
 from pathlib import Path
 from typing import Final
 
@@ -113,15 +115,26 @@ def build_single_site(*, site_root_directory: Path) -> None:
         )
 
 
-def build_all_sites() -> None:
+def build_all_sites() -> Set[Path]:
     """Render all sites HTML pages into string outputs."""
+    built_sites: set[Path] = set()
+
     site_subdirectory: Path
     for site_subdirectory in PROJECT_ROOT.iterdir():
         if not site_subdirectory.is_dir() or site_subdirectory.stem.startswith("."):
             continue
 
-        build_single_site(site_root_directory=site_subdirectory)
+        exception: ValueError | RuntimeError | AttributeError | TypeError | OSError
+        try:
+            build_single_site(site_root_directory=site_subdirectory)
+        except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as exception:
+            sys.stderr.write(str(exception))
+            continue
+        else:
+            built_sites.add(site_subdirectory / "deploy")
+
+    return built_sites
 
 
 if __name__ == "__main__":
-    build_all_sites()
+    sys.stdout.write(",".join(str(path) for path in build_all_sites()))

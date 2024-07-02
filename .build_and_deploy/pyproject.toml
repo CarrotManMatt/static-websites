@@ -129,6 +129,7 @@ ignore = [
     "UP040",  # NOTE: Mypy does not currently support PEP 695 type aliases, so they should not be used
     "PT009",
     "PT027",
+    "S308",  # NOTE: Warnings about `mark_safe` are ignored as the script build output should be validated by administrators
 ]
 task-tags = [
     "TODO",
