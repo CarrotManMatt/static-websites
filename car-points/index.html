@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet"
-          href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css">
+          href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css" />
 {% endblock stylesheets %}
 
 {% block extra_styles %}
@@ -32,7 +32,7 @@
             <div class="col col-auto">
                 <a href="" class="text-reset text-decoration-none">
                     <img src="/static/images/Logo.png" alt="a carrot within a blue car"
-                         height="100vh"/>
+                         height="100vh" width="100%"/>
                 </a>
             </div>
         </div>
@@ -44,14 +44,14 @@
 {% block main %}
     <h1 class="text-center fs-3 mb-0" id="counter">0</h1>
 
-    {% for counter in vehicles.split %}
+    {% for counter in "123456789" %}
         <div class="row mx-0{% if counter != "1" %} mt-2{% endif %}">
             <div class="w-auto mx-auto">
                 <button type="button" class="btn btn-success fw-bold"
                         onclick="increase({{ counter }})">
                     +
                 </button>
-                <p class="d-inline fs-5 align-middle" id="button-{{ counter }}"></p>
+                <p class="d-inline fs-5 align-middle mx-2" id="button-{{ counter }}"></p>
                 <button type="button" disabled onclick="decrease({{ counter }})"
                         class="btn btn-danger fw-bold decrease">
                     -
@@ -60,18 +60,18 @@
         </div>
     {% endfor %}
 
-    <div class="row mx-0 mt-4" onload="names()">
+    <div class="row mx-0 mt-4">
         <div class="w-auto mx-auto">
             <div onclick="names()">
                 <input class="form-check-input" type="radio"
-                       name="namesOrPoints" id="names" checked>
+                       name="namesOrPoints" id="names" checked />
                 <label class="ms-1 form-check-label" for="names">
                     Category Names
                 </label>
             </div>
             <div class="mt-2" onclick="points()">
                 <input class="form-check-input" type="radio"
-                       name="namesOrPoints" id="points">
+                       name="namesOrPoints" id="points" />
                 <label class="ms-1 form-check-label" for="points">
                     Points Rewarded
                 </label>
@@ -83,9 +83,8 @@
 {% block footer %}
     <p class="text-center fs-5 my-3">
         <a class="text-secondary text-decoration-none"
-           href="https://carrotmanmatt.com">
-            &copy;&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
-        </a>
+           href="https://carrotmanmatt.com"
+        >©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}</a>
     </p>
 {% endblock footer %}
 
@@ -136,5 +135,7 @@
             document.getElementById("button-8").innerHTML = "8 Points";
             document.getElementById("button-9").innerHTML = "9 Points";
         }
+
+        names()
     </script>
 {% endblock scripts %}
