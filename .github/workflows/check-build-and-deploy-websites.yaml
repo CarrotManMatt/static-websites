@@ -8,6 +8,9 @@ on:
         branches:
             - "main"
 
+    schedule:
+        - cron: "47 5 * * 1"
+
     workflow_dispatch:
 
 jobs:
