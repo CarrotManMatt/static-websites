@@ -9,6 +9,7 @@ from argparse import ArgumentParser, Namespace
 
 import build
 import deploy
+from utils import logging_setup
 
 
 def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
@@ -56,6 +57,20 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
         help="Perform all operations apart from the final deployment of the static websites.",
     )
 
+    arg_parser.add_argument(
+        "-v"
+        "--verbose",
+        action="count",  # TODO: Add max number
+        help="",  # TODO: Add help
+    )
+
+    arg_parser.add_argument(  # TODO: Add to mutually exclusive group
+        "-q"
+        "--quiet",
+        action="store_true",
+        help="",  # TODO: Add help
+    )
+
     known_parsed_args: Namespace
     remaining_arg_values: Sequence[str]
     known_parsed_args, remaining_arg_values = arg_parser.parse_known_args(given_arguments)
@@ -71,6 +86,8 @@ def run(argv: Sequence[str] | None = None) -> int:
     arg_parser: ArgumentParser = _set_up_arg_parser(argv)
 
     parsed_args: Namespace = arg_parser.parse_args(argv)
+
+    logging_setup.setup(verbosity=3)  # TODO: Use verbosity parse args
 
     deploy.deploy_all_sites(
         build.build_all_sites(),

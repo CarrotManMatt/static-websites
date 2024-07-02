@@ -9,10 +9,12 @@ __all__: Sequence[str] = (
 )
 
 
+import logging
 import re
 import shutil
 import sys
 from collections.abc import Set
+from logging import Logger
 from pathlib import Path
 from typing import Final
 
@@ -22,6 +24,8 @@ from django.template import Template
 from django.template.engine import Engine as TemplateEngine
 
 from utils import PROJECT_ROOT
+
+logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
     dirs=[str(PROJECT_ROOT)],
@@ -57,7 +61,24 @@ def build_single_page(*, html_file_path: Path) -> str:
         minify_js=True,
         minify_css=True,
         keep_comments=False,
-    ).replace("<!doctype html>", "<!DOCTYPE HTML>")
+    )
+
+    minified_html = minified_html.replace("<!doctype html>", "<!DOCTYPE HTML>")
+
+    if re.search(r">\s+", minified_html):
+        logger.warning(
+            "Found whitespace after HTML tag. Make sure to check validity of rendered output.",
+        )
+        minified_html = re.sub(r">\s+", ">", minified_html)
+
+    if re.search(r"\s+<", minified_html):
+        logger.warning(
+            (
+                "Found whitespace before HTML tag. "
+                "Make sure to check validity of rendered output."
+            ),
+        )
+        minified_html = re.sub(r"\s+<", ">", minified_html)
 
     if copyright_comment_match:
         copyright_comment_type: str = copyright_comment_match.group("copyright_type")

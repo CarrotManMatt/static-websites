@@ -64,7 +64,9 @@
                         onclick="increase({{ counter }})">
                     +
                 </button>
+
                 <p class="d-inline fs-5 align-middle mx-2" id="button-{{ counter }}"></p>
+
                 <button type="button" disabled onclick="decrease({{ counter }})"
                         class="btn btn-danger fw-bold decrease">
                     -
@@ -78,13 +80,16 @@
             <div onclick="names()">
                 <input class="form-check-input" type="radio"
                        name="namesOrPoints" id="names" checked />
+
                 <label class="ms-1 form-check-label" for="names">
                     Category Names
                 </label>
             </div>
+
             <div class="mt-2" onclick="points()">
                 <input class="form-check-input" type="radio"
                        name="namesOrPoints" id="points" />
+
                 <label class="ms-1 form-check-label" for="points">
                     Points Rewarded
                 </label>
@@ -96,8 +101,9 @@
 {% block footer %}
     <p class="text-center fs-5 my-3">
         <a class="text-secondary text-decoration-none"
-           href="https://carrotmanmatt.com"
-        >©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}</a>
+           href="https://carrotmanmatt.com">
+            ©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
+        </a>
     </p>
 {% endblock footer %}
 
