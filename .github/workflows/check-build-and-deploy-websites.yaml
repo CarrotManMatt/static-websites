@@ -25,7 +25,8 @@ jobs:
                   directory: "./.build_and_deploy"
 
             - name: Run mypy
-              run: poetry -C "./.build_and_deploy" run mypy .build_and_deploy
+              working-directory: ./.build_and_deploy
+              run: poetry run mypy .
 
     ruff:
         runs-on: ubuntu-latest
@@ -38,7 +39,8 @@ jobs:
                   directory: "./.build_and_deploy"
 
             - name: Run Ruff
-              run: poetry -C "./.build_and_deploy" run ruff check .build_and_deploy --no-fix
+              working-directory: ./.build_and_deploy
+              run: poetry run ruff check --no-fix
 
     djlint:
         runs-on: ubuntu-latest
@@ -51,7 +53,8 @@ jobs:
                   directory: "./.build_and_deploy"
 
             - name: Run djLint
-              run: poetry -C "./.build_and_deploy" run djlint . --lint --configuration ./.build_and_deploy/pyproject.toml
+              working-directory: ./.build_and_deploy
+              run: poetry run djlint .. --lint --configuration pyproject.toml
 
     build-and-deploy-websites:
         name: Build and Deploy All Websites
@@ -71,4 +74,5 @@ jobs:
                   directory: "./.build_and_deploy"
 
             - name: Run Build Script
-              run: poetry -C "./.build_and_deploy" run python ./.build_and_deploy/__main__.py  # TODO: add arguments
+              working-directory: ./.build_and_deploy
+              run: poetry run python -m console  # TODO: add arguments
