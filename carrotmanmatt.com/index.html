@@ -1,6 +1,7 @@
 {% extends ".common/base.html" %}
 
 {% load simple_dates %}
+{% load icons_list %}
 
 {% block copyright_comments %}
     {# COPYRIGHT_COMMENT "HTML5 UP" #}
@@ -29,9 +30,7 @@
             {# Header #}
             <header id="header" class="alt">
                 <h1>
-                    <a href="">
-                        CarrotManMatt.com
-                    </a>
+                    <a href="">CarrotManMatt.com</a>
                 </h1>
             </header>
 
@@ -43,68 +42,14 @@
                     </h2>
 
                     <ul class="icons" style="font-size: 20px; text-shadow: 2px 2px #1c1001;">
-                        <li>  {# TODO: Convert icons to for loop #}
-                            <a href="https://github.carrotmanmatt.com"
-                               class="icon brands fa-github">
-                                <span class="label">
-                                    GitHub
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://twitch.carrotmanmatt.com"
-                               class="icon brands fa-twitch">
-                                <span class="label">
-                                    Twitch
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://reddit.carrotmanmatt.com"
-                               class="icon brands fa-reddit">
-                                <span class="label">
-                                    Reddit
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://instagram.carrotmanmatt.com"
-                               class="icon brands fa-instagram">
-                                <span class="label">
-                                    Instagram
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://youtube.carrotmanmatt.com"
-                               class="icon brands fa-youtube">
-                                <span class="label">
-                                    YouTube
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://stackoverflow.carrotmanmatt.com"
-                               class="icon brands fa-stack-overflow">
-                                <span class="label">
-                                    Stack&nbsp;Overflow
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="mailto:matt@carrotmanmatt.com"
-                               class="icon solid fa-envelope">
-                                <span class="label">
-                                    Email
-                                </span>
-                            </a>
-                        </li>
+                        {% generate_icons_details_list as icon_details_list %}
+                        {% for icon_details in icon_details_list %}
+                            <li>
+                                <a href="{{ icon_details.link_href }}"
+                                   class="icon {{ icon_details.font_awesome_icon_name }}"
+                                ><span class="label">{{ icon_details.label }}</span></a>
+                            </li>
+                        {% endfor %}
                     </ul>
 
                     <img src="/static/images/Avatar.png" alt="Smiling carrot avatar"
@@ -112,9 +57,8 @@
                          style="width: 170px; padding-top: 25px; shadow: 2px 2px #1c1001;"/>
                 </div>
 
-                <a href="#one" class="more scrolly" style="text-shadow: 2px 2px #1c1001;">
-                    Learn More
-                </a>
+                <a href="#one" class="more scrolly" style="text-shadow: 2px 2px #1c1001;"
+                >Learn More</a>
             </section>
 
             {# One #}
@@ -128,19 +72,15 @@
                         <p>
                             I'm CarrotManMatt.
                             {% carrotmanmatt_age %},
-                            from the UK and absolutely gosh darn crazy.
-                            <br/>
-                            Welcome to my small corner of the internet
+                            from the UK and absolutely gosh darn crazy.<br
+                            />Welcome to my small corner of the internet
                             (hosted on an old office PC),
                             so feel free to look around!
                         </p>
                     </header>
 
-                    <span class="icon solid fa-carrot major">
-                        <span class="label">
-                            Carrot
-                        </span>
-                    </span>
+                    <span class="icon solid fa-carrot major"
+                    ><span class="label">Carrot</span></span>
                 </div>
             </section>
 
@@ -183,21 +123,18 @@
                         <p>
                             These are the three words I strive to live by.
                             I think it's a simple way for us all to act
-                            to the benefit of others.
-                            <br/><br/>
-                            • Communicate -
+                            to the benefit of others.<br/><br
+                            />• Communicate -
                             Talking clearly to others is imperative for understanding
                             and will quickly solve many issues.
-                            Try to truly listen to others rather than just talking at them!
-                            <br/><br/>
-                            • Contemplate -
+                            Try to truly listen to others rather than just talking at them!<br
+                            /><br/>• Contemplate -
                             Always think about yourself,
                             how you are acting and the situation you are in.
                             It's certainly a bit "meta",
                             but I think self-awareness
-                            is the key to ensuring we all act sensibly and kindly
-                            <br/><br/>
-                            • Appreciate -
+                            is the key to ensuring we all act sensibly and kindly<br/><br
+                            />• Appreciate -
                             I know it's rather vague, but it involves many things.
                             Try to understand the additional "baggage" others may be carrying,
                             always assume the best in people,
@@ -241,9 +178,8 @@
                         <p>
                             I'm grateful to have had the opportunity
                             to try an astonishing range of activities so far.
-                            Below are a few of the key ones that really stuck with me.
-                            <br/>
-                            You can probably tell that there's a theme between them all;
+                            Below are a few of the key ones that really stuck with me.<br
+                            />You can probably tell that there's a theme between them all;
                             I guess these all stem from my love for technology & learning!
                         </p>
                     </header>
@@ -252,9 +188,7 @@
                         <li class="icon solid fa-laptop-code">
                             <h3>
                                 Coding
-                            </h3>
-
-                            <p>
+                            </h3><p>
                                 As you can see from this website I made & hosted from scratch,
                                 I really enjoy improving my productivity
                                 & simplifying my life through technology.
@@ -266,9 +200,8 @@
                         <li class="icon solid fa-guitar">
                             <h3>
                                 Playing Guitar
-                            </h3>
-
-                            <p>I love music and the way it can bring people together;
+                            </h3><p>
+                                I love music and the way it can bring people together;
                                 I feel at my best when performing for others.
                                 Although I have the voice of a screeching cat,
                                 I have been playing the guitar since I was six
@@ -279,9 +212,7 @@
                         <li class="icon solid fa-lightbulb">
                             <h3>
                                 Live Events Technology
-                            </h3>
-
-                            <p>
+                            </h3><p>
                                 Putting on a great show can't be beat.
                                 Even from more of a backstage role,
                                 the connection between performers
@@ -295,9 +226,7 @@
                         <li class="icon solid fa-video">
                             <h3>
                                 Video Production
-                            </h3>
-
-                            <p>
+                            </h3><p>
                                 Both presenting and editing videos are useful skills
                                 for me to take into the workplace,
                                 even if my infrequent dabbling with it
@@ -311,9 +240,7 @@
                         <li class="icon solid fa-city">
                             <h3>
                                 The UK
-                            </h3>
-
-                            <p>
+                            </h3><p>
                                 My home country is something I am both proud of and in awe of.
                                 I love to explore all it has to offer
                                 from the Bustling London Underground;
@@ -328,9 +255,7 @@
                         <li class="icon solid fa-microscope">
                             <h3>
                                 Maths & Science
-                            </h3>
-
-                            <p>
+                            </h3><p>
                                 I have a passion for exploring complex maths & physics
                                 at a level of detail that few do.
                                 I admit, I fell in love with the logical deduction
@@ -347,95 +272,34 @@
             {# Footer #}
             <footer id="footer">
                 <ul class="icons">
-                    <li>  {# TODO: Convert icons to for loop #}
-                        <a href="https://github.carrotmanmatt.com"
-                           class="icon brands fa-github">
-                            <span class="label">
-                                GitHub
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://twitch.carrotmanmatt.com"
-                           class="icon brands fa-twitch">
-                            <span class="label">
-                                Twitch
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://reddit.carrotmanmatt.com"
-                           class="icon brands fa-reddit">
-                            <span class="label">
-                                Reddit
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://instagram.carrotmanmatt.com"
-                           class="icon brands fa-instagram">
-                            <span class="label">
-                                Instagram
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://youtube.carrotmanmatt.com"
-                           class="icon brands fa-youtube">
-                            <span class="label">
-                                YouTube
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://stackoverflow.carrotmanmatt.com"
-                           class="icon brands fa-stack-overflow">
-                            <span class="label">
-                                Stack&nbsp;Overflow
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="mailto:matt@carrotmanmatt.com" class="icon solid fa-envelope">
-                            <span class="label">
-                                Email
-                            </span>
-                        </a>
-                    </li>
+                    {% generate_icons_details_list as icon_details_list %}
+                    {% for icon_details in icon_details_list %}
+                        <li>
+                            <a href="{{ icon_details.link_href }}"
+                               class="icon {{ icon_details.font_awesome_icon_name }}"
+                            ><span class="label">{{ icon_details.label }}</span></a>
+                        </li>
+                    {% endfor %}
                 </ul>
 
                 <ul class="copyright">
                     <li>
-                        <a href="" style="border: none;">
-                            ©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
-                            <span class="icon solid fa-carrot"></span>
-                        </a>
+                        <a href="" style="border: none;"
+                            >©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}<span
+                        class="icon solid fa-carrot"></span></a>
                     </li>
 
                     <li id="css-sponsorship">
-                        <a href="https://cssbham.com/join" style="border: none;">
-                            Sponsored by UoB&nbsp;CSS
-                        </a>
+                        <a href="https://cssbham.com/join" style="border: none;"
+                        >Sponsored by UoB&nbsp;CSS</a>
                     </li>
 
                     <li>
-                        Design:
-                        <a href="https://html5up.net">
-                            HTML5&nbsp;UP
-                        </a>
+                        Design:<a href="https://html5up.net">HTML5&nbsp;UP</a>
                     </li>
 
                     <li>
-                        Illustrations:
-                        <a href="https://storyset.com">
-                            Storyset
-                        </a>
+                        Illustrations:<a href="https://storyset.com">Storyset</a>
                     </li>
                 </ul>
             </footer>

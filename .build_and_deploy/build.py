@@ -1,4 +1,4 @@
-""""""
+"""Build and render functions for whole sites and single HTML pages."""
 
 from collections.abc import Sequence
 
@@ -26,6 +26,7 @@ TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
     app_dirs=False,
     libraries={
         "simple_dates": "custom_template_tags.simple_dates",
+        "icons_list": "custom_template_tags.icons_list",
     },
 )
 
