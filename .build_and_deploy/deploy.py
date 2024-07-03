@@ -31,7 +31,7 @@ def deploy_single_site(site_path: Path, *, remote_ip: str | None = None, remote_
         )
         raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
 
-    raise NotImplementedError
+    raise NotImplementedError  # TODO: Add copying to remote machine with rsync (https://www.digitalocean.com/community/tutorials/how-to-copy-files-with-rsync-over-ssh)
 
 
 def deploy_all_sites(site_paths: Set[Path], *, remote_ip: str | None = None, remote_ssh_key: str | None = None, remote_user_name: str | None = None, remote_directory: str | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501

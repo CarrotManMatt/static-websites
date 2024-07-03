@@ -72,7 +72,7 @@ jobs:
               with:
                   python-version: 3.12
                   directory: "./.build_and_deploy"
-
+            # TODO: Add step to login with Twingate (https://www.twingate.com/docs/example-cicd-configurations)
             - name: Run Build Script
               working-directory: ./.build_and_deploy
               run: poetry run python -m console  # TODO: add arguments
