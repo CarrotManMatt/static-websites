@@ -14,6 +14,20 @@ on:
     workflow_dispatch:
 
 jobs:
+    yamllint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Install Python Project
+              uses: CarrotManMatt/action-install-python-project@v2
+              with:
+                  python-version: 3.12
+                  directory: "./.build_and_deploy"
+
+            - name: Run yamllint
+              working-directory: .build_and_deploy
+              run: poetry run yamllint . -s -f colored
+
     mypy:
         runs-on: ubuntu-latest
 
