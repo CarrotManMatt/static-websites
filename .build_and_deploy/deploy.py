@@ -13,11 +13,12 @@ from pathlib import Path
 from typing import Final
 
 from utils import CaughtException
+from utils.validators import Hostname, Username, PrivateSSHKey
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 
-def deploy_single_site(site_path: Path, *, remote_ip: str | None = None, remote_ssh_key: str | None = None, remote_user_name: str | None = None, remote_directory: str | None = None, dry_run: bool = False) -> None:  # noqa: E501
+def deploy_single_site(site_path: Path, *, remote_ip: Hostname | None = None, remote_ssh_key: PrivateSSHKey | None = None, remote_user_name: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
     """"""
     FORMATTED_SITE_NAME: Final[str] = (
         site_path.parent.name if site_path.name == "deploy" else site_path.name
@@ -34,7 +35,7 @@ def deploy_single_site(site_path: Path, *, remote_ip: str | None = None, remote_
     raise NotImplementedError  # TODO: Add copying to remote machine with rsync (https://www.digitalocean.com/community/tutorials/how-to-copy-files-with-rsync-over-ssh)
 
 
-def deploy_all_sites(site_paths: Set[Path], *, remote_ip: str | None = None, remote_ssh_key: str | None = None, remote_user_name: str | None = None, remote_directory: str | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
+def deploy_all_sites(site_paths: Set[Path], *, remote_ip: Hostname | None = None, remote_ssh_key: PrivateSSHKey | None = None, remote_user_name: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
     """"""
     logger.debug("Begin deploying all sites.")
 
@@ -68,12 +69,10 @@ def deploy_all_sites(site_paths: Set[Path], *, remote_ip: str | None = None, rem
         if deployment_outcome is None:
             continue
 
-        logger.error(
-            (
-                f"(Deployment Failed | {site_name}) "
-                f"{traceback.format_exception(deployment_outcome)[-1].strip()}"
-            ),
-        )
+        traceback_messages: Sequence[str] = traceback.format_exception(deployment_outcome)
+
+        logger.error(f"(Deployment Failed | {site_name}) {traceback_messages[-1].strip()}")
+        logger.debug(f"({site_name}) {"".join(traceback_messages[:-1])}")
 
     deployed_site_names: Set[str] = {
         site_name

@@ -18,6 +18,7 @@ import cleanup
 import deploy
 from exceptions import MutuallyExclusiveArgsError
 from utils import logging_setup
+from utils.validators import PrivateSSHKey, Hostname, Username
 
 if TYPE_CHECKING:
     # noinspection PyProtectedMember,PyUnresolvedReferences
@@ -29,11 +30,13 @@ logger: Final[Logger] = logging.getLogger("static-website-builder")
 def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
     arg_parser.add_argument(
         "remote-ip",
-        help="The IP address of the webserver to deploy static websites to.",
+        type=Hostname,
+        help="The IP address or hostname of the webserver to deploy static websites to.",
     )
 
     arg_parser.add_argument(
         "remote-ssh-key",
+        type=PrivateSSHKey,
         help="The private SSH key of the webserver to deploy static websites to.",
     )
 
@@ -57,12 +60,14 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
     arg_parser.add_argument(
         "-d",
         "--remote-directory",
+        type=Path,
         help="The remote directory of the webserver to deploy static websites to.",
     )
 
     arg_parser.add_argument(
         "-u",
         "--remote-user",
+        type=Username,
         help="The username on the webserver to deploy static websites to.",
     )
 

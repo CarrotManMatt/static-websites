@@ -227,12 +227,12 @@ def build_all_sites() -> Set[Path]:
         if build_outcome is None:
             continue
 
+        traceback_messages: Sequence[str] = traceback.format_exception(build_outcome)
+
         logger.error(
-            (
-                f"(Build Failed | {FORMATTED_SITE_NAME}) "
-                f"{traceback.format_exception(build_outcome)[-1].strip()}"
-            ),
+            f"(Build Failed | {FORMATTED_SITE_NAME}) {traceback_messages[-1].strip()}",
         )
+        logger.debug(f"({FORMATTED_SITE_NAME}) {"".join(traceback_messages[:-1])}")
 
     built_site_paths: Set[Path] = {
         site_path

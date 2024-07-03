@@ -4,6 +4,7 @@ from collections.abc import Sequence
 
 __all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException")
 
+
 from pathlib import Path
 from typing import Final, TypeAlias
 
