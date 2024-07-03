@@ -12,7 +12,7 @@ __all__: Sequence[str] = (
 import logging
 import re
 import shutil
-import sys
+import traceback
 from collections.abc import Set
 from logging import Logger
 from pathlib import Path
@@ -23,7 +23,7 @@ from django.template import Context as TemplateContext
 from django.template import Template
 from django.template.engine import Engine as TemplateEngine
 
-from utils import PROJECT_ROOT
+from utils import PROJECT_ROOT, CaughtException
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
 
@@ -67,18 +67,23 @@ def build_single_page(*, html_file_path: Path) -> str:
 
     if re.search(r">\s+", minified_html):
         logger.warning(
-            "Found whitespace after HTML tag. Make sure to check validity of rendered output.",
+            (
+                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                "Found whitespace after HTML tag. "
+                "Make sure to check validity of rendered output."
+            ),
         )
         minified_html = re.sub(r">\s+", ">", minified_html)
 
     if re.search(r"\s+<", minified_html):
         logger.warning(
             (
+                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
                 "Found whitespace before HTML tag. "
                 "Make sure to check validity of rendered output."
             ),
         )
-        minified_html = re.sub(r"\s+<", ">", minified_html)
+        minified_html = re.sub(r"\s+<", "<", minified_html)
 
     if copyright_comment_match:
         copyright_comment_type: str = copyright_comment_match.group("copyright_type")
@@ -107,6 +112,19 @@ def build_single_page(*, html_file_path: Path) -> str:
 
 def build_single_site(*, site_root_directory: Path) -> None:
     """Render a single site's HTML pages into string outputs."""
+    logger.debug(
+        (
+            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
+            "Begin building single site."
+        ),
+    )
+
+    if not site_root_directory.is_dir():
+        PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
+            f"Path to site's root directory is not a directory: {site_root_directory}"
+        )
+        raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
+
     deploy_dir: Path = site_root_directory / "deploy"
     if deploy_dir.exists():
         shutil.rmtree(deploy_dir)
@@ -135,27 +153,59 @@ def build_single_site(*, site_root_directory: Path) -> None:
             encoding="utf-8",
         )
 
+    logger.debug(
+        (
+            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
+            "Completed building single site successfully."
+        ),
+    )
+
 
 def build_all_sites() -> Set[Path]:
     """Render all sites HTML pages into string outputs."""
-    built_sites: set[Path] = set()
+    logger.debug("Begin building all sites.")
+
+    built_sites: dict[Path, CaughtException | None] = {}
 
     site_subdirectory: Path
     for site_subdirectory in PROJECT_ROOT.iterdir():
         if not site_subdirectory.is_dir() or site_subdirectory.stem.startswith("."):
             continue
 
-        exception: ValueError | RuntimeError | AttributeError | TypeError | OSError
+        caught_exception: CaughtException
         try:
             build_single_site(site_root_directory=site_subdirectory)
-        except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as exception:
-            sys.stderr.write(str(exception))
+        except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as caught_exception:  # noqa: E501
+            built_sites[site_subdirectory / "deploy"] = caught_exception
             continue
         else:
-            built_sites.add(site_subdirectory / "deploy")
+            built_sites[site_subdirectory / "deploy"] = None
 
-    return built_sites
+    site_path: Path
+    build_outcome: CaughtException | None
+    for site_path, build_outcome in built_sites.items():
+        if build_outcome is None:
+            continue
 
+        logger.error(
+            (
+                f"(Build Failed | {
+                    (
+                        site_path.parent if site_path.name == "deploy" else site_path
+                    ).relative_to(PROJECT_ROOT).as_posix()
+                }) "
+                f"{traceback.format_exception(build_outcome)[-1].strip()}"
+            ),
+        )
 
-if __name__ == "__main__":
-    sys.stdout.write(",".join(str(path) for path in build_all_sites()))
+    built_site_paths: Set[Path] = {
+        site_path
+        for site_path, build_outcome
+        in built_sites.items()
+        if build_outcome is None
+    }
+
+    if built_site_paths:
+        logger.info("Building all sites completed successfully.")
+
+    return built_site_paths

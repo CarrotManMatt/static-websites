@@ -5,11 +5,25 @@ from collections.abc import Sequence
 __all__: Sequence[str] = ("run",)
 
 
+import logging
+import sys
 from argparse import ArgumentParser, Namespace
+from collections.abc import Set
+from logging import Logger
+from pathlib import Path
+from typing import TYPE_CHECKING, Literal, Final
 
 import build
+import cleanup
 import deploy
+from exceptions import MutuallyExclusiveArgsError
 from utils import logging_setup
+
+if TYPE_CHECKING:
+    # noinspection PyProtectedMember,PyUnresolvedReferences
+    from argparse import _MutuallyExclusiveGroup as MutuallyExclusiveGroup
+
+logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 
 def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
@@ -31,44 +45,53 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
         prog="build-and-deploy-static-websites",
         description="Render all sites HTML pages & deploy to given webserver.",
         usage=(
-            "[-h] "
-            "[-D REMOTE_DIRECTORY] "
-            "[-U REMOTE_USER] "
-            "[--dry-run] "
-            "[remote-ip && remote-ssh-key]"
+            "[-h/--help]\n       "
+            "[-d/--remote-directory REMOTE_DIRECTORY]\n       "
+            "[-u/--remote-user REMOTE_USER]\n       "
+            "[-D/--dry-run]\n       "
+            "[-v/--verbose | -q/--quiet]\n       "
+            "[REMOTE_IP & REMOTE_SSH_KEY]"
         ),
     )
 
     arg_parser.add_argument(
-        "-D",
+        "-d",
         "--remote-directory",
         help="The remote directory of the webserver to deploy static websites to.",
     )
 
     arg_parser.add_argument(
-        "-U",
+        "-u",
         "--remote-user",
         help="The username on the webserver to deploy static websites to.",
     )
 
     arg_parser.add_argument(
+        "-D",
         "--dry-run",
         action="store_true",
-        help="Perform all operations apart from the final deployment of the static websites.",
+        help=(
+            "Perform all operations apart from saving rendered files "
+            "or the final deployment of the static websites."
+        ),
     )
 
-    arg_parser.add_argument(
-        "-v"
+    verbosity_args_group: MutuallyExclusiveGroup = arg_parser.add_mutually_exclusive_group()
+
+    verbosity_args_group.add_argument(
+        "-v",
         "--verbose",
-        action="count",  # TODO: Add max number
-        help="",  # TODO: Add help
+        action="count",
+        default=0,
+        dest="verbosity",
+        help="Increase output verbosity. (Mutually exclusive with `--quiet`.)",
     )
 
-    arg_parser.add_argument(  # TODO: Add to mutually exclusive group
-        "-q"
+    verbosity_args_group.add_argument(
+        "-q",
         "--quiet",
         action="store_true",
-        help="",  # TODO: Add help
+        help="Produce no output while running. (Mutually exclusive with `--verbose`.)",
     )
 
     known_parsed_args: Namespace
@@ -81,24 +104,79 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
     return arg_parser
 
 
+def _get_true_verbosity(raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
+    if is_quiet and is_dry_run:
+        raise MutuallyExclusiveArgsError(
+            mutually_exclusive_arguments={{"-q", "--quiet"}, {"-D", "--dry-run"}},
+        )
+
+    raw_verbosity = 0 if is_quiet else raw_verbosity + 1
+
+    if raw_verbosity > 3:
+        return 3
+
+    if raw_verbosity == 3:
+        return 3
+
+    if raw_verbosity == 2:
+        return 2
+
+    if raw_verbosity == 1:
+        return 1
+
+    if raw_verbosity == 0:
+        if is_dry_run:
+            return 1
+
+        return 0
+
+    raise ValueError
+
+
 def run(argv: Sequence[str] | None = None) -> int:
     """Run the static websites builder & deployment script."""
     arg_parser: ArgumentParser = _set_up_arg_parser(argv)
 
     parsed_args: Namespace = arg_parser.parse_args(argv)
 
-    logging_setup.setup(verbosity=3)  # TODO: Use verbosity parse args
+    try:
+        verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(
+            parsed_args.verbosity,
+            is_quiet=parsed_args.quiet,
+            is_dry_run=parsed_args.dry_run,
+        )
+    except MutuallyExclusiveArgsError as mutually_exclusive_args_error:
+        arg_parser.error(mutually_exclusive_args_error.message)
 
-    deploy.deploy_all_sites(
-        build.build_all_sites(),
-        remote_ip=parsed_args.remote_ip,
-        remote_ssh_key=parsed_args.remote_ssh_key,
-        remote_directory=parsed_args.remote_directory,
-        remote_user_name=parsed_args.remote_user,
-        dry_run=parsed_args.dry_run,
-    )
+    # noinspection PyUnboundLocalVariable
+    logging_setup.setup(verbosity=verbosity)
 
-    return 0
+    try:
+        built_site_paths: Set[Path] = build.build_all_sites()
+
+        if not built_site_paths:
+            logger.warning("All sites failed to build. (Or no sites exist.)")
+            return 1
+
+        deployed_site_names: Set[str] = deploy.deploy_all_sites(
+            built_site_paths,
+            remote_ip=getattr(parsed_args, "remote_ip", None),
+            remote_ssh_key=getattr(parsed_args, "remote_ssh_key", None),
+            remote_directory=parsed_args.remote_directory,
+            remote_user_name=parsed_args.remote_user,
+            dry_run=parsed_args.dry_run,
+        )
+
+        if not deployed_site_names:
+            logger.warning("All sites failed to deploy.")
+            return 1
+
+        sys.stdout.write(", ".join(deployed_site_names))
+        return 0
+
+    finally:
+        if parsed_args.dry_run:
+            cleanup.cleanup_all_sites()
 
 
 if __name__ == "__main__":

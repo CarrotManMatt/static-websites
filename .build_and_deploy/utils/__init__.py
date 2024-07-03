@@ -2,13 +2,14 @@
 
 from collections.abc import Sequence
 
-__all__: Sequence[str] = ("PROJECT_ROOT",)
-
+__all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException")
 
 from pathlib import Path
-from typing import Final
+from typing import Final, TypeAlias
 
 from git import InvalidGitRepositoryError, PathLike, Repo
+
+CaughtException: TypeAlias = ValueError | RuntimeError | AttributeError | TypeError | OSError
 
 
 def _get_project_root() -> Path:
