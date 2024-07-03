@@ -76,7 +76,7 @@ jobs:
         permissions:
             contents: read
 
-        needs: [mypy, ruff, djlint]
+        needs: [mypy, ruff, yamllint, djlint]
 
         if: github.event == 'push'
 
