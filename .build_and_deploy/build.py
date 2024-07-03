@@ -52,8 +52,26 @@ def build_single_page(*, html_file_path: Path) -> str:
         template.source,
     )
 
+    if copyright_comment_match:
+        logger.debug(
+            (
+                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                "Found copyright-comment that will later be re-added: "
+                f"{copyright_comment_match.group("copyright_type")}"
+            ),
+        )
+
+    rendered_template: str = template.render(TemplateContext())
+
+    logger.debug(
+        (
+            f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+            "Django template successfully rendered."
+        ),
+    )
+
     minified_html: str = minify_html.minify(
-        template.render(TemplateContext()),
+        rendered_template,
         do_not_minify_doctype=True,
         keep_html_and_head_opening_tags=True,
         ensure_spec_compliant_unquoted_attribute_values=True,
@@ -64,6 +82,13 @@ def build_single_page(*, html_file_path: Path) -> str:
     )
 
     minified_html = minified_html.replace("<!doctype html>", "<!DOCTYPE HTML>")
+
+    logger.debug(
+        (
+            f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+            "HTML file successfully minified."
+        ),
+    )
 
     if re.search(r">\s+", minified_html):
         logger.warning(
@@ -107,6 +132,13 @@ def build_single_page(*, html_file_path: Path) -> str:
             )
             raise NotImplementedError(UNKNOWN_COPYRIGHT_COMMENT_TYPE_MESSAGE)
 
+        logger.debug(
+            (
+                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                f"Copyright-comment successfully re-added: {copyright_comment_type}"
+            ),
+        )
+
     return minified_html
 
 
@@ -125,10 +157,24 @@ def build_single_site(*, site_root_directory: Path) -> None:
         )
         raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
 
+    logger.debug(
+        (
+            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
+            "Creating `deploy/` directory."
+        ),
+    )
+
     deploy_dir: Path = site_root_directory / "deploy"
     if deploy_dir.exists():
         shutil.rmtree(deploy_dir)
     deploy_dir.mkdir()
+
+    logger.debug(
+        (
+            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
+            "Creating symlink to original static directory from inside `deploy/` directory."
+        ),
+    )
 
     static_dir: Path = site_root_directory / "static"
     if static_dir.is_dir():
@@ -151,6 +197,13 @@ def build_single_site(*, site_root_directory: Path) -> None:
         new_html_file_location.write_text(
             build_single_page(html_file_path=html_file_path),
             encoding="utf-8",
+        )
+
+        logger.debug(
+            (
+                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                "Rendered HTML file successfully saved to `deploy/` directory."
+            ),
         )
 
     logger.debug(
