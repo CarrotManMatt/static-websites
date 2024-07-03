@@ -18,12 +18,13 @@ logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 def cleanup_single_site(*, site_root_directory: Path) -> None:
     """"""
-    logger.debug(
-        (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Begin clean-up of single site."
-        ),
+    FORMATTED_SITE_NAME: Final[str] = (
+        site_root_directory.parent.name
+        if site_root_directory.name == "deploy"
+        else site_root_directory.name
     )
+
+    logger.debug(f"({FORMATTED_SITE_NAME}) Begin clean-up of single site.")
 
     if not site_root_directory.is_dir():
         PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
@@ -35,12 +36,7 @@ def cleanup_single_site(*, site_root_directory: Path) -> None:
     if deploy_dir.exists():
         shutil.rmtree(deploy_dir)
 
-    logger.debug(
-        (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Completed clean-up of single site successfully."
-        ),
-    )
+    logger.debug(f"({FORMATTED_SITE_NAME}) Completed clean-up of single site successfully.")
 
 
 def cleanup_all_sites() -> None:

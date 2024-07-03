@@ -39,6 +39,8 @@ TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
 
 def build_single_page(*, html_file_path: Path) -> str:
     """Render a single HTML page into a string output."""
+    FORMATTED_HTML_FILE_PATH: Final[str] = html_file_path.relative_to(PROJECT_ROOT).as_posix()
+
     if not html_file_path.is_file() or html_file_path.suffix != ".html":
         INVALID_FILE_PATH_MESSAGE: Final[str] = (
             "Provided file path does not refer to a valid HTML file."
@@ -55,7 +57,7 @@ def build_single_page(*, html_file_path: Path) -> str:
     if copyright_comment_match:
         logger.debug(
             (
-                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                f"({FORMATTED_HTML_FILE_PATH}) "
                 "Found copyright-comment that will later be re-added: "
                 f"{copyright_comment_match.group("copyright_type")}"
             ),
@@ -63,12 +65,7 @@ def build_single_page(*, html_file_path: Path) -> str:
 
     rendered_template: str = template.render(TemplateContext())
 
-    logger.debug(
-        (
-            f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Django template successfully rendered."
-        ),
-    )
+    logger.debug(f"({FORMATTED_HTML_FILE_PATH}) Django template successfully rendered.")
 
     minified_html: str = minify_html.minify(
         rendered_template,
@@ -83,18 +80,12 @@ def build_single_page(*, html_file_path: Path) -> str:
 
     minified_html = minified_html.replace("<!doctype html>", "<!DOCTYPE HTML>")
 
-    logger.debug(
-        (
-            f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
-            "HTML file successfully minified."
-        ),
-    )
+    logger.debug(f"({FORMATTED_HTML_FILE_PATH}) HTML file successfully minified.")
 
     if re.search(r">\s+", minified_html):
         logger.warning(
             (
-                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
-                "Found whitespace after HTML tag. "
+                f"({FORMATTED_HTML_FILE_PATH}) Found whitespace after HTML tag. "
                 "Make sure to check validity of rendered output."
             ),
         )
@@ -103,8 +94,7 @@ def build_single_page(*, html_file_path: Path) -> str:
     if re.search(r"\s+<", minified_html):
         logger.warning(
             (
-                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
-                "Found whitespace before HTML tag. "
+                f"({FORMATTED_HTML_FILE_PATH}) Found whitespace before HTML tag. "
                 "Make sure to check validity of rendered output."
             ),
         )
@@ -134,7 +124,7 @@ def build_single_page(*, html_file_path: Path) -> str:
 
         logger.debug(
             (
-                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                f"({FORMATTED_HTML_FILE_PATH}) "
                 f"Copyright-comment successfully re-added: {copyright_comment_type}"
             ),
         )
@@ -144,12 +134,13 @@ def build_single_page(*, html_file_path: Path) -> str:
 
 def build_single_site(*, site_root_directory: Path) -> None:
     """Render a single site's HTML pages into string outputs."""
-    logger.debug(
-        (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Begin building single site."
-        ),
+    FORMATTED_SITE_NAME: Final[str] = (
+        site_root_directory.parent.name
+        if site_root_directory.name == "deploy"
+        else site_root_directory.name
     )
+
+    logger.debug(f"({FORMATTED_SITE_NAME}) Begin building single site.")
 
     if not site_root_directory.is_dir():
         PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
@@ -157,12 +148,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
         )
         raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
 
-    logger.debug(
-        (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Creating `deploy/` directory."
-        ),
-    )
+    logger.debug(f"({FORMATTED_SITE_NAME}) Creating `deploy/` directory.")
 
     deploy_dir: Path = site_root_directory / "deploy"
     if deploy_dir.exists():
@@ -171,7 +157,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
 
     logger.debug(
         (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
+            f"({FORMATTED_SITE_NAME}) "
             "Creating symlink to original static directory from inside `deploy/` directory."
         ),
     )
@@ -182,6 +168,8 @@ def build_single_site(*, site_root_directory: Path) -> None:
 
     html_file_path: Path
     for html_file_path in site_root_directory.rglob("*.html"):
+        FORMATTED_HTML_FILE_PATH: str = html_file_path.relative_to(PROJECT_ROOT).as_posix()
+
         if (site_root_directory / "static") in html_file_path.parents:
             continue
 
@@ -201,17 +189,12 @@ def build_single_site(*, site_root_directory: Path) -> None:
 
         logger.debug(
             (
-                f"({html_file_path.relative_to(PROJECT_ROOT).as_posix()}) "
+                f"({FORMATTED_HTML_FILE_PATH}) "
                 "Rendered HTML file successfully saved to `deploy/` directory."
             ),
         )
 
-    logger.debug(
-        (
-            f"({site_root_directory.relative_to(PROJECT_ROOT).as_posix()}) "
-            "Completed building single site successfully."
-        ),
-    )
+    logger.debug(f"({FORMATTED_SITE_NAME}) Completed building single site successfully.")
 
 
 def build_all_sites() -> Set[Path]:
@@ -237,16 +220,16 @@ def build_all_sites() -> Set[Path]:
     site_path: Path
     build_outcome: CaughtException | None
     for site_path, build_outcome in built_sites.items():
+        FORMATTED_SITE_NAME: str = (
+            site_path.parent.name if site_path.name == "deploy" else site_path.name
+        )
+
         if build_outcome is None:
             continue
 
         logger.error(
             (
-                f"(Build Failed | {
-                    (
-                        site_path.parent if site_path.name == "deploy" else site_path
-                    ).relative_to(PROJECT_ROOT).as_posix()
-                }) "
+                f"(Build Failed | {FORMATTED_SITE_NAME}) "
                 f"{traceback.format_exception(build_outcome)[-1].strip()}"
             ),
         )

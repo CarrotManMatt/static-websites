@@ -19,6 +19,18 @@ logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 def deploy_single_site(site_path: Path, *, remote_ip: str | None = None, remote_ssh_key: str | None = None, remote_user_name: str | None = None, remote_directory: str | None = None, dry_run: bool = False) -> None:  # noqa: E501
     """"""
+    FORMATTED_SITE_NAME: Final[str] = (
+        site_path.parent.name if site_path.name == "deploy" else site_path.name
+    )
+
+    logger.debug(f"({FORMATTED_SITE_NAME}) Begin deploying single site.")
+
+    if not site_path.is_dir():
+        PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
+            f"Path to site's root directory is not a directory: {site_path}"
+        )
+        raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
+
     raise NotImplementedError
 
 
@@ -30,7 +42,7 @@ def deploy_all_sites(site_paths: Set[Path], *, remote_ip: str | None = None, rem
 
     site_path: Path
     for site_path in site_paths:
-        formatted_site_name: str = (
+        FORMATTED_SITE_NAME: str = (
             site_path.parent.name if site_path.name == "deploy" else site_path.name
         )
 
@@ -45,10 +57,10 @@ def deploy_all_sites(site_paths: Set[Path], *, remote_ip: str | None = None, rem
                 dry_run=dry_run,
             )
         except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as caught_exception:  # noqa: E501
-            deployed_sites[formatted_site_name] = caught_exception
+            deployed_sites[FORMATTED_SITE_NAME] = caught_exception
             continue
         else:
-            deployed_sites[formatted_site_name] = None
+            deployed_sites[FORMATTED_SITE_NAME] = None
 
     site_name: str
     deployment_outcome: CaughtException | None
