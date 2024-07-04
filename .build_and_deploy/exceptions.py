@@ -6,8 +6,8 @@ __all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
 
 
 import abc
-from collections.abc import Set, Iterator
-from typing import override, Final
+from collections.abc import Iterator, Set
+from typing import Final, override
 
 from classproperties import classproperty
 
@@ -63,11 +63,13 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         self.mutually_exclusive_arguments: Set[Set[str]] | None = mutually_exclusive_arguments
 
         super().__init__(
-            message
-            if message or not mutually_exclusive_arguments
-            else self.format_mutually_exclusive_arguments_to_message(
-                mutually_exclusive_arguments,
-            )
+            (
+                message
+                if message or not mutually_exclusive_arguments
+                else self.format_mutually_exclusive_arguments_to_message(
+                    mutually_exclusive_arguments,
+                )
+            ),
         )
 
     @classmethod
@@ -79,7 +81,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
             raise ValueError(CANNOT_CONSTRUCT_MESSAGE_WITHOUT_ARGUMENTS_MESSAGE)
 
         no_argument_values_provided_exception: ValueError = ValueError(
-            f"No argument values provided to {cls.__name__}."
+            f"No argument values provided to {cls.__name__}.",
         )
 
         remaining_arguments: Iterator[Set[str]] = iter(mutually_exclusive_arguments)

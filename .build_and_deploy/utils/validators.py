@@ -9,7 +9,7 @@ import abc
 import re
 import socket
 from pathlib import Path
-from typing import TypeVar, Generic, override, final, overload
+from typing import Final, Generic, TypeVar, final, overload, override
 
 T = TypeVar("T")
 
@@ -25,26 +25,34 @@ class SimpleValidator(abc.ABC, Generic[T]):
     @classmethod
     @final
     def validate(cls, value: T) -> None:
-        """"""
+        """
+        Perform custom validation on the wrapped value.
+
+        This is a fixed shortcut function that calls cls._validate() on the cleaned value.
+        """
         cls._validate(value=cls.clean(value))
 
     @classmethod
     @abc.abstractmethod
     def _validate(cls, value: T) -> None:
-        """"""
+        """Perform custom validation on the wrapped value."""
 
     def __init__(self, value: T, /) -> None:
+        """Validate and store the cleaned wrapped value."""
         self.validate(value)
 
         self._value: T = self.clean(value)
 
     def __str__(self) -> str:
+        """Return the string representation of the wrapped validated value."""
         return str(self._value)
 
     def __repr__(self) -> str:
+        """Return the developer-focussed representation of the wrapped validated value."""
         return repr(self._value)
 
     def __bool__(self) -> bool:
+        """Return the truthiness of the wrapped validated value."""
         return bool(self._value)
 
 
@@ -61,6 +69,12 @@ class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
     def __rtruediv__(self, other: object) -> object: ...
 
     def __rtruediv__(self, other: object) -> object:
+        """
+        Perform right-division with another object.
+
+        Because this wrapper holds a string object, if the other object is a Path,
+        the Path division can be applied to the wrapped string.
+        """
         if isinstance(other, Path):
             return other / self._value
 
@@ -68,7 +82,7 @@ class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
 
 
 class Hostname(_StrippedStringValidator):
-    """"""
+    """Wrapper validator holding an SSH hostname or IP address string."""
 
     @classmethod
     @override
@@ -77,11 +91,12 @@ class Hostname(_StrippedStringValidator):
         try:
             socket.gethostbyname(value)
         except socket.gaierror as hostname_error:
-            raise ValueError("Invalid hostname.") from hostname_error
+            INVALID_HOSTNAME_MESSAGE: Final[str] = "Invalid hostname."
+            raise ValueError(INVALID_HOSTNAME_MESSAGE) from hostname_error
 
 
 class Username(_StrippedStringValidator):
-    """"""
+    """Wrapper validator holding an SSH remote username string."""
 
     @classmethod
     @override
@@ -91,4 +106,5 @@ class Username(_StrippedStringValidator):
             value,
         )
         if not match:
-            raise ValueError("Invalid username.")
+            INVALID_USERNAME_MESSAGE: Final[str] = "Invalid username."
+            raise ValueError(INVALID_USERNAME_MESSAGE)

@@ -13,10 +13,12 @@ from collections.abc import Set
 from logging import Logger
 from pathlib import Path
 from subprocess import CalledProcessError, CompletedProcess
-from typing import Final, Literal
+from typing import TYPE_CHECKING, Final, Literal
 
-from utils import CaughtException
 from utils.validators import Hostname, Username
+
+if TYPE_CHECKING:
+    from utils import CaughtException
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
 
@@ -62,7 +64,7 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
     )
 
     logger.debug(
-        f"({FORMATTED_SITE_NAME}) Successfully retrieved resolved remote directory path."
+        f"({FORMATTED_SITE_NAME}) Successfully retrieved resolved remote directory path.",
     )
 
     logger.debug(
@@ -107,7 +109,11 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
 
     no_rsync_command_error: FileNotFoundError
     try:
-        process_output: CompletedProcess = subprocess.run(rsync_args, capture_output=True)
+        process_output: CompletedProcess[str] = subprocess.run(  # noqa: S603,PLW1510
+            rsync_args,
+            capture_output=True,
+            text=True,
+        )
     except FileNotFoundError as no_rsync_command_error:
         raise RuntimeError(
             f"{"rsync"!r} command not found. (Ensure it is installed on your system.)",
@@ -115,12 +121,12 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
 
     if process_output.stdout:
         logger.debug(
-            f"({FORMATTED_SITE_NAME}) rsync subprocess stdout:\n{process_output.stdout.decode("utf-8").strip()}\n"
+            f"({FORMATTED_SITE_NAME}) rsync subprocess stdout:\n{process_output.stdout.strip()}\n",
         )
 
     if process_output.stderr:
         logger.debug(
-            f"({FORMATTED_SITE_NAME}) rsync subprocess stderr:\n{process_output.stderr.decode("utf-8").strip()}\n"
+            f"({FORMATTED_SITE_NAME}) rsync subprocess stderr:\n{process_output.stderr.strip()}\n",
         )
 
     if process_output.returncode != 0:

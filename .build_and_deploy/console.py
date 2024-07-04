@@ -11,7 +11,7 @@ from argparse import ArgumentParser, Namespace
 from collections.abc import Set
 from logging import Logger
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal, Final
+from typing import TYPE_CHECKING, Final, Literal
 
 import build
 import cleanup
