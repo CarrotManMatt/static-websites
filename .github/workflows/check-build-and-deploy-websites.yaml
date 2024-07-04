@@ -26,11 +26,11 @@ jobs:
 
             - name: Test CWD
               working-directory: .build_and_deploy
-              run: poetry run which yamllint
+              run: poetry run python -m yamllint
 
             - name: Run yamllint
               working-directory: .build_and_deploy
-              run: poetry run yamllint . -s -f colored
+              run: poetry run python -m yamllint . -s -f colored
 
     mypy:
         runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
 
             - name: Run mypy
               working-directory: .build_and_deploy
-              run: poetry run mypy .
+              run: poetry run python -m mypy .
 
     ruff:
         runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
 
             - name: Run Ruff
               working-directory: .build_and_deploy
-              run: poetry run ruff check --no-fix
+              run: poetry run python -m ruff check --no-fix
 
     djlint:
         runs-on: ubuntu-latest
@@ -84,7 +84,7 @@ jobs:
 
             - name: Run djLint
               working-directory: .build_and_deploy  # TODO: fix commands not available in working directory
-              run: poetry run djlint .. --lint --configuration pyproject.toml
+              run: poetry run python -m djlint .. --lint --configuration pyproject.toml
 
     build-and-deploy-websites:
         name: Build and Deploy All Websites
