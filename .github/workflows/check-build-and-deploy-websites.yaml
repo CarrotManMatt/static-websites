@@ -26,7 +26,7 @@ jobs:
 
             - name: Test CWD
               working-directory: .build_and_deploy
-              run: poetry run python -m yamllint
+              run: poetry run python -m yamllint -V
 
             - name: Run yamllint
               working-directory: .build_and_deploy
@@ -44,7 +44,7 @@ jobs:
 
             - name: Test CWD
               working-directory: .build_and_deploy
-              run: poetry run python -m mypy
+              run: poetry run python -m mypy -V
 
             - name: Run mypy
               working-directory: .build_and_deploy
@@ -62,7 +62,7 @@ jobs:
 
             - name: Test CWD
               working-directory: .build_and_deploy
-              run: poetry run python -m ruff
+              run: poetry run python -m ruff -V
 
             - name: Run Ruff
               working-directory: .build_and_deploy
@@ -80,7 +80,7 @@ jobs:
 
             - name: Test CWD
               working-directory: .build_and_deploy
-              run: poetry run python -m djlint
+              run: poetry run python -m djlint -V
 
             - name: Run djLint
               working-directory: .build_and_deploy  # TODO: fix commands not available in working directory
