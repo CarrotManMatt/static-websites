@@ -2,13 +2,14 @@
 
 from collections.abc import Sequence
 
-__all__: Sequence[str] = ("SimpleValidator", "Hostname", "PrivateSSHKey", "Username")
+__all__: Sequence[str] = ("SimpleValidator", "Hostname", "Username")
 
 
 import abc
 import re
 import socket
-from typing import TypeVar, Generic, override, final
+from pathlib import Path
+from typing import TypeVar, Generic, override, final, overload
 
 T = TypeVar("T")
 
@@ -43,12 +44,27 @@ class SimpleValidator(abc.ABC, Generic[T]):
     def __repr__(self) -> str:
         return repr(self._value)
 
+    def __bool__(self) -> bool:
+        return bool(self._value)
+
 
 class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
     @classmethod
     @override
     def clean(cls, value: str) -> str:
         return value.strip()
+
+    @overload
+    def __rtruediv__(self, other: Path) -> Path: ...
+
+    @overload
+    def __rtruediv__(self, other: object) -> object: ...
+
+    def __rtruediv__(self, other: object) -> object:
+        if isinstance(other, Path):
+            return other / self._value
+
+        return NotImplemented
 
 
 class Hostname(_StrippedStringValidator):
@@ -62,20 +78,6 @@ class Hostname(_StrippedStringValidator):
             socket.gethostbyname(value)
         except socket.gaierror as hostname_error:
             raise ValueError("Invalid hostname.") from hostname_error
-
-
-class PrivateSSHKey(_StrippedStringValidator):
-    """"""
-
-    @classmethod
-    @override
-    def _validate(cls, value: str) -> None:
-        match: re.Match[str] | None = re.fullmatch(
-            r"\A\s*(?P<hyphens>-{2,7})(?P<has_space> ?)BEGIN (?P<key_type>[A-Z]{2,6}|[A-Za-z](?=.*[0-9])[A-Za-z0-9]{1,6}) PRIVATE KEY(?P=has_space)(?P=hyphens)(?:\r?\n)?\s*\S+(?:.*\S+)?\s*(?:\r?\n)?(?P=hyphens)(?P=has_space)END (?P=key_type) PRIVATE KEY(?P=has_space)(?P=hyphens)\s*\Z",
-            value,
-        )
-        if not match:
-            raise ValueError("Invalid private SSH key.")
 
 
 class Username(_StrippedStringValidator):

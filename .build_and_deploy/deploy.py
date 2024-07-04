@@ -6,19 +6,41 @@ __all__: Sequence[str] = ("deploy_single_site", "deploy_all_sites")
 
 
 import logging
+import os
+import subprocess
 import traceback
 from collections.abc import Set
 from logging import Logger
 from pathlib import Path
-from typing import Final
+from typing import Final, Literal
 
 from utils import CaughtException
-from utils.validators import Hostname, Username, PrivateSSHKey
+from utils.validators import Hostname, Username
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
 
 
-def deploy_single_site(site_path: Path, *, remote_ip: Hostname | None = None, remote_ssh_key: PrivateSSHKey | None = None, remote_user_name: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
+def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name: str, remote_username: Username | None = None) -> str:  # noqa: E501
+    if raw_remote_directory is not None:
+        if remote_username:
+            return (
+                    Path("/home") / remote_username / raw_remote_directory / site_name
+            ).as_posix()
+
+        relative_posix: str = (raw_remote_directory / site_name).as_posix()
+
+        if relative_posix.startswith("/"):
+            return relative_posix
+
+        return f"/{relative_posix}"
+
+    if remote_username:
+        return (Path("/home") / remote_username / site_name).as_posix()
+
+    return (Path("/") / site_name).as_posix()
+
+
+def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
     """"""
     FORMATTED_SITE_NAME: Final[str] = (
         site_path.parent.name if site_path.name == "deploy" else site_path.name
@@ -32,14 +54,85 @@ def deploy_single_site(site_path: Path, *, remote_ip: Hostname | None = None, re
         )
         raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
 
-    raise NotImplementedError  # TODO: Add copying to remote machine with rsync (https://www.digitalocean.com/community/tutorials/how-to-copy-files-with-rsync-over-ssh)
+    POSIX_REMOTE_DIRECTORY: Final[str] = _get_posix_remote_directory(
+        remote_directory,
+        site_name=FORMATTED_SITE_NAME,
+        remote_username=remote_username,
+    )
+
+    logger.debug(
+        f"({FORMATTED_SITE_NAME}) Successfully retrieved resolved remote directory path."
+    )
+
+    logger.debug(
+        (
+            f"({"dry_run=True | " if dry_run else ""}"
+            f"{FORMATTED_SITE_NAME}) "
+            f"Beginning {"mock " if dry_run else ""}upload of `deploy/` directory "
+            "to remote server."
+        ),
+    )
+
+    # noinspection SpellCheckingInspection
+    rsync_args: list[str] = [
+        "rsync",
+        "--recursive",
+        "--times",
+        "--copy-links",
+        "--copy-dirlinks",
+        "--compress",
+        "--checksum",
+        "--delete",
+        "--rsh=\"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"",
+    ]
+
+    if dry_run:
+        rsync_args.append("--dry-run")
+
+    if verbosity > 1:
+        rsync_args.append("--verbose")
+
+    rsync_args.extend(
+        (
+            f"{site_path}{os.sep}",
+            (
+                f"{f"{remote_username}@" if remote_username else ""}"
+                f"{remote_hostname}:"
+                f"{POSIX_REMOTE_DIRECTORY}"
+            ),
+        ),
+    )
+
+    no_rsync_command_error: FileNotFoundError
+    try:
+        subprocess.run(rsync_args)
+    except FileNotFoundError as no_rsync_command_error:
+        raise RuntimeError(
+            f"{"rsync"!r} command not found. (Ensure it is installed on your system.)",
+        ) from no_rsync_command_error
+
+    logger.debug(f"({FORMATTED_SITE_NAME}) Completed deploying single site successfully.")
 
 
-def deploy_all_sites(site_paths: Set[Path], *, remote_ip: Hostname | None = None, remote_ssh_key: PrivateSSHKey | None = None, remote_user_name: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
+def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname | None = None, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
     """"""
     logger.debug("Begin deploying all sites.")
 
     deployed_sites: dict[str, CaughtException | None] = {}
+
+    if not dry_run and not remote_hostname:
+        raise ValueError(f"No {"remote_hostname"!r} was specified.")
+
+    real_hostname: Hostname = (
+        Hostname("192.168.0.1") if remote_hostname is None else remote_hostname
+    )
+
+    logger.debug(
+        (
+            f"{"(dry_run=True) " if dry_run else ""}"
+            f"Opening {"mock " if dry_run else ""}connection to remote deployment server."
+        ),
+    )
 
     site_path: Path
     for site_path in site_paths:
@@ -51,9 +144,9 @@ def deploy_all_sites(site_paths: Set[Path], *, remote_ip: Hostname | None = None
         try:
             deploy_single_site(
                 site_path,
-                remote_ip=remote_ip,
-                remote_ssh_key=remote_ssh_key,
-                remote_user_name=remote_user_name,
+                verbosity=verbosity,
+                remote_hostname=real_hostname,
+                remote_username=remote_username,
                 remote_directory=remote_directory,
                 dry_run=dry_run,
             )

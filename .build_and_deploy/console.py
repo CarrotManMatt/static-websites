@@ -18,7 +18,7 @@ import cleanup
 import deploy
 from exceptions import MutuallyExclusiveArgsError
 from utils import logging_setup
-from utils.validators import PrivateSSHKey, Hostname, Username
+from utils.validators import Hostname, Username
 
 if TYPE_CHECKING:
     # noinspection PyProtectedMember,PyUnresolvedReferences
@@ -34,11 +34,8 @@ def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParse
         help="The IP address or hostname of the webserver to deploy static websites to.",
     )
 
-    arg_parser.add_argument(
-        "remote-ssh-key",
-        type=PrivateSSHKey,
-        help="The private SSH key of the webserver to deploy static websites to.",
-    )
+    if arg_parser.usage:
+        arg_parser.usage += "\n       REMOTE_IP"
 
     return arg_parser
 
@@ -52,8 +49,7 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
             "[-d/--remote-directory REMOTE_DIRECTORY]\n       "
             "[-u/--remote-user REMOTE_USER]\n       "
             "[-D/--dry-run]\n       "
-            "[-v/--verbose | -q/--quiet]\n       "
-            "[REMOTE_IP & REMOTE_SSH_KEY]"
+            "[-v/--verbose | -q/--quiet]"
         ),
     )
 
@@ -61,14 +57,21 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
         "-d",
         "--remote-directory",
         type=Path,
-        help="The remote directory of the webserver to deploy static websites to.",
+        help=(
+            "The remote directory of the webserver to deploy static websites to. "
+            "(This is relative to the home directory of the remote user "
+            "and will have the site names appended to it.)"
+        ),
     )
 
     arg_parser.add_argument(
         "-u",
         "--remote-user",
         type=Username,
-        help="The username on the webserver to deploy static websites to.",
+        help=(
+            "The username on the webserver to deploy static websites to. "
+            "(Defaults to the root user if not specified.)"
+        ),
     )
 
     arg_parser.add_argument(
@@ -165,10 +168,10 @@ def run(argv: Sequence[str] | None = None) -> int:
 
         deployed_site_names: Set[str] = deploy.deploy_all_sites(
             built_site_paths,
-            remote_ip=getattr(parsed_args, "remote_ip", None),
-            remote_ssh_key=getattr(parsed_args, "remote_ssh_key", None),
+            verbosity=verbosity,
+            remote_hostname=getattr(parsed_args, "remote-ip", None),
+            remote_username=parsed_args.remote_user,
             remote_directory=parsed_args.remote_directory,
-            remote_user_name=parsed_args.remote_user,
             dry_run=parsed_args.dry_run,
         )
 
