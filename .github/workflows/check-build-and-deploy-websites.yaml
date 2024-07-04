@@ -114,5 +114,5 @@ jobs:  # yamllint disable-line rule:key-ordering
                   console
                   -Dvvvv
                   --remote-directory "$REMOTE_DIRECTORY"
-                  --remote-username "$REMOTE_USERNAME"
+                  --remote-user "$REMOTE_USERNAME"
                   "$REMOTE_IP"
