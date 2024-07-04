@@ -85,5 +85,34 @@ jobs:  # yamllint disable-line rule:key-ordering
         runs-on: ubuntu-latest
 
         steps:
-            - name: Test event type
-              run: echo ${{ github.event_name }}
+            - name: Install Python Project
+              uses: CarrotManMatt/action-install-python-project@v2  # yamllint disable-line rule:key-ordering rule:line-length
+              with:
+                  directory: ./.build_and_deploy
+                  python-version: 3.12
+
+            - uses: twingate/github-action@v1
+              with:
+                  service-key: ${{ secrets.TWINGATE_SERVICE_KEY }}  # TODO: create service key
+
+            -  # noinspection SpellCheckingInspection
+                uses: webfactory/ssh-agent@v0.9.0
+                with:
+                    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            - name: Run Build Script
+              env:  # yamllint disable-line rule:key-ordering
+                  REMOTE_DIRECTORY: ${{ secrets.REMOTE_DIRECTORY }}
+                  REMOTE_IP: ${{ secrets.REMOTE_IP }}
+                  REMOTE_USERNAME: ${{ secrets.REMOTE_USERNAME }}
+              working-directory: ./.build_and_deploy  # yamllint disable-line rule:key-ordering
+              # noinspection SpellCheckingInspection
+              # yamllint disable-line rule:key-ordering
+              run: >-
+                  poetry run
+                  python -m
+                  console
+                  -Dvvvv
+                  --remote-directory "$REMOTE_DIRECTORY"
+                  --remote-username "$REMOTE_USERNAME"
+                  "$REMOTE_IP"
