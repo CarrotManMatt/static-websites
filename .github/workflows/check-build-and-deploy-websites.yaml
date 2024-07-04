@@ -24,13 +24,9 @@ jobs:
                   python-version: 3.12
                   directory: "./.build_and_deploy"
 
-            - name: Test CWD
-              working-directory: .build_and_deploy
-              run: poetry run python -m yamllint -V
-
             - name: Run yamllint
               working-directory: .build_and_deploy
-              run: poetry run python -m yamllint . -s -f colored
+              run: poetry run python -m yamllint .. -s -f colored
 
     mypy:
         runs-on: ubuntu-latest
@@ -41,10 +37,6 @@ jobs:
               with:
                   python-version: 3.12
                   directory: "./.build_and_deploy"
-
-            - name: Test CWD
-              working-directory: .build_and_deploy
-              run: poetry run python -m mypy -V
 
             - name: Run mypy
               working-directory: .build_and_deploy
@@ -60,10 +52,6 @@ jobs:
                   python-version: 3.12
                   directory: "./.build_and_deploy"
 
-            - name: Test CWD
-              working-directory: .build_and_deploy
-              run: poetry run python -m ruff -V
-
             - name: Run Ruff
               working-directory: .build_and_deploy
               run: poetry run python -m ruff check --no-fix
@@ -78,12 +66,8 @@ jobs:
                   python-version: 3.12
                   directory: "./.build_and_deploy"
 
-            - name: Test CWD
-              working-directory: .build_and_deploy
-              run: poetry run python -m djlint -V
-
             - name: Run djLint
-              working-directory: .build_and_deploy  # TODO: fix commands not available in working directory
+              working-directory: .build_and_deploy
               run: poetry run python -m djlint .. --lint --configuration pyproject.toml
 
     build-and-deploy-websites:
