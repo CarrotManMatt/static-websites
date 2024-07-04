@@ -14,7 +14,7 @@ import re
 import shutil
 import traceback
 from collections.abc import Set
-from logging import Logger
+from logging import Logger, LoggerAdapter
 from pathlib import Path
 from subprocess import CalledProcessError
 from typing import Final
@@ -27,6 +27,7 @@ from django.template.engine import Engine as TemplateEngine
 from utils import PROJECT_ROOT, CaughtException
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
+extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
 
 TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
     dirs=[str(PROJECT_ROOT)],
@@ -41,6 +42,10 @@ TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
 def build_single_page(*, html_file_path: Path) -> str:
     """Render a single HTML page into a string output."""
     FORMATTED_HTML_FILE_PATH: Final[str] = html_file_path.relative_to(PROJECT_ROOT).as_posix()
+    html_file_path_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
+        extra_context_logger,
+        {"extra_context": FORMATTED_HTML_FILE_PATH},
+    )
 
     if not html_file_path.is_file() or html_file_path.suffix != ".html":
         INVALID_FILE_PATH_MESSAGE: Final[str] = (
@@ -56,17 +61,14 @@ def build_single_page(*, html_file_path: Path) -> str:
     )
 
     if copyright_comment_match:
-        logger.debug(
-            (
-                f"({FORMATTED_HTML_FILE_PATH}) "
-                "Found copyright-comment that will later be re-added: "
-                f"{copyright_comment_match.group("copyright_type")}"
-            ),
+        html_file_path_logger.debug(
+            "Found copyright-comment that will later be re-added: %s",
+            copyright_comment_match.group("copyright_type"),
         )
 
     rendered_template: str = template.render(TemplateContext())
 
-    logger.debug(f"({FORMATTED_HTML_FILE_PATH}) Django template successfully rendered.")
+    html_file_path_logger.debug("Django template successfully rendered.")
 
     minified_html: str = minify_html.minify(
         rendered_template,
@@ -81,21 +83,18 @@ def build_single_page(*, html_file_path: Path) -> str:
 
     minified_html = minified_html.replace("<!doctype html>", "<!DOCTYPE HTML>")
 
-    logger.debug(f"({FORMATTED_HTML_FILE_PATH}) HTML file successfully minified.")
+    html_file_path_logger.debug("HTML file successfully minified.")
 
     if re.search(r">\s+", minified_html):
-        logger.warning(
-            (
-                f"({FORMATTED_HTML_FILE_PATH}) Found whitespace after HTML tag. "
-                "Make sure to check validity of rendered output."
-            ),
+        html_file_path_logger.warning(
+            "Found whitespace after HTML tag. Make sure to check validity of rendered output.",
         )
         minified_html = re.sub(r">\s+", ">", minified_html)
 
     if re.search(r"\s+<", minified_html):
-        logger.warning(
+        html_file_path_logger.warning(
             (
-                f"({FORMATTED_HTML_FILE_PATH}) Found whitespace before HTML tag. "
+                "Found whitespace before HTML tag. "
                 "Make sure to check validity of rendered output."
             ),
         )
@@ -123,11 +122,9 @@ def build_single_page(*, html_file_path: Path) -> str:
             )
             raise NotImplementedError(UNKNOWN_COPYRIGHT_COMMENT_TYPE_MESSAGE)
 
-        logger.debug(
-            (
-                f"({FORMATTED_HTML_FILE_PATH}) "
-                f"Copyright-comment successfully re-added: {copyright_comment_type}"
-            ),
+        html_file_path_logger.debug(
+            "Copyright-comment successfully re-added: %s",
+            copyright_comment_type,
         )
 
     return minified_html
@@ -140,8 +137,12 @@ def build_single_site(*, site_root_directory: Path) -> None:
         if site_root_directory.name == "deploy"
         else site_root_directory.name
     )
+    site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
+        extra_context_logger,
+        {"extra_context": FORMATTED_SITE_NAME},
+    )
 
-    logger.debug(f"({FORMATTED_SITE_NAME}) Begin building single site.")
+    site_name_logger.debug("Begin building single site.")
 
     if not site_root_directory.is_dir():
         PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
@@ -149,18 +150,15 @@ def build_single_site(*, site_root_directory: Path) -> None:
         )
         raise ValueError(PATH_IS_NOT_DIRECTORY_MESSAGE)
 
-    logger.debug(f"({FORMATTED_SITE_NAME}) Creating `deploy/` directory.")
+    site_name_logger.debug("Creating `deploy/` directory.")
 
     deploy_dir: Path = site_root_directory / "deploy"
     if deploy_dir.exists():
         shutil.rmtree(deploy_dir)
     deploy_dir.mkdir()
 
-    logger.debug(
-        (
-            f"({FORMATTED_SITE_NAME}) "
-            "Creating symlink to original static directory from inside `deploy/` directory."
-        ),
+    site_name_logger.debug(
+        "Creating symlink to original static directory from inside `deploy/` directory.",
     )
 
     static_dir: Path = site_root_directory / "static"
@@ -170,6 +168,10 @@ def build_single_site(*, site_root_directory: Path) -> None:
     html_file_path: Path
     for html_file_path in site_root_directory.rglob("*.html"):
         FORMATTED_HTML_FILE_PATH: str = html_file_path.relative_to(PROJECT_ROOT).as_posix()
+        html_file_path_logger: LoggerAdapter[Logger] = LoggerAdapter(
+            extra_context_logger,
+            {"extra_context": FORMATTED_HTML_FILE_PATH},
+        )
 
         if (site_root_directory / "static") in html_file_path.parents:
             continue
@@ -188,14 +190,11 @@ def build_single_site(*, site_root_directory: Path) -> None:
             encoding="utf-8",
         )
 
-        logger.debug(
-            (
-                f"({FORMATTED_HTML_FILE_PATH}) "
-                "Rendered HTML file successfully saved to `deploy/` directory."
-            ),
+        html_file_path_logger.debug(
+            "Rendered HTML file successfully saved to `deploy/` directory.",
         )
 
-    logger.debug(f"({FORMATTED_SITE_NAME}) Completed building single site successfully.")
+    site_name_logger.debug("Completed building single site successfully.")
 
 
 def build_all_sites() -> Set[Path]:
@@ -224,16 +223,22 @@ def build_all_sites() -> Set[Path]:
         FORMATTED_SITE_NAME: str = (
             site_path.parent.name if site_path.name == "deploy" else site_path.name
         )
+        site_name_logger: LoggerAdapter[Logger] = LoggerAdapter(
+            extra_context_logger,
+            {"extra_context": FORMATTED_SITE_NAME},
+        )
+        build_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
+            extra_context_logger,
+            {"extra_context": f"Build Failed | {FORMATTED_SITE_NAME}"},
+        )
 
         if build_outcome is None:
             continue
 
         traceback_messages: Sequence[str] = traceback.format_exception(build_outcome)
 
-        logger.error(
-            f"(Build Failed | {FORMATTED_SITE_NAME}) {traceback_messages[-1].strip()}",
-        )
-        logger.debug(f"({FORMATTED_SITE_NAME}) {"".join(traceback_messages[:-1]).strip()}\n")
+        build_failed_logger.error(traceback_messages[-1].strip())
+        site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
 
     built_site_paths: Set[Path] = {
         site_path

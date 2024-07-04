@@ -1,4 +1,4 @@
-""""""
+"""Validator classes that hold values guaranteed to be valid."""
 
 from collections.abc import Sequence
 
@@ -15,11 +15,30 @@ T = TypeVar("T")
 
 
 class SimpleValidator(abc.ABC, Generic[T]):
-    """"""
+    """Validator class that holds a value guaranteed to be valid."""
 
     @classmethod
-    def clean(cls, value: T) -> T:
-        """"""
+    @abc.abstractmethod
+    def _get_wrapped_type(cls) -> type[T]:
+        """
+        Return the wrapped type.
+
+        This is used for generic isinstance checks,
+        when the wrapped type is not known at compile time.
+        """
+
+    @classmethod
+    def clean(cls, value: object) -> T:
+        """
+        Transform the incoming value as necessary to become a valid value.
+
+        This can be overridden by validator subclasses.
+        By default, it will just check that the value has the same type as the wrapped type,
+        then return the value unchanged.
+        """
+        if not isinstance(value, cls._get_wrapped_type()):
+            raise TypeError
+
         return value
 
     @classmethod
@@ -59,8 +78,13 @@ class SimpleValidator(abc.ABC, Generic[T]):
 class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
     @classmethod
     @override
-    def clean(cls, value: str) -> str:
-        return value.strip()
+    def _get_wrapped_type(cls) -> type[str]:
+        return str
+
+    @classmethod
+    @override
+    def clean(cls, value: object) -> str:
+        return super().clean(value).strip()
 
     @overload
     def __rtruediv__(self, other: Path) -> Path: ...

@@ -112,7 +112,7 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
     return arg_parser
 
 
-def _get_true_verbosity(raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
+def _get_true_verbosity(raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool) -> Literal[0, 1, 2, 3]:  # noqa: E501
     if is_quiet and is_dry_run:
         raise MutuallyExclusiveArgsError(
             mutually_exclusive_arguments={{"-q", "--quiet"}, {"-D", "--dry-run"}},
@@ -184,7 +184,7 @@ def run(argv: Sequence[str] | None = None) -> int:
 
     finally:
         if parsed_args.dry_run:
-            cleanup.cleanup_all_sites()
+            cleanup.cleanup_all_sites(dry_run=parsed_args.dry_run)
 
 
 if __name__ == "__main__":

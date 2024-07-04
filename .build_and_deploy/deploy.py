@@ -1,4 +1,4 @@
-""""""
+"""Deployment functions for whole static websites."""
 
 from collections.abc import Sequence
 
@@ -10,7 +10,7 @@ import os
 import subprocess
 import traceback
 from collections.abc import Set
-from logging import Logger
+from logging import Logger, LoggerAdapter
 from pathlib import Path
 from subprocess import CalledProcessError, CompletedProcess
 from typing import TYPE_CHECKING, Final, Literal
@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from utils import CaughtException
 
 logger: Final[Logger] = logging.getLogger("static-website-builder")
+extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
 
 
 def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name: str, remote_username: Username | None = None) -> str:  # noqa: E501
@@ -44,12 +45,27 @@ def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name:
 
 
 def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
-    """"""
+    """
+    Deploy the single given static website to the remote server.
+
+    This is done by copying the contents of the site's built/rendered `deploy/` directory
+    to the remote server with the given copy authentication credentials.
+    """
     FORMATTED_SITE_NAME: Final[str] = (
         site_path.parent.name if site_path.name == "deploy" else site_path.name
     )
+    site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
+        extra_context_logger,
+        {"extra_context": FORMATTED_SITE_NAME},
+    )
+    dry_run_site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
+        extra_context_logger,
+        {
+            "extra_context": f"{"dry_run=True | " if dry_run else ""}{FORMATTED_SITE_NAME}",
+        },
+    )
 
-    logger.debug(f"({FORMATTED_SITE_NAME}) Begin deploying single site.")
+    site_name_logger.debug("Begin deploying single site.")
 
     if not site_path.is_dir():
         PATH_IS_NOT_DIRECTORY_MESSAGE: Final[str] = (
@@ -63,17 +79,12 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
         remote_username=remote_username,
     )
 
-    logger.debug(
-        f"({FORMATTED_SITE_NAME}) Successfully retrieved resolved remote directory path.",
-    )
+    site_name_logger.debug("Successfully retrieved resolved remote directory path.")
 
-    logger.debug(
-        (
-            f"({"dry_run=True | " if dry_run else ""}"
-            f"{FORMATTED_SITE_NAME}) "
-            f"Beginning {"mock " if dry_run else ""}upload of `deploy/` directory "
-            "to remote server."
-        ),
+    # noinspection SpellCheckingInspection
+    dry_run_site_name_logger.debug(
+        "Beginning %supload of `deploy/` directory to remote server.",
+        "mock " if dry_run else "",
     )
 
     # noinspection SpellCheckingInspection
@@ -115,44 +126,62 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
             text=True,
         )
     except FileNotFoundError as no_rsync_command_error:
-        raise RuntimeError(
-            f"{"rsync"!r} command not found. (Ensure it is installed on your system.)",
-        ) from no_rsync_command_error
+        NO_RSYNC_COMMAND_MESSAGE: Final[str] = (
+            f"{"rsync"!r} command not found. (Ensure it is installed on your system.)"
+        )
+        raise RuntimeError(NO_RSYNC_COMMAND_MESSAGE) from no_rsync_command_error
 
     if process_output.stdout:
-        logger.debug(
-            f"({FORMATTED_SITE_NAME}) rsync subprocess stdout:\n{process_output.stdout.strip()}\n",
+        site_name_logger.debug(
+            "rsync subprocess stdout:\n%s",
+            f"{process_output.stdout.strip()}\n",
         )
 
     if process_output.stderr:
-        logger.debug(
-            f"({FORMATTED_SITE_NAME}) rsync subprocess stderr:\n{process_output.stderr.strip()}\n",
+        site_name_logger.debug(
+            "rsync subprocess stderr:\n%s",
+            f"{process_output.stderr.strip()}\n",
         )
 
     if process_output.returncode != 0:
-        raise RuntimeError(f"{"rsync"!r} command failed: exit code {process_output.returncode}")
+        RSYNC_COMMAND_FAILED_MESSAGE: Final[str] = (
+            f"{"rsync"!r} command failed: exit code {process_output.returncode}"
+        )
+        raise RuntimeError(RSYNC_COMMAND_FAILED_MESSAGE)
 
-    logger.debug(f"({FORMATTED_SITE_NAME}) Completed deploying single site successfully.")
+    site_name_logger.debug("Completed deploying single site successfully.")
 
 
 def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname | None = None, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
-    """"""
+    """
+    Deploy all static websites.
+
+    This is done by copying the built & rendered contents of each site's `deploy/` directory
+    to the specified remote server.
+    """
+    dry_run_logger: Final[LoggerAdapter[Logger] | Logger] = LoggerAdapter(
+        extra_context_logger,
+        {
+            "extra_context": "dry_run=True",
+        },
+    ) if dry_run else logger
+
     logger.debug("Begin deploying all sites.")
 
     deployed_sites: dict[str, CaughtException | None] = {}
 
     if not dry_run and not remote_hostname:
-        raise ValueError(f"No {"remote_hostname"!r} was specified.")
+        NO_REMOTE_HOSTNAME_MESSAGE: Final[str] = f"No {"remote_hostname"!r} was specified."
+        raise ValueError(NO_REMOTE_HOSTNAME_MESSAGE)
 
     real_hostname: Hostname = (
         Hostname("192.168.0.1") if remote_hostname is None else remote_hostname
     )
 
-    logger.debug(
-        (
-            f"{"(dry_run=True) " if dry_run else ""}"
-            f"Opening {"mock " if dry_run else ""}connection to remote deployment server."
-        ),
+    # noinspection SpellCheckingInspection
+    dry_run_logger.debug(
+        "Opening %sconnection to remote deployment server.",
+        "mock " if dry_run else "",
     )
 
     site_path: Path
@@ -180,13 +209,22 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
     site_name: str
     deployment_outcome: CaughtException | None
     for site_name, deployment_outcome in deployed_sites.items():
+        site_name_logger: LoggerAdapter[Logger] = LoggerAdapter(
+            extra_context_logger,
+            {"extra_context": site_name},
+        )
+        deployment_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
+            extra_context_logger,
+            {"extra_context": f"Deployment Failed | {site_name}"},
+        )
+
         if deployment_outcome is None:
             continue
 
         traceback_messages: Sequence[str] = traceback.format_exception(deployment_outcome)
 
-        logger.error(f"(Deployment Failed | {site_name}) {traceback_messages[-1].strip()}")
-        logger.debug(f"({site_name}) {"".join(traceback_messages[:-1]).strip()}\n")
+        deployment_failed_logger.error(traceback_messages[-1].strip())
+        site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
 
     deployed_site_names: Set[str] = {
         site_name

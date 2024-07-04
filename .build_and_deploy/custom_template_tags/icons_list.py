@@ -1,4 +1,4 @@
-""""""
+"""Custom Django template tags for retrieving details about CarrotManMatt's link icons."""
 
 from collections.abc import Sequence
 
@@ -21,6 +21,7 @@ class IconDetails(NamedTuple):
 
 @register.simple_tag
 def generate_icons_details_list() -> Sequence[IconDetails]:
+    """Generate the list of icon details for use on CarrotManMatt's main website."""
     return [
         IconDetails(
             label=mark_safe("GitHub"),

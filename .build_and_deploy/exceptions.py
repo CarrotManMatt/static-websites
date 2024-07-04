@@ -74,6 +74,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
 
     @classmethod
     def format_mutually_exclusive_arguments_to_message(cls, mutually_exclusive_arguments: Set[Set[str]]) -> str:  # noqa: E501
+        """Create the exception message based on the set of mutually exclusive arguments."""
         if not mutually_exclusive_arguments:
             CANNOT_CONSTRUCT_MESSAGE_WITHOUT_ARGUMENTS_MESSAGE: Final[str] = (
                 "Cannot construct exception message without any argument values."
