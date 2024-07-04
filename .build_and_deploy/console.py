@@ -47,7 +47,7 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
         usage=(
             "[-h/--help]\n       "
             "[-d/--remote-directory REMOTE_DIRECTORY]\n       "
-            "[-u/--remote-user REMOTE_USER]\n       "
+            "[-u/--remote-username REMOTE_USERNAME]\n       "
             "[-D/--dry-run]\n       "
             "[-v/--verbose | -q/--quiet]"
         ),
@@ -66,7 +66,7 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
 
     arg_parser.add_argument(
         "-u",
-        "--remote-user",
+        "--remote-username",
         type=Username,
         help=(
             "The username on the webserver to deploy static websites to. "
