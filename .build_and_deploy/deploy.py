@@ -12,6 +12,7 @@ import traceback
 from collections.abc import Set
 from logging import Logger
 from pathlib import Path
+from subprocess import CalledProcessError, CompletedProcess
 from typing import Final, Literal
 
 from utils import CaughtException
@@ -83,13 +84,14 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
         "--compress",
         "--checksum",
         "--delete",
-        "--rsh=\"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"",
+        "-e",
+        "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no",
     ]
 
     if dry_run:
         rsync_args.append("--dry-run")
 
-    if verbosity > 1:
+    if verbosity > 2:
         rsync_args.append("--verbose")
 
     rsync_args.extend(
@@ -105,11 +107,24 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
 
     no_rsync_command_error: FileNotFoundError
     try:
-        subprocess.run(rsync_args)
+        process_output: CompletedProcess = subprocess.run(rsync_args, capture_output=True)
     except FileNotFoundError as no_rsync_command_error:
         raise RuntimeError(
             f"{"rsync"!r} command not found. (Ensure it is installed on your system.)",
         ) from no_rsync_command_error
+
+    if process_output.stdout:
+        logger.debug(
+            f"({FORMATTED_SITE_NAME}) rsync subprocess stdout:\n{process_output.stdout.decode("utf-8").strip()}\n"
+        )
+
+    if process_output.stderr:
+        logger.debug(
+            f"({FORMATTED_SITE_NAME}) rsync subprocess stderr:\n{process_output.stderr.decode("utf-8").strip()}\n"
+        )
+
+    if process_output.returncode != 0:
+        raise RuntimeError(f"{"rsync"!r} command failed: exit code {process_output.returncode}")
 
     logger.debug(f"({FORMATTED_SITE_NAME}) Completed deploying single site successfully.")
 
@@ -150,7 +165,7 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
                 remote_directory=remote_directory,
                 dry_run=dry_run,
             )
-        except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as caught_exception:  # noqa: E501
+        except (ValueError, RuntimeError, AttributeError, TypeError, OSError, CalledProcessError) as caught_exception:  # noqa: E501
             deployed_sites[FORMATTED_SITE_NAME] = caught_exception
             continue
         else:
@@ -165,7 +180,7 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
         traceback_messages: Sequence[str] = traceback.format_exception(deployment_outcome)
 
         logger.error(f"(Deployment Failed | {site_name}) {traceback_messages[-1].strip()}")
-        logger.debug(f"({site_name}) {"".join(traceback_messages[:-1])}")
+        logger.debug(f"({site_name}) {"".join(traceback_messages[:-1]).strip()}\n")
 
     deployed_site_names: Set[str] = {
         site_name

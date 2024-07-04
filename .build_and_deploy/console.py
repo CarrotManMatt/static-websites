@@ -179,7 +179,7 @@ def run(argv: Sequence[str] | None = None) -> int:
             logger.warning("All sites failed to deploy.")
             return 1
 
-        sys.stdout.write(", ".join(deployed_site_names))
+        sys.stdout.write(",".join(deployed_site_names))
         return 0
 
     finally:

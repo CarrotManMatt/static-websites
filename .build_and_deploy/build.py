@@ -16,6 +16,7 @@ import traceback
 from collections.abc import Set
 from logging import Logger
 from pathlib import Path
+from subprocess import CalledProcessError
 from typing import Final
 
 import minify_html
@@ -211,7 +212,7 @@ def build_all_sites() -> Set[Path]:
         caught_exception: CaughtException
         try:
             build_single_site(site_root_directory=site_subdirectory)
-        except (ValueError, RuntimeError, AttributeError, TypeError, OSError) as caught_exception:  # noqa: E501
+        except (ValueError, RuntimeError, AttributeError, TypeError, OSError, CalledProcessError) as caught_exception:  # noqa: E501
             built_sites[site_subdirectory / "deploy"] = caught_exception
             continue
         else:
@@ -232,7 +233,7 @@ def build_all_sites() -> Set[Path]:
         logger.error(
             f"(Build Failed | {FORMATTED_SITE_NAME}) {traceback_messages[-1].strip()}",
         )
-        logger.debug(f"({FORMATTED_SITE_NAME}) {"".join(traceback_messages[:-1])}")
+        logger.debug(f"({FORMATTED_SITE_NAME}) {"".join(traceback_messages[:-1]).strip()}\n")
 
     built_site_paths: Set[Path] = {
         site_path

@@ -6,11 +6,19 @@ __all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException")
 
 
 from pathlib import Path
+from subprocess import CalledProcessError
 from typing import Final, TypeAlias
 
 from git import InvalidGitRepositoryError, PathLike, Repo
 
-CaughtException: TypeAlias = ValueError | RuntimeError | AttributeError | TypeError | OSError
+CaughtException: TypeAlias = (
+    ValueError
+    | RuntimeError
+    | AttributeError
+    | TypeError
+    | OSError
+    | CalledProcessError
+)
 
 
 def _get_project_root() -> Path:
