@@ -73,6 +73,7 @@ jobs:  # yamllint disable-line rule:key-ordering
 
     build-and-deploy-websites:  # yamllint disable-line rule:key-ordering
         name: Build and Deploy All Websites
+        environment: deploy  # yamllint disable-line rule:key-ordering
         needs: [djlint, mypy, ruff, yamllint]
         # yamllint disable-line rule:key-ordering
         if: >-
