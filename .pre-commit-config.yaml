@@ -23,6 +23,7 @@ repos:
       rev: v0.19.1
       hooks:  # yamllint disable-line rule:key-ordering
           - id: gitlint
+            # noinspection SpellCheckingInspection
             args: [  # yamllint disable-line rule:key-ordering
                 --ignore=body-is-missing,
                 -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+",  # yamllint disable-line rule:line-length
@@ -30,6 +31,7 @@ repos:
             ]
 
           - id: gitlint-ci
+            # noinspection SpellCheckingInspection
             args: [  # yamllint disable-line rule:key-ordering
                 --ignore=body-is-missing,
                 -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+",  # yamllint disable-line rule:line-length

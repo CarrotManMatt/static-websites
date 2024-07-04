@@ -74,8 +74,12 @@ jobs:  # yamllint disable-line rule:key-ordering
     build-and-deploy-websites:  # yamllint disable-line rule:key-ordering
         name: Build and Deploy All Websites
         environment: deploy  # yamllint disable-line rule:key-ordering
-        if: github.event == 'push'  # yamllint disable-line rule:key-ordering
-        needs: [mypy, ruff, yamllint, djlint]
+        # yamllint disable-line rule:key-ordering rule:line-length
+        if: >-
+            github.event == 'push'
+            || github.event == 'schedule'
+            || github.event == 'workflow_dispatch'
+        needs: [djlint, mypy, ruff, yamllint]
         permissions:
             contents: read
         runs-on: ubuntu-latest
@@ -91,9 +95,10 @@ jobs:  # yamllint disable-line rule:key-ordering
               with:
                   service-key: ${{ secrets.TWINGATE_SERVICE_KEY }}  # TODO: create service key
 
-            - uses: webfactory/ssh-agent@v0.9.0
-              with:
-                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            -  # noinspection SpellCheckingInspection
+                uses: webfactory/ssh-agent@v0.9.0
+                with:
+                    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
             - name: Run Build Script
               env:  # yamllint disable-line rule:key-ordering
