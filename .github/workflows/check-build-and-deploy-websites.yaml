@@ -1,32 +1,33 @@
+---
 name: Check, Build and Deploy All Websites
 
-on:
+on:  # yamllint disable-line rule:truthy
     pull_request:
         branches:
-            - "main"
+            - main
     push:
         branches:
-            - "main"
+            - main
 
     schedule:
-        - cron: "47 5 * * 1"
+        - cron: 47 5 * * 1
 
-    workflow_dispatch:
+    workflow_dispatch:  # yamllint disable-line rule:empty-values
 
-jobs:
-    yamllint:
+jobs:  # yamllint disable-line rule:key-ordering
+    djlint:
         runs-on: ubuntu-latest
 
         steps:
             - name: Install Python Project
               uses: CarrotManMatt/action-install-python-project@v2
               with:
+                  directory: ./.build_and_deploy
                   python-version: 3.12
-                  directory: "./.build_and_deploy"
 
-            - name: Run yamllint
+            - name: Run djLint
               working-directory: .build_and_deploy
-              run: poetry run python -m yamllint .. -s -f colored
+              run: poetry run python -m djlint .. --lint --configuration pyproject.toml  # yamllint disable-line rule:key-ordering rule:line-length
 
     mypy:
         runs-on: ubuntu-latest
@@ -35,12 +36,12 @@ jobs:
             - name: Install Python Project
               uses: CarrotManMatt/action-install-python-project@v2
               with:
+                  directory: ./.build_and_deploy
                   python-version: 3.12
-                  directory: "./.build_and_deploy"
 
             - name: Run mypy
               working-directory: .build_and_deploy
-              run: poetry run python -m mypy .
+              run: poetry run python -m mypy .  # yamllint disable-line rule:key-ordering
 
     ruff:
         runs-on: ubuntu-latest
@@ -49,56 +50,62 @@ jobs:
             - name: Install Python Project
               uses: CarrotManMatt/action-install-python-project@v2
               with:
+                  directory: ./.build_and_deploy
                   python-version: 3.12
-                  directory: "./.build_and_deploy"
 
             - name: Run Ruff
               working-directory: .build_and_deploy
-              run: poetry run python -m ruff check --no-fix
+              run: poetry run python -m ruff check --no-fix  # yamllint disable-line rule:key-ordering rule:line-length
 
-    djlint:
+    yamllint:
         runs-on: ubuntu-latest
 
         steps:
             - name: Install Python Project
               uses: CarrotManMatt/action-install-python-project@v2
               with:
+                  directory: ./.build_and_deploy
                   python-version: 3.12
-                  directory: "./.build_and_deploy"
 
-            - name: Run djLint
+            - name: Run yamllint
               working-directory: .build_and_deploy
-              run: poetry run python -m djlint .. --lint --configuration pyproject.toml
+              run: poetry run python -m yamllint .. -s -f colored  # yamllint disable-line rule:key-ordering rule:line-length
 
-    build-and-deploy-websites:
+    build-and-deploy-websites:  # yamllint disable-line rule:key-ordering
         name: Build and Deploy All Websites
-        runs-on: ubuntu-latest
+        environment: deploy  # yamllint disable-line rule:key-ordering
+        if: github.event == 'push'  # yamllint disable-line rule:key-ordering
+        needs: [mypy, ruff, yamllint, djlint]
         permissions:
             contents: read
-
-        environment: "deploy"
-
-        needs: [mypy, ruff, yamllint, djlint]
-
-        if: github.event == 'push'
+        runs-on: ubuntu-latest
 
         steps:
             - name: Install Python Project
-              uses: CarrotManMatt/action-install-python-project@v2
+              uses: CarrotManMatt/action-install-python-project@v2  # yamllint disable-line rule:key-ordering rule:line-length
               with:
+                  directory: ./.build_and_deploy
                   python-version: 3.12
-                  directory: "./.build_and_deploy"
 
-            # TODO: Add step to login with Twingate (https://www.twingate.com/docs/example-cicd-configurations)
+            - uses: twingate/github-action@v1
+              with:
+                  service-key: ${{ secrets.TWINGATE_SERVICE_KEY }}  # TODO: create service key
 
             - uses: webfactory/ssh-agent@v0.9.0
               with:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
             - name: Run Build Script
-              working-directory: ./.build_and_deploy
-              env:
+              env:  # yamllint disable-line rule:key-ordering
+                  REMOTE_DIRECTORY: ${{ secrets.REMOTE_DIRECTORY }}
                   REMOTE_IP: ${{ secrets.REMOTE_IP }}
                   REMOTE_USERNAME: ${{ secrets.REMOTE_USERNAME }}
-                  REMOTE_DIRECTORY: ${{ secrets.REMOTE_DIRECTORY }}
-              run: poetry run python -m console --remote-username "$REMOTE_USERNAME" --remote-directory "$REMOTE_DIRECTORY" "$REMOTE_IP"
+              working-directory: ./.build_and_deploy  # yamllint disable-line rule:key-ordering
+              # yamllint disable-line rule:key-ordering
+              run: >-
+                  poetry run
+                  python -m
+                  console
+                  --remote-directory "$REMOTE_DIRECTORY"
+                  --remote-username "$REMOTE_USERNAME"
+                  "$REMOTE_IP"

@@ -15,8 +15,7 @@ repos:
       rev: v1.3.3
       hooks:  # yamllint disable-line rule:key-ordering
           - id: python-safety-dependencies-check
-            # yamllint disable-line rule:key-ordering
-            args: ["--groups=dev,main", --short-report]
+            args: ["--groups=dev,main", --short-report]  # yamllint disable-line rule:key-ordering rule:line-length
             files: pyproject.toml  # yamllint disable-line rule:key-ordering
             stages: [manual]
 
@@ -24,10 +23,18 @@ repos:
       rev: v0.19.1
       hooks:  # yamllint disable-line rule:key-ordering
           - id: gitlint
-            args: [--ignore=body-is-missing, -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+", --msg-filename]
+            args: [  # yamllint disable-line rule:key-ordering
+                --ignore=body-is-missing,
+                -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+",  # yamllint disable-line rule:line-length
+                --msg-filename
+            ]
 
           - id: gitlint-ci
-            args: [--ignore=body-is-missing, -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+", --msg-filename]
+            args: [  # yamllint disable-line rule:key-ordering
+                --ignore=body-is-missing,
+                -c, "ignore-body-lines.regex=^(?:[rR]esolve(?:[sd])?|[fF]ix(?:e[sd])?|[cC]lose(?:[sd])?) #\\d+",  # yamllint disable-line rule:line-length
+                --msg-filename
+            ]
 
     - repo: https://github.com/gitleaks/gitleaks
       rev: v8.18.4
@@ -41,12 +48,12 @@ repos:
       hooks:  # yamllint disable-line rule:key-ordering
           - id: poetry-check
             name: check poetry config in pyproject.toml is valid
-            args: ["-C", "./.build_and_deploy", --no-interaction]  # yamllint disable-line rule:key-ordering
+            args: [-C, ./.build_and_deploy, --no-interaction]  # yamllint disable-line rule:key-ordering rule:line-length
             stages: [pre-commit, pre-merge-commit, manual]
 
           - id: poetry-check
             name: check poetry.lock file is valid
-            args: ["-C", "./.build_and_deploy", --lock, --no-interaction]  # yamllint disable-line rule:key-ordering
+            args: [-C, ./.build_and_deploy, --lock, --no-interaction]  # yamllint disable-line rule:key-ordering rule:line-length
             stages: [pre-commit, pre-merge-commit, manual]
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -57,7 +64,8 @@ repos:
           - id: end-of-file-fixer
 
           - id: check-added-large-files
-            args: ["--maxkb=2000"]
+            # noinspection SpellCheckingInspection
+            args: [--maxkb=2000]  # yamllint disable-line rule:key-ordering
 
           - id: check-json
             stages: [pre-commit, pre-merge-commit, manual]
