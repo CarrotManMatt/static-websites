@@ -74,10 +74,15 @@ jobs:  # yamllint disable-line rule:key-ordering
     build-and-deploy-websites:  # yamllint disable-line rule:key-ordering
         name: Build and Deploy All Websites
         needs: [djlint, mypy, ruff, yamllint]
+        # yamllint disable-line rule:key-ordering
+        if: >-
+            github.event_name == 'push'
+            || github.event_name == 'schedule'
+            || github.event_name == 'workflow_dispatch'
         permissions:
             contents: read
         runs-on: ubuntu-latest
 
         steps:
             - name: Test event type
-              run: echo ${{ github.event }}
+              run: echo ${{ github.event_name }}
