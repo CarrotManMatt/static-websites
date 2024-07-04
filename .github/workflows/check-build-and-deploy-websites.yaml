@@ -112,7 +112,6 @@ jobs:  # yamllint disable-line rule:key-ordering
                   poetry run
                   python -m
                   console
-                  -Dvvvv
                   --remote-directory "$REMOTE_DIRECTORY"
                   --remote-user "$REMOTE_USERNAME"
                   "$REMOTE_IP"
