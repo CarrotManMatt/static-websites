@@ -186,7 +186,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
         new_html_file_location.parent.mkdir(parents=True, exist_ok=True)
 
         new_html_file_location.write_text(
-            build_single_page(html_file_path=html_file_path),
+            build_single_page(html_file_path=html_file_path).strip() + "\n",
             encoding="utf-8",
         )
 
