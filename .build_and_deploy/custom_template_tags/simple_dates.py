@@ -33,5 +33,5 @@ def carrotmanmatt_age() -> int:
     """Get CarrotManMatt's current age as an integer for use in rendered HTML pages."""
     return relativedelta(
         datetime.datetime.now(tz=datetime.UTC),
-        datetime.datetime(year=2004, month=8, day=7, tzinfo=datetime.UTC),
+        datetime.datetime(year=2004, month=7, day=8, tzinfo=datetime.UTC),
     ).years
