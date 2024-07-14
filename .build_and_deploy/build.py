@@ -100,6 +100,8 @@ def build_single_page(*, html_file_path: Path) -> str:
         )
         minified_html = re.sub(r"\s+<", "<", minified_html)
 
+    minified_html = minified_html.replace(":<", ": <")
+
     if copyright_comment_match:
         copyright_comment_type: str = copyright_comment_match.group("copyright_type")
 
