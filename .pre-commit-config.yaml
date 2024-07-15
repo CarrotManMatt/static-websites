@@ -6,7 +6,7 @@ default_language_version:
 
 repos:
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.28.6
+      rev: 0.29.0
       hooks:  # yamllint disable-line rule:key-ordering
           - id: check-github-workflows
             stages: [pre-commit, pre-merge-commit, manual]
