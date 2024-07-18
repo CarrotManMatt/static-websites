@@ -100,10 +100,7 @@
 
 {% block footer %}
     <p class="text-center fs-5 my-3">
-        <a class="text-secondary text-decoration-none"
-           href="https://carrotmanmatt.com">
-            ©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
-        </a>
+        {% include ".common/fragments/site_copyright.html" with site_copyright_classes="text-secondary text-decoration-none" %}
     </p>
 {% endblock footer %}
 

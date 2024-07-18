@@ -1,0 +1,8 @@
+{% load simple_dates %}
+
+<a {% if site_copyright_classes %}class="{{ site_copyright_classes }}"{% endif %}
+   {% if site_copyright_styles %}style="{{ site_copyright_styles }}"{% endif %}
+   href="https://carrotmanmatt.com">
+    ©&nbsp;CarrotManMatt&nbsp;2022-{% current_year %}
+    {{ site_copyright_extra_tags | safe }}
+</a>
