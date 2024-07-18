@@ -201,7 +201,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
 
 def build_all_sites() -> Set[Path]:
     """Render all sites HTML pages into string outputs."""
-    logger.debug("Begin building all sites.")
+    logger.info("Begin building all sites.")
 
     built_sites: dict[Path, CaughtException | None] = {}
 
@@ -231,7 +231,7 @@ def build_all_sites() -> Set[Path]:
         )
         build_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
             extra_context_logger,
-            {"extra_context": f"Build Failed | {FORMATTED_SITE_NAME}"},
+            {"extra_context": f"{FORMATTED_SITE_NAME} | Build Failed"},
         )
 
         if build_outcome is None:

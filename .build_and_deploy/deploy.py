@@ -61,7 +61,7 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
     dry_run_site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
         extra_context_logger,
         {
-            "extra_context": f"{"dry_run=True | " if dry_run else ""}{FORMATTED_SITE_NAME}",
+            "extra_context": f"{FORMATTED_SITE_NAME}{" | dry_run=True" if dry_run else ""}",
         },
     )
 
@@ -166,7 +166,7 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
         },
     ) if dry_run else logger
 
-    logger.debug("Begin deploying all sites.")
+    logger.info("Begin deploying all sites.")
 
     deployed_sites: dict[str, CaughtException | None] = {}
 
@@ -215,7 +215,7 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
         )
         deployment_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
             extra_context_logger,
-            {"extra_context": f"Deployment Failed | {site_name}"},
+            {"extra_context": f"{site_name} | Deployment Failed"},
         )
 
         if deployment_outcome is None:
