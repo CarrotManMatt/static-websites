@@ -100,7 +100,7 @@ def build_single_page(*, html_file_path: Path) -> str:
         )
         minified_html = re.sub(r"\s+<", "<", minified_html)
 
-    minified_html = re.sub(r"(?=[A-Za-z]):<(?=a|span)", r": <", minified_html)
+    minified_html = re.sub(r"(?<=[A-Za-z]):<(?=a|span)", r": <", minified_html)
 
     if copyright_comment_match:
         copyright_comment_type: str = copyright_comment_match.group("copyright_type")
