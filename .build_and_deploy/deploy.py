@@ -39,9 +39,9 @@ def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name:
         return f"/{relative_posix}"
 
     if remote_username:
-        return (Path("/home") / remote_username / "www" / site_name).as_posix()
+        return (Path("/home") / remote_username / site_name).as_posix()
 
-    return (Path("/srv/www") / site_name).as_posix()
+    return (Path("/srv") / site_name).as_posix()
 
 
 def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
