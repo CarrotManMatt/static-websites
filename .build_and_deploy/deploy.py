@@ -97,6 +97,7 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
         "--compress",
         "--checksum",
         "--delete",
+        "--timeout=5",
         "-e",
         "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no",
     ]
