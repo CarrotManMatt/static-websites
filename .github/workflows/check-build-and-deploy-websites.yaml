@@ -100,7 +100,7 @@ jobs:  # yamllint disable-line rule:key-ordering
                 with:
                     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            - name: Run Build Script
+            - name: Run Build & Deploy Script
               env:  # yamllint disable-line rule:key-ordering
                   REMOTE_DIRECTORY: ${{ secrets.REMOTE_DIRECTORY }}
                   REMOTE_IP: ${{ secrets.REMOTE_IP }}
