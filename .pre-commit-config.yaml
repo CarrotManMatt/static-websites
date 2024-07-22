@@ -110,7 +110,7 @@ repos:
             stages: [pre-commit, pre-merge-commit, manual]
 
           - id: name-tests-test
-            args: [--unittest]  # yamllint disable-line rule:key-ordering
+            args: [--pytest-test-first]  # yamllint disable-line rule:key-ordering
             stages: [pre-commit, pre-merge-commit, manual]
 
           - id: pretty-format-json
