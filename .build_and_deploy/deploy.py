@@ -9,7 +9,7 @@ import logging
 import os
 import subprocess
 import traceback
-from collections.abc import Set
+from collections.abc import Set as AbstractSet
 from logging import Logger, LoggerAdapter
 from pathlib import Path
 from subprocess import CalledProcessError, CompletedProcess
@@ -153,7 +153,7 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
     site_name_logger.debug("Completed deploying single site successfully.")
 
 
-def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname | None = None, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> Set[str]:  # noqa: E501
+def deploy_all_sites(site_paths: AbstractSet[Path], *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname | None = None, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> AbstractSet[str]:  # noqa: E501
     """
     Deploy all static websites.
 
@@ -227,7 +227,7 @@ def deploy_all_sites(site_paths: Set[Path], *, verbosity: Literal[0, 1, 2, 3] = 
         deployment_failed_logger.error(traceback_messages[-1].strip())
         site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
 
-    deployed_site_names: Set[str] = {
+    deployed_site_names: AbstractSet[str] = {
         site_name
         for site_name, deployment_outcome
         in deployed_sites.items()

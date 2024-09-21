@@ -8,7 +8,7 @@ __all__: Sequence[str] = ("run",)
 import logging
 import sys
 from argparse import ArgumentParser, Namespace
-from collections.abc import Set
+from collections.abc import Set as AbstractSet
 from logging import Logger
 from pathlib import Path
 from typing import TYPE_CHECKING, Final, Literal
@@ -160,13 +160,13 @@ def run(argv: Sequence[str] | None = None) -> int:
     logging_setup.setup(verbosity=verbosity)
 
     try:
-        built_site_paths: Set[Path] = build.build_all_sites()
+        built_site_paths: AbstractSet[Path] = build.build_all_sites()
 
         if not built_site_paths:
             logger.warning("All sites failed to build. (Or no sites exist.)")
             return 1
 
-        deployed_site_names: Set[str] = deploy.deploy_all_sites(
+        deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
             built_site_paths,
             verbosity=verbosity,
             remote_hostname=getattr(parsed_args, "remote-ip", None),

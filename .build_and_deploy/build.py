@@ -13,7 +13,7 @@ import logging
 import re
 import shutil
 import traceback
-from collections.abc import Set
+from collections.abc import Set as AbstractSet
 from logging import Logger, LoggerAdapter
 from pathlib import Path
 from subprocess import CalledProcessError
@@ -199,7 +199,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
     site_name_logger.debug("Completed building single site successfully.")
 
 
-def build_all_sites() -> Set[Path]:
+def build_all_sites() -> AbstractSet[Path]:
     """Render all sites HTML pages into string outputs."""
     logger.info("Begin building all sites.")
 
@@ -242,7 +242,7 @@ def build_all_sites() -> Set[Path]:
         build_failed_logger.error(traceback_messages[-1].strip())
         site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
 
-    built_site_paths: Set[Path] = {
+    built_site_paths: AbstractSet[Path] = {
         site_path
         for site_path, build_outcome
         in built_sites.items()

@@ -6,7 +6,8 @@ __all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
 
 
 import abc
-from collections.abc import Iterator, Set
+from collections.abc import Iterator
+from collections.abc import Set as AbstractSet
 from typing import Final, override
 
 from classproperties import classproperty
@@ -59,8 +60,10 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         return "Two or more mutually exclusive arguments were provided."
 
     @override
-    def __init__(self, message: str | None = None, mutually_exclusive_arguments: Set[Set[str]] | None = None) -> None:  # noqa: E501
-        self.mutually_exclusive_arguments: Set[Set[str]] | None = mutually_exclusive_arguments
+    def __init__(self, message: str | None = None, mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = None) -> None:  # noqa: E501
+        self.mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = (
+            mutually_exclusive_arguments
+        )
 
         super().__init__(
             (
@@ -73,7 +76,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         )
 
     @classmethod
-    def format_mutually_exclusive_arguments_to_message(cls, mutually_exclusive_arguments: Set[Set[str]]) -> str:  # noqa: E501
+    def format_mutually_exclusive_arguments_to_message(cls, mutually_exclusive_arguments: AbstractSet[AbstractSet[str]]) -> str:  # noqa: E501
         """Create the exception message based on the set of mutually exclusive arguments."""
         if not mutually_exclusive_arguments:
             CANNOT_CONSTRUCT_MESSAGE_WITHOUT_ARGUMENTS_MESSAGE: Final[str] = (
@@ -85,9 +88,9 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
             f"No argument values provided to {cls.__name__}.",
         )
 
-        remaining_arguments: Iterator[Set[str]] = iter(mutually_exclusive_arguments)
+        remaining_arguments: Iterator[AbstractSet[str]] = iter(mutually_exclusive_arguments)
 
-        first_argument: Set[str] = next(remaining_arguments)
+        first_argument: AbstractSet[str] = next(remaining_arguments)
         if not first_argument:
             raise no_argument_values_provided_exception
 
@@ -96,13 +99,13 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         if len(mutually_exclusive_arguments) == 1:
             return constructed_message + " on its own"
 
-        second_argument: Set[str] = next(remaining_arguments)
+        second_argument: AbstractSet[str] = next(remaining_arguments)
         if not second_argument:
             raise no_argument_values_provided_exception
 
         constructed_message += f" with argument `{"`/`".join(second_argument)}`"
 
-        argument: Set[str]
+        argument: AbstractSet[str]
         for argument in remaining_arguments:
             if not argument:
                 raise no_argument_values_provided_exception
