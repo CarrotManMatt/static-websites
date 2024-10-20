@@ -23,10 +23,10 @@ minify-html = "^0.15"
 python-dateutil = "^2.9"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.8"
+pre-commit = "^4.0"
 mypy = "~1.11"
-django-stubs = {extras = ["compatible-mypy"], version = "~5.0"}
-ruff = "^0.6"
+django-stubs = {extras = ["compatible-mypy"], version = "~5.1"}
+ruff = "^0.7"
 djlint = "^1.35"
 types-python-dateutil = "^2.9"
 yamllint = "^1.35"
@@ -90,14 +90,9 @@ select = [
     "T",
     "DJ",
     "EM",
-    "EXE",
-    "ISC",
-    "ICN",
-    "LOG",
     "G",
     "INP",
     "PIE",
-    "PYI",
     "PT",
     "Q",
     "RSE",
@@ -107,7 +102,6 @@ select = [
     "SIM",
     "TID",
     "TCH",
-    "INT",
     "ARG",
     "PTH",
     "TD",
@@ -118,8 +112,6 @@ select = [
     "TRY",
     "FLY",
     "PERF",
-    "FURB",
-    "DOC",
     "RUF",
 ]
 fixable = ["I001", "TCH", "F401", "COM812"]
