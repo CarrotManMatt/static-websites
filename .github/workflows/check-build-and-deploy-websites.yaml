@@ -10,7 +10,7 @@ name: Check, Build and Deploy All Websites
             - main
 
     schedule:
-        - cron: 47 5 * * 1
+        - cron: 48 5 * * 1
 
     workflow_dispatch:  # yamllint disable-line rule:empty-values
 
