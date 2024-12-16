@@ -1,35 +1,42 @@
 """Build and render functions for whole sites and single HTML pages."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = (
-    "build_single_page",
-    "build_single_site",
-    "build_all_sites",
-)
-
-
 import logging
 import re
 import shutil
 import traceback
-from collections.abc import Set as AbstractSet
-from logging import Logger, LoggerAdapter
-from pathlib import Path
+from logging import LoggerAdapter
 from subprocess import CalledProcessError
-from typing import Final
+from typing import TYPE_CHECKING
 
 import minify_html
 from django.template import Context as TemplateContext
-from django.template import Template
 from django.template.engine import Engine as TemplateEngine
 
-from utils import PROJECT_ROOT, CaughtException
+from utils import PROJECT_ROOT
 
-logger: Final[Logger] = logging.getLogger("static-website-builder")
-extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from collections.abc import Set as AbstractSet
+    from logging import Logger
+    from pathlib import Path
+    from typing import Final
 
-TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
+    from django.template import Template
+
+    from utils import CaughtException
+
+__all__: "Sequence[str]" = (
+    "build_all_sites",
+    "build_single_page",
+    "build_single_site",
+)
+
+logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+extra_context_logger: "Final[Logger]" = logging.getLogger(
+    "static-website-builder-extra-context"
+)
+
+TEMPLATE_ENGINE: "Final[TemplateEngine]" = TemplateEngine(
     dirs=[str(PROJECT_ROOT)],
     app_dirs=False,
     libraries={
@@ -39,7 +46,7 @@ TEMPLATE_ENGINE: Final[TemplateEngine] = TemplateEngine(
 )
 
 
-def build_single_page(*, html_file_path: Path) -> str:
+def build_single_page(*, html_file_path: "Path") -> str:
     """Render a single HTML page into a string output."""
     FORMATTED_HTML_FILE_PATH: Final[str] = html_file_path.relative_to(PROJECT_ROOT).as_posix()
     html_file_path_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
@@ -132,7 +139,7 @@ def build_single_page(*, html_file_path: Path) -> str:
     return minified_html
 
 
-def build_single_site(*, site_root_directory: Path) -> None:
+def build_single_site(*, site_root_directory: "Path") -> None:
     """Render a single site's HTML pages into string outputs."""
     FORMATTED_SITE_NAME: Final[str] = (
         site_root_directory.parent.name
@@ -181,8 +188,8 @@ def build_single_site(*, site_root_directory: Path) -> None:
         if (site_root_directory / "deploy") in html_file_path.parents:
             continue
 
-        new_html_file_location: Path = (
-            deploy_dir / html_file_path.relative_to(site_root_directory)
+        new_html_file_location: Path = deploy_dir / html_file_path.relative_to(
+            site_root_directory
         )
 
         new_html_file_location.parent.mkdir(parents=True, exist_ok=True)
@@ -199,7 +206,7 @@ def build_single_site(*, site_root_directory: Path) -> None:
     site_name_logger.debug("Completed building single site successfully.")
 
 
-def build_all_sites() -> AbstractSet[Path]:
+def build_all_sites() -> "AbstractSet[Path]":
     """Render all sites HTML pages into string outputs."""
     logger.info("Begin building all sites.")
 
@@ -213,7 +220,14 @@ def build_all_sites() -> AbstractSet[Path]:
         caught_exception: CaughtException
         try:
             build_single_site(site_root_directory=site_subdirectory)
-        except (ValueError, RuntimeError, AttributeError, TypeError, OSError, CalledProcessError) as caught_exception:  # noqa: E501
+        except (
+            ValueError,
+            RuntimeError,
+            AttributeError,
+            TypeError,
+            OSError,
+            CalledProcessError,
+        ) as caught_exception:
             built_sites[site_subdirectory / "deploy"] = caught_exception
             continue
         else:
@@ -243,10 +257,7 @@ def build_all_sites() -> AbstractSet[Path]:
         site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
 
     built_site_paths: AbstractSet[Path] = {
-        site_path
-        for site_path, build_outcome
-        in built_sites.items()
-        if build_outcome is None
+        site_path for site_path, build_outcome in built_sites.items() if build_outcome is None
     }
 
     if built_site_paths:

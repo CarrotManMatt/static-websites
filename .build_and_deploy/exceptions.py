@@ -1,26 +1,25 @@
 """Custom exception classes to be used within this project."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
-
-
 import abc
-from collections.abc import Iterator
-from collections.abc import Set as AbstractSet
-from typing import Final, override
+from typing import TYPE_CHECKING, override
 
-from classproperties import classproperty
+from typed_classproperties import classproperty
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator, Sequence
+    from collections.abc import Set as AbstractSet
+    from typing import Final
+
+__all__: "Sequence[str]" = ("BaseError", "MutuallyExclusiveArgsError")
 
 
 class BaseError(BaseException, abc.ABC):
     """Base exception parent class."""
 
-    # noinspection PyMethodParameters,PyPep8Naming
     @classproperty
     @abc.abstractmethod
-    def DEFAULT_MESSAGE(cls) -> str:  # noqa: N802,N805
-        """The message to be displayed alongside this exception class if none is provided."""  # noqa: D401
+    def DEFAULT_MESSAGE(cls) -> str:
+        """The message to be displayed alongside this exception class if none is provided."""
 
     @override
     def __init__(self, message: str | None = None) -> None:
@@ -56,11 +55,15 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
     # noinspection PyMethodParameters,PyPep8Naming
     @classproperty
     @override
-    def DEFAULT_MESSAGE(cls) -> str:  # noqa: N805
+    def DEFAULT_MESSAGE(cls) -> str:
         return "Two or more mutually exclusive arguments were provided."
 
     @override
-    def __init__(self, message: str | None = None, mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = None) -> None:  # noqa: E501
+    def __init__(
+        self,
+        message: str | None = None,
+        mutually_exclusive_arguments: "AbstractSet[AbstractSet[str]] | None" = None,
+    ) -> None:
         self.mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = (
             mutually_exclusive_arguments
         )
@@ -76,7 +79,9 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         )
 
     @classmethod
-    def format_mutually_exclusive_arguments_to_message(cls, mutually_exclusive_arguments: AbstractSet[AbstractSet[str]]) -> str:  # noqa: E501
+    def format_mutually_exclusive_arguments_to_message(
+        cls, mutually_exclusive_arguments: "AbstractSet[AbstractSet[str]]"
+    ) -> str:
         """Create the exception message based on the set of mutually exclusive arguments."""
         if not mutually_exclusive_arguments:
             CANNOT_CONSTRUCT_MESSAGE_WITHOUT_ARGUMENTS_MESSAGE: Final[str] = (

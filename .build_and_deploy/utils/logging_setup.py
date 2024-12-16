@@ -1,26 +1,27 @@
 """Set up logging."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("setup",)
-
-
 import logging
-from collections.abc import Mapping
-from logging import Logger
-from typing import Final, Literal, TextIO
+from typing import TYPE_CHECKING
 
-logger: Final[Logger] = logging.getLogger("static-website-builder")
-extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
+if TYPE_CHECKING:
+    from collections.abc import Mapping, Sequence
+    from logging import Logger
+    from typing import Final, Literal, TextIO
 
-LOG_LEVEL_MAPS: Final[Mapping[Literal[1, 2, 3], Literal["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]]] = {  # noqa: E501
+__all__: "Sequence[str]" = ("setup",)
+logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+extra_context_logger: "Final[Logger]" = logging.getLogger(
+    "static-website-builder-extra-context"
+)
+
+LOG_LEVEL_MAPS: "Final[Mapping[Literal[1, 2, 3], Literal['DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL']]]" = {  # noqa: E501
     1: "INFO",
     2: "DEBUG",
     3: "DEBUG",
 }
 
 
-def setup(*, verbosity: Literal[0, 1, 2, 3] = 1) -> None:
+def setup(*, verbosity: "Literal[0, 1, 2, 3]" = 1) -> None:
     """Set up a console logger with the output level according to the given verbosity."""
     logger.setLevel(1)
     logger.propagate = False

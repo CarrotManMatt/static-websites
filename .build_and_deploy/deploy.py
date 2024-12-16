@@ -1,34 +1,47 @@
 """Deployment functions for whole static websites."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("deploy_single_site", "deploy_all_sites")
-
-
 import logging
 import os
 import subprocess
 import traceback
-from collections.abc import Set as AbstractSet
-from logging import Logger, LoggerAdapter
+from logging import LoggerAdapter
 from pathlib import Path
-from subprocess import CalledProcessError, CompletedProcess
-from typing import TYPE_CHECKING, Final, Literal
+from subprocess import CalledProcessError
+from typing import TYPE_CHECKING
 
-from utils.validators import Hostname, Username
+from utils.validators import Hostname
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from collections.abc import Set as AbstractSet
+    from logging import Logger
+    from subprocess import CompletedProcess
+    from typing import Final, Literal
+
     from utils import CaughtException
+    from utils.validators import Username
 
-logger: Final[Logger] = logging.getLogger("static-website-builder")
-extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
+__all__: "Sequence[str]" = ("deploy_all_sites", "deploy_single_site")
+
+logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+extra_context_logger: "Final[Logger]" = logging.getLogger(
+    "static-website-builder-extra-context"
+)
 
 
-def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name: str, remote_username: Username | None = None) -> str:  # noqa: E501
+def _get_posix_remote_directory(
+    raw_remote_directory: Path | None,
+    *,
+    site_name: str,
+    remote_username: "Username | None" = None,
+) -> str:
     if raw_remote_directory is not None:
         if remote_username:
             return (
-                Path("/home") / remote_username / raw_remote_directory / site_name  # NOTE: This will only prepend the user's home directory if raw_remote_directory is not absolute
+                Path("/home")
+                / remote_username
+                / raw_remote_directory
+                / site_name  # NOTE: This will only prepend the user's home directory if raw_remote_directory is not absolute
             ).as_posix()
 
         relative_posix: str = (raw_remote_directory / site_name).as_posix()
@@ -44,7 +57,15 @@ def _get_posix_remote_directory(raw_remote_directory: Path | None, *, site_name:
     return (Path("/srv") / site_name).as_posix()
 
 
-def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> None:  # noqa: E501
+def deploy_single_site(
+    site_path: Path,
+    *,
+    verbosity: "Literal[0, 1, 2, 3]" = 1,
+    remote_hostname: Hostname,
+    remote_username: "Username | None" = None,
+    remote_directory: Path | None = None,
+    dry_run: bool = False,
+) -> None:
     """
     Deploy the single given static website to the remote server.
 
@@ -121,10 +142,11 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
 
     no_rsync_command_error: FileNotFoundError
     try:
-        process_output: CompletedProcess[str] = subprocess.run(  # noqa: S603,PLW1510
+        process_output: CompletedProcess[str] = subprocess.run(
             rsync_args,
             capture_output=True,
             text=True,
+            check=True,
         )
     except FileNotFoundError as no_rsync_command_error:
         NO_RSYNC_COMMAND_MESSAGE: Final[str] = (
@@ -144,28 +166,34 @@ def deploy_single_site(site_path: Path, *, verbosity: Literal[0, 1, 2, 3] = 1, r
             f"{process_output.stderr.strip()}\n",
         )
 
-    if process_output.returncode != 0:
-        RSYNC_COMMAND_FAILED_MESSAGE: Final[str] = (
-            f"{"rsync"!r} command failed: exit code {process_output.returncode}"
-        )
-        raise RuntimeError(RSYNC_COMMAND_FAILED_MESSAGE)
-
     site_name_logger.debug("Completed deploying single site successfully.")
 
 
-def deploy_all_sites(site_paths: AbstractSet[Path], *, verbosity: Literal[0, 1, 2, 3] = 1, remote_hostname: Hostname | None = None, remote_username: Username | None = None, remote_directory: Path | None = None, dry_run: bool = False) -> AbstractSet[str]:  # noqa: E501
+def deploy_all_sites(
+    site_paths: "AbstractSet[Path]",
+    *,
+    verbosity: "Literal[0, 1, 2, 3]" = 1,
+    remote_hostname: Hostname | None = None,
+    remote_username: "Username | None" = None,
+    remote_directory: Path | None = None,
+    dry_run: bool = False,
+) -> "AbstractSet[str]":
     """
     Deploy all static websites.
 
-    This is done by copying the built & rendered contents of each site's `deploy/` directory
+    This is done by copying the built and rendered contents of each site's `deploy/` directory
     to the specified remote server.
     """
-    dry_run_logger: Final[LoggerAdapter[Logger] | Logger] = LoggerAdapter(
-        extra_context_logger,
-        {
-            "extra_context": "dry_run=True",
-        },
-    ) if dry_run else logger
+    dry_run_logger: Final[LoggerAdapter[Logger] | Logger] = (
+        LoggerAdapter(
+            extra_context_logger,
+            {
+                "extra_context": "dry_run=True",
+            },
+        )
+        if dry_run
+        else logger
+    )
 
     logger.info("Begin deploying all sites.")
 
@@ -201,7 +229,14 @@ def deploy_all_sites(site_paths: AbstractSet[Path], *, verbosity: Literal[0, 1, 
                 remote_directory=remote_directory,
                 dry_run=dry_run,
             )
-        except (ValueError, RuntimeError, AttributeError, TypeError, OSError, CalledProcessError) as caught_exception:  # noqa: E501
+        except (
+            ValueError,
+            RuntimeError,
+            AttributeError,
+            TypeError,
+            OSError,
+            CalledProcessError,
+        ) as caught_exception:
             deployed_sites[FORMATTED_SITE_NAME] = caught_exception
             continue
         else:
@@ -229,8 +264,7 @@ def deploy_all_sites(site_paths: AbstractSet[Path], *, verbosity: Literal[0, 1, 
 
     deployed_site_names: AbstractSet[str] = {
         site_name
-        for site_name, deployment_outcome
-        in deployed_sites.items()
+        for site_name, deployment_outcome in deployed_sites.items()
         if deployment_outcome is None
     }
 

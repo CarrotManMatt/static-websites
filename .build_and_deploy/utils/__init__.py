@@ -1,24 +1,27 @@
 """Common utils made available for use throughout this project."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException")
-
-
 from pathlib import Path
-from subprocess import CalledProcessError
-from typing import Final, TypeAlias
+from typing import TYPE_CHECKING
 
-from git import InvalidGitRepositoryError, PathLike, Repo
+from git import InvalidGitRepositoryError, Repo
 
-CaughtException: TypeAlias = (
-    ValueError
-    | RuntimeError
-    | AttributeError
-    | TypeError
-    | OSError
-    | CalledProcessError
-)
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from subprocess import CalledProcessError
+    from typing import Final
+
+    from git import PathLike
+
+    type CaughtException = (
+        ValueError
+        | RuntimeError
+        | AttributeError
+        | TypeError
+        | OSError
+        | CalledProcessError
+    )
+
+__all__: "Sequence[str]" = ("PROJECT_ROOT", "CaughtException")
 
 
 def _get_project_root() -> Path:
@@ -50,4 +53,4 @@ def _get_readme_root() -> Path:
     raise FileNotFoundError(NO_ROOT_DIRECTORY_MESSAGE)
 
 
-PROJECT_ROOT: Final[Path] = _get_project_root()
+PROJECT_ROOT: "Final[Path]" = _get_project_root()

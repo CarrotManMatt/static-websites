@@ -1,171 +1,148 @@
-[tool.poetry]
-package-mode = false
-license ="Apache-2.0"
-description = "My own personal static websites. Available at https://carrotmanmatt.com & subdomains."
-authors = ["Matt Norton <matt@carrotmanmatt.com>"]
-repository = "https://github.com/CarrotManMatt/website.git"
-keywords = ["website", "html", "HTML5up", "carrot"]
+[dependency-groups]
+dev = [
+    { include-group = "lint-format" },
+    { include-group = "pre-commit" },
+    { include-group = "test" },
+    { include-group = "type-check" },
+]
+lint-format = ["djlint>=1.35", "ruff>=0.4", "taplo"]
+pre-commit = ["pre-commit"]
+test = []
+type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
+
+[project]
+authors = [{ name = "Matt Norton", email = "matt@carrotmanmatt.com" }]
 classifiers = [
-    "Private :: Do Not Upload",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "License :: OSI Approved :: Apache Software License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
+    "Private :: Do Not Upload",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
-    "Typing :: Typed",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Internet",
+    "Typing :: Typed",
 ]
+dependencies = [
+    "django>=5.1",
+    "gitpython>=3.1",
+    "minify-html>=0.15",
+    "python-dateutil>=2.9",
+    "typed_classproperties",
+]
+description = "My own personal static websites. Available at https://carrotmanmatt.com & subdomains."
+keywords = ["HTML5up", "carrot", "django-templates", "html", "static-site", "website"]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+name = "static-websites"
+requires-python = ">=3.12,<3.13" # TODO: Allow Python 3.13 once minify-html makes a new release with support for it
+version = "1.0.0"
 
-[tool.poetry.dependencies]
-python = "^3.12"
-django = "~5.1"
-classproperties = {git = "https://github.com/hottwaj/classproperties.git"}
-gitpython = "^3.1"
-minify-html = "^0.15"
-python-dateutil = "^2.9"
+[project.urls]
+Repository = "https://github.com/CarrotManMatt/static-websites"
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^4.0"
-mypy = "~1.11"
-django-stubs = {extras = ["compatible-mypy"], version = "~5.1"}
-ruff = "^0.7"
-djlint = "^1.35"
-types-python-dateutil = "^2.9"
-yamllint = "^1.35"
-
+[tool.djlint]
+blank_line_after_tag = "load,extends,include"
+ignore = "H021,D004"
+include = "H017,H035"
+profile = "django"
+use_gitignore = true
 
 [tool.mypy]
-exclude = ["venv/"]
-extra_checks = true
-warn_unused_configs = true
-disallow_untyped_calls = true
-disallow_untyped_defs = true
 check_untyped_defs = true
-disallow_any_generics = true
-disallow_any_unimported = true
 disallow_any_decorated = true
 disallow_any_explicit = true
-disallow_subclassing_any = true
-disallow_untyped_decorators = true
+disallow_any_generics = true
+disallow_any_unimported = true
 disallow_incomplete_defs = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_return_any = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+extra_checks = true
 no_implicit_reexport = true
 strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
 warn_unreachable = true
-
+warn_unused_configs = true
+warn_unused_ignores = true
 
 [tool.ruff]
-output-format = "concise"
+indent-width = 4
 line-length = 95
-target-version ="py312"
-extend-exclude = [
-    "venv/",
-    ".vscode",
-    ".idea",
-    ".mypy_cache",
-    ".ruff_cache",
-    "__pycache__",
-]
+output-format = "concise"
 
 [tool.ruff.lint]
-select = [
-    "E",
-    "F",
-    "W",
-    "C",
-    "I",
-    "N",
-    "D",
-    "UP",
-    "YTT",
-    "ANN",
-    "ASYNC",
-    "S",
-    "BLE",
-    "FBT",
-    "B",
-    "A",
-    "COM",
-    "DTZ",
-    "T",
-    "DJ",
-    "EM",
-    "G",
-    "INP",
-    "PIE",
-    "PT",
-    "Q",
-    "RSE",
-    "RET",
-    "SLF",
-    "SLOT",
-    "SIM",
-    "TID",
-    "TCH",
-    "ARG",
-    "PTH",
-    "TD",
-    "FIX",
-    "ERA",
-    "PGH",
-    "PL",
-    "TRY",
-    "FLY",
-    "PERF",
-    "RUF",
-]
-fixable = ["I001", "TCH", "F401", "COM812"]
 ignore = [
-    "N818",
-    "N806",
-    "D203",
+    "C90",
+    "COM812",
+    "COM819",
+    "CPY",
+    "D206",
     "D212",
-    "ANN101",
-    "ANN102",
+    "DJ",
+    "FA",
+    "FAST",
+    "INP001",
+    "ISC001",
+    "ISC002",
+    "N806",
+    "PD",
+    "PIE808",
+    "Q000",
+    "Q001",
+    "Q002",
     "Q003",
+    "S603",
+    "SIM910",
     "TD002",
     "TD003",
-    "S311",
-    "UP040",  # NOTE: Mypy does not currently support PEP 695 type aliases, so they should not be used
-    "PT009",
-    "PT027",
-    "S308",  # NOTE: Warnings about `mark_safe` are ignored as the script build output should be validated by administrators
+    "W191",
 ]
-task-tags = [
-    "TODO",
-    "FIXME",
-    "HACK",
-    "BUG",
-    "NOBUG",
-    "REQ",
-    "IDEA",
-    "NOTE",
-    "ISSUE",
-    "DONE",
+select = ["ALL", "D204", "D213", "D401"]
+task-tags = ["BUG", "DONE", "FIXME", "HACK", "IDEA", "ISSUE", "NOBUG", "NOTE", "REQ", "TODO"]
+
+[tool.ruff.lint.flake8-type-checking]
+quote-annotations = true
+strict = true
+
+[tool.ruff.lint.pep8-naming]
+classmethod-decorators = [
+    "typed_classproperties.cached_classproperty",
+    "typed_classproperties.classproperty",
 ]
-
-[tool.ruff.lint.flake8-pytest-style]
-parametrize-values-type = "tuple"
-
-[tool.ruff.lint.mccabe]
-max-complexity = 18
+extend-ignore-names = [
+    "BROKEN_*_MESSAGE",
+    "DEFAULT_MESSAGE",
+    "INVALID_*_MESSAGE",
+    "NO_*_MESSAGE",
+]
 
 [tool.ruff.lint.pycodestyle]
 ignore-overlong-task-comments = true
 max-doc-length = 95
 
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+property-decorators = [
+    "typed_classproperties.cached_classproperty",
+    "typed_classproperties.classproperty",
+]
+
 [tool.ruff.lint.pylint]
-allow-magic-value-types = ["str", "bytes", "int"]
+allow-magic-value-types = ["bytes", "int", "str"]
 max-args = 7
-max-returns = 10
 max-branches = 19
+max-returns = 10
 
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
 
-[tool.djlint]
-profile = "django"
-use_gitignore = true
-include = "H017,H035"
-ignore = "H021,D004"
-blank_line_after_tag="load,extends,include"
+[tool.uv]
+default-groups = ["dev"]
+no-build-package = ["minify-html"]
+package = false

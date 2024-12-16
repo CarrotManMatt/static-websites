@@ -1,14 +1,15 @@
 """Custom Django template tags for rendering dates within Django templates."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("current_year", "carrotmanmatt_age")
-
-
 import datetime
+from typing import TYPE_CHECKING
 
 from dateutil.relativedelta import relativedelta
 from django import template
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+__all__: "Sequence[str]" = ("carrotmanmatt_age", "current_year")
 
 register: template.Library = template.Library()
 

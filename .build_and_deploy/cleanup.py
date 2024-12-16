@@ -1,23 +1,27 @@
 """Clean up temporary build/deploy directories."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("cleanup_single_site", "cleanup_all_sites")
-
-
 import logging
 import shutil
-from logging import Logger, LoggerAdapter
-from pathlib import Path
-from typing import Final
+from logging import LoggerAdapter
+from typing import TYPE_CHECKING, Final
 
 from utils import PROJECT_ROOT
 
-logger: Final[Logger] = logging.getLogger("static-website-builder")
-extra_context_logger: Final[Logger] = logging.getLogger("static-website-builder-extra-context")
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from logging import Logger
+    from pathlib import Path
+    from typing import Final
+
+__all__: "Sequence[str]" = ("cleanup_all_sites", "cleanup_single_site")
+
+logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+extra_context_logger: "Final[Logger]" = logging.getLogger(
+    "static-website-builder-extra-context"
+)
 
 
-def cleanup_single_site(*, site_root_directory: Path, dry_run: bool = True) -> None:
+def cleanup_single_site(*, site_root_directory: "Path", dry_run: bool = True) -> None:
     """Delete any temporary build/deploy directories created for a single given site."""
     FORMATTED_SITE_NAME: Final[str] = (
         site_root_directory.parent.name

@@ -1,20 +1,19 @@
 """Validator classes that hold values guaranteed to be valid."""
 
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("SimpleValidator", "Hostname", "Username")
-
-
 import abc
 import re
 import socket
 from pathlib import Path
-from typing import Final, Generic, TypeVar, final, overload, override
+from typing import TYPE_CHECKING, final, overload, override
 
-T = TypeVar("T")
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from typing import Final
+
+__all__: "Sequence[str]" = ("Hostname", "SimpleValidator", "Username")
 
 
-class SimpleValidator(abc.ABC, Generic[T]):
+class SimpleValidator[T](abc.ABC):
     """Validator class that holds a value guaranteed to be valid."""
 
     @classmethod

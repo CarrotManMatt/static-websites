@@ -1,15 +1,8 @@
-"""Console entry point for the static websites builder & deployment script."""
-
-from collections.abc import Sequence
-
-__all__: Sequence[str] = ("run",)
-
+"""Console entry point for the static websites builder and deployment script."""
 
 import logging
 import sys
-from argparse import ArgumentParser, Namespace
-from collections.abc import Set as AbstractSet
-from logging import Logger
+from argparse import ArgumentParser
 from pathlib import Path
 from typing import TYPE_CHECKING, Final, Literal
 
@@ -21,10 +14,15 @@ from utils import logging_setup
 from utils.validators import Hostname, Username
 
 if TYPE_CHECKING:
-    # noinspection PyProtectedMember,PyUnresolvedReferences
+    from argparse import Namespace
     from argparse import _MutuallyExclusiveGroup as MutuallyExclusiveGroup
+    from collections.abc import Sequence
+    from collections.abc import Set as AbstractSet
+    from logging import Logger
 
-logger: Final[Logger] = logging.getLogger("static-website-builder")
+__all__: "Sequence[str]" = ("run",)
+
+logger: Final["Logger"] = logging.getLogger("static-website-builder")
 
 
 def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
@@ -40,7 +38,9 @@ def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParse
     return arg_parser
 
 
-def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> ArgumentParser:
+def _set_up_arg_parser(
+    given_arguments: "Sequence[str] | None" = None,
+) -> ArgumentParser:
     arg_parser: ArgumentParser = ArgumentParser(
         prog="build-and-deploy-static-websites",
         description="Render all sites HTML pages & deploy to given webserver.",
@@ -112,7 +112,9 @@ def _set_up_arg_parser(given_arguments: Sequence[str] | None = None) -> Argument
     return arg_parser
 
 
-def _get_true_verbosity(raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool) -> Literal[0, 1, 2, 3]:  # noqa: E501
+def _get_true_verbosity(
+    raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool
+) -> Literal[0, 1, 2, 3]:
     if is_quiet and is_dry_run:
         raise MutuallyExclusiveArgsError(
             mutually_exclusive_arguments={{"-q", "--quiet"}, {"-D", "--dry-run"}},
@@ -141,8 +143,8 @@ def _get_true_verbosity(raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool)
     raise ValueError
 
 
-def run(argv: Sequence[str] | None = None) -> int:
-    """Run the static websites builder & deployment script."""
+def run(argv: "Sequence[str] | None" = None) -> int:
+    """Run the static websites builder and deployment script."""
     arg_parser: ArgumentParser = _set_up_arg_parser(argv)
 
     parsed_args: Namespace = arg_parser.parse_args(argv)
