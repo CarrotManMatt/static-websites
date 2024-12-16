@@ -13,12 +13,7 @@ if TYPE_CHECKING:
     from git import PathLike
 
     type CaughtException = (
-        ValueError
-        | RuntimeError
-        | AttributeError
-        | TypeError
-        | OSError
-        | CalledProcessError
+        ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
     )
 
 __all__: "Sequence[str]" = ("PROJECT_ROOT", "CaughtException")
