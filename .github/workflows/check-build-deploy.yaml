@@ -296,6 +296,12 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Install uv
+              uses: astral-sh/setup-uv@v3
+              with:
+                enable-cache: true
+                cache-dependency-glob: .build_and_deploy/uv.lock
+
             - name: Install Project
               run: uv sync --project .build_and_deploy --no-group dev
 
