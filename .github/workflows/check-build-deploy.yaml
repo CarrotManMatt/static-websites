@@ -79,8 +79,8 @@ jobs:
 
             - name: Save Hashed Python Version
               id: save_hashed_python_version
-              run: echo "HASHED_PYTHON_VERSION=$(uv run --project .build_and_deploy --python ${{matrix.python-version}}
-                python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+              run: echo "HASHED_PYTHON_VERSION=$(uv run --project .build_and_deploy python -VV |
+                sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
@@ -314,5 +314,5 @@ jobs:
                 ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
 
             - name: Run Build & Deploy Script
-              run: uv run --directory .build_and_deploy python -m console --remote-directory ${{secrets.REMOTE_DIRECTORY}}
+              run: uv run --directory .build_and_deploy -m console --remote-directory ${{secrets.REMOTE_DIRECTORY}}
                 --remote-user ${{secrets.REMOTE_USERNAME}} ${{secrets.REMOTE_IP}}
