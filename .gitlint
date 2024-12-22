@@ -3,3 +3,7 @@ ignore = B6,B5
 
 [title-must-not-contain-word]
 words = fuck,stupid,annoying,rubbish,shit,crap
+
+[ignore-by-author-name]
+regex = (.*)\[bot\](.*)
+ignore = B1

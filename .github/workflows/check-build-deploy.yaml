@@ -131,10 +131,6 @@ jobs:
               run: echo "SKIP=check-github-workflows,ruff,ruff-format,taplo-format,taplo-lint,uv-lock,yamlfmt"
                 >> $GITHUB_ENV
 
-            - name: Skip gitlint-ci pre-commit hook if current branch is from renovate
-              if: ${{ startsWith((github.head_ref || github.ref_name), 'renovate/') }}
-              run: echo "SKIP=${SKIP},gitlint-ci" >> $GITHUB_ENV
-
             - name: Run pre-commit
               run: uv run --project .build_and_deploy pre-commit run --all-files --hook-stage manual  # TODO: Add GitHub workflows output format
 
