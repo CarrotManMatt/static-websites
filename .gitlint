@@ -5,5 +5,5 @@ ignore = B6,B5
 words = fuck,stupid,annoying,rubbish,shit,crap
 
 [ignore-by-author-name]
-regex = (.*)\[bot\](.*)
-ignore = B1
+regex = \A.*\[bot\].*\Z
+ignore = B1,T1
