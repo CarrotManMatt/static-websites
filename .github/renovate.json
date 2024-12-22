@@ -1,6 +1,31 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "assignAutomerge": true,
+    "configMigration": true,
+    "dependencyDashboard": true,
+    "dependencyDashboardAutoclose": false,
+    "dependencyDashboardLabels": [
+        "dependencies",
+        "tracker"
+    ],
+    "enabled": true,
+    "enabledManagers": [
+        "github-actions",
+        "pep621",
+        "pre-commit",
+        "pep723"
+    ],
     "extends": [
-        "config:recommended"
-    ]
+        "replacements:all",
+        "workarounds:all"
+    ],
+    "labels": [
+        "dependencies"
+    ],
+    "lockFileMaintenance": {
+        "enabled": true
+    },
+    "pre-commit": {
+        "enabled": true
+    }
 }
