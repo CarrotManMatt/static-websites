@@ -49,6 +49,18 @@
             "matchManagers": [
                 "github-actions"
             ]
+        },
+        {
+            "description": "Update renovatebot's pre-commit hooks Tuesday mornings",
+            "matchManagers": [
+                "pre-commit"
+            ],
+            "matchPackageNames": [
+                "renovatebot/pre-commit-hooks"
+            ],
+            "schedule": [
+                "* 3-8 * * 2"
+            ]
         }
     ],
     "pep621": {
@@ -59,5 +71,6 @@
     "prHourlyLimit": 5,
     "pre-commit": {
         "enabled": true
-    }
+    },
+    "timezone": "Europe/London"
 }
