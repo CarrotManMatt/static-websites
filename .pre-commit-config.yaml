@@ -80,7 +80,7 @@ repos:
       hooks:
         - id: uv-lock
           always_run: true
-          args: [--upgrade, --project, .build_and_deploy]
+          args: [--project, .build_and_deploy]
 
     - repo: https://github.com/google/yamlfmt
       rev: v0.14.0
