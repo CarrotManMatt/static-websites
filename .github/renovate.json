@@ -3,7 +3,7 @@
     "assignAutomerge": true,
     "configMigration": true,
     "dependencyDashboard": true,
-    "dependencyDashboardAutoclose": false,
+    "dependencyDashboardAutoclose": true,
     "dependencyDashboardLabels": [
         "dependencies",
         "tracker"
@@ -25,6 +25,32 @@
     "lockFileMaintenance": {
         "enabled": true
     },
+    "packageRules": [
+        {
+            "groupName": "pep621",
+            "matchManagers": [
+                "pep621"
+            ]
+        },
+        {
+            "groupName": "github-actions",
+            "matchDatasources": [
+                "github-tags"
+            ],
+            "matchManagers": [
+                "github-actions"
+            ]
+        },
+        {
+            "groupName": "github-runners",
+            "matchDatasources": [
+                "github-runners"
+            ],
+            "matchManagers": [
+                "github-actions"
+            ]
+        }
+    ],
     "pep621": {
         "fileMatch": [
             "^\\.build_and_deploy/pyproject\\.toml$"
