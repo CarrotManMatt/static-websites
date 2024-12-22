@@ -25,6 +25,11 @@
     "lockFileMaintenance": {
         "enabled": true
     },
+    "pep621": {
+        "fileMatch": [
+            "^\\.build_and_deploy/pyproject\\.toml$"
+        ]
+    },
     "prHourlyLimit": 5,
     "pre-commit": {
         "enabled": true
