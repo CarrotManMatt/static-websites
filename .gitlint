@@ -1,7 +1,7 @@
 [general]
 ignore = B5,B6
 regex-style-search = True
-fail-without-commits = true
+fail-without-commits = True
 
 [title-must-not-contain-word]
 words = fuck,stupid,annoying,rubbish,shit,crap
