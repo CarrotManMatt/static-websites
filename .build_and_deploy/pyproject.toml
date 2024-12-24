@@ -5,7 +5,7 @@ dev = [
     { include-group = "test" },
     { include-group = "type-check" },
 ]
-lint-format = ["djlint>=1.35", "ruff>=0.4", "taplo"]
+lint-format = ["djlint>=1.35", "ruff>=0.4"]
 pre-commit = ["pre-commit"]
 test = []
 type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
