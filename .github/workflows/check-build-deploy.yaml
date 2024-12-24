@@ -50,8 +50,8 @@ jobs:
 
             - name: Save Hashed Python Version
               id: save_hashed_python_version
-              run: echo "HASHED_PYTHON_VERSION=$(uv run --project .build_and_deploy python -VV |
-                sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+              run: echo "HASHED_PYTHON_VERSION=$(uv run --project .build_and_deploy -- python -VV
+                | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
@@ -59,7 +59,7 @@ jobs:
                 key: mypy|${{steps.save_hashed_python_version.outputs.hashed_python_version}}
 
             - name: Run mypy
-              run: uv run --project .build_and_deploy mypy .build_and_deploy  # TODO: Add GitHub workflows output format
+              run: uv run --project .build_and_deploy -- mypy .build_and_deploy  # TODO: Add GitHub workflows output format
 
     pre-commit:
         runs-on: ubuntu-latest
@@ -86,8 +86,8 @@ jobs:
 
             - name: Save Hashed Python Version
               id: save_hashed_python_version
-              run: echo "hashed_python_version=$(uv run --project .build_and_deploy python -VV |
-                sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+              run: echo "hashed_python_version=$(uv run --project .build_and_deploy -- python -VV
+                | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
@@ -95,13 +95,14 @@ jobs:
                 key: pre-commit|${{steps.save_hashed_python_version.outputs.hashed_python_version}}|${{hashFiles('.pre-commit-config.yaml')}}
 
             - name: Setup pre-commit Environments
-              run: uv run --project .build_and_deploy pre-commit install-hooks
+              run: uv run --project .build_and_deploy -- pre-commit install-hooks
 
             - name: Save pre-commit Checks Which Require Skipping
               run: echo "SKIP=check-github-workflows,ruff,uv-lock" >> $GITHUB_ENV
 
             - name: Run pre-commit
-              run: uv run --project .build_and_deploy pre-commit run --all-files --hook-stage manual  # TODO: Add GitHub workflows output format
+              run: uv run --project .build_and_deploy -- pre-commit run --all-files --hook-stage
+                manual  # TODO: Add GitHub workflows output format
 
     ruff-lint:
         runs-on: ubuntu-latest
@@ -128,8 +129,8 @@ jobs:
 
             - name: Save Hashed Python Version
               id: save_hashed_python_version
-              run: echo "hashed_python_version=$(uv run --project .build_and_deploy python -VV |
-                sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+              run: echo "hashed_python_version=$(uv run --project .build_and_deploy -- python -VV
+                | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
@@ -137,7 +138,7 @@ jobs:
                 key: ruff|${{steps.save_hashed_python_version.outputs.hashed_python_version}}
 
             - name: Run Ruff
-              run: uv run --project .build_and_deploy ruff check --no-fix --output-format=github
+              run: uv run --project .build_and_deploy -- ruff check --no-fix --output-format=github
 
     build-and-deploy:
         name: Build and Deploy All Websites

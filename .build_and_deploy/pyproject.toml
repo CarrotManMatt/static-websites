@@ -75,6 +75,12 @@ indent-width = 4
 line-length = 95
 output-format = "concise"
 
+[tool.ruff.format]
+docstring-code-format = true
+indent-style = "space"
+line-ending = "lf"
+quote-style = "double"
+
 [tool.ruff.lint]
 ignore = [
     "C90",
