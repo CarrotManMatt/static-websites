@@ -31,9 +31,9 @@ __all__: "Sequence[str]" = (
     "build_single_site",
 )
 
-logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
 extra_context_logger: "Final[Logger]" = logging.getLogger(
-    "static-website-builder-extra-context"
+    "static-websites-builder-extra-context"
 )
 
 TEMPLATE_ENGINE: "Final[TemplateEngine]" = TemplateEngine(

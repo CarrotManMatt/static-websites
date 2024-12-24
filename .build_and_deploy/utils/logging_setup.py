@@ -9,9 +9,9 @@ if TYPE_CHECKING:
     from typing import Final, Literal, TextIO
 
 __all__: "Sequence[str]" = ("setup",)
-logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
 extra_context_logger: "Final[Logger]" = logging.getLogger(
-    "static-website-builder-extra-context"
+    "static-websites-builder-extra-context"
 )
 
 LOG_LEVEL_MAPS: "Final[Mapping[Literal[1, 2, 3], Literal['DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL']]]" = {  # noqa: E501
@@ -30,7 +30,7 @@ def setup(*, verbosity: "Literal[0, 1, 2, 3]" = 1) -> None:
 
     if verbosity != 0:
         # noinspection SpellCheckingInspection
-        info_format_string: str = "{asctime} | static-website-builder | {levelname:^8} - "
+        info_format_string: str = "{asctime} | static-websites-builder | {levelname:^8} - "
 
         console_logging_handler: logging.StreamHandler[TextIO] = logging.StreamHandler()
         console_logging_handler.setFormatter(

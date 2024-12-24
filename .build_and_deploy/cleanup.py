@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 __all__: "Sequence[str]" = ("cleanup_all_sites", "cleanup_single_site")
 
-logger: "Final[Logger]" = logging.getLogger("static-website-builder")
+logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
 extra_context_logger: "Final[Logger]" = logging.getLogger(
-    "static-website-builder-extra-context"
+    "static-websites-builder-extra-context"
 )
 
 
