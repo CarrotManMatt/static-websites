@@ -143,7 +143,7 @@ jobs:
         name: Build and Deploy All Websites
         runs-on: ubuntu-latest
         environment: deploy
-        needs: [djlint, mypy, pre-commit, ruff-lint, uv-check]
+        needs: [mypy, pre-commit, ruff-lint, uv-check]
         permissions:
             contents: read
 
