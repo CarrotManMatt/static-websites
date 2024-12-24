@@ -68,7 +68,7 @@ repos:
           stages: [manual]
 
     - repo: https://github.com/djlint/djLint
-      rev: v1.36.3
+      rev: v1.36.4
       hooks:
         - id: djlint-reformat-django
           args: [--configuration, .build_and_deploy/pyproject.toml]
