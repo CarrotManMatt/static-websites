@@ -55,16 +55,19 @@ class SimpleValidator[T](abc.ABC):
     def _validate(cls, value: T) -> None:
         """Perform custom validation on the wrapped value."""
 
+    @override
     def __init__(self, value: T, /) -> None:
         """Validate and store the cleaned wrapped value."""
         self.validate(value)
 
         self._value: T = self.clean(value)
 
+    @override
     def __str__(self) -> str:
         """Return the string representation of the wrapped validated value."""
         return str(self._value)
 
+    @override
     def __repr__(self) -> str:
         """Return the developer-focussed representation of the wrapped validated value."""
         return repr(self._value)

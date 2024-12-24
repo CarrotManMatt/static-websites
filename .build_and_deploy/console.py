@@ -3,18 +3,18 @@
 import logging
 import os
 import sys
-from typing import TYPE_CHECKING
+from pathlib import Path
+from typing import TYPE_CHECKING, overload
 
 import build
 import cleanup
 import deploy
-from utils import logging_setup
+from utils import logging_setup, validators
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from collections.abc import Set as AbstractSet
     from logging import Logger
-    from pathlib import Path
     from typing import Final, Literal
 
 __all__: "Sequence[str]" = ("run",)
@@ -68,6 +68,35 @@ def _get_true_verbosity(*, is_dry_run: bool) -> "Literal[0, 1, 2, 3]":
     raise ValueError
 
 
+@overload
+def _get_true_string_arg(
+    environment_variable_name: str, validator: type[Path]
+) -> Path | None: ...
+
+
+@overload
+def _get_true_string_arg[T: validators.SimpleValidator[str]](
+    environment_variable_name: str, validator: type[T]
+) -> T | None: ...
+
+
+def _get_true_string_arg[T: validators.SimpleValidator[str]](
+    environment_variable_name: str, validator: type[T | Path]
+) -> T | Path | None:
+    raw_value: str | None = os.environ.get(
+        f"{ENVIRONMENT_VARIABLE_PREFIX}{environment_variable_name}"
+    )
+    if raw_value is None:
+        return None
+
+    raw_value = raw_value.strip("\n\r\t .-_")
+
+    if not raw_value:
+        return None
+
+    return validator(raw_value)
+
+
 def run() -> int:
     """Run the static websites builder and deployment script."""
     dry_run: bool = _get_true_dry_run()
@@ -87,13 +116,9 @@ def run() -> int:
         deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
             built_site_paths,
             verbosity=verbosity,
-            remote_hostname=os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP", None),
-            remote_username=os.environ.get(
-                f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_USERNAME", None
-            ),
-            remote_directory=os.environ.get(
-                f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_DIRECTORY", None
-            ),
+            remote_hostname=_get_true_string_arg("REMOTE_IP", validators.Hostname),
+            remote_username=_get_true_string_arg("REMOTE_USERNAME", validators.Username),
+            remote_directory=_get_true_string_arg("REMOTE_DIRECTORY", Path),
             dry_run=dry_run,
         )
 
