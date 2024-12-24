@@ -175,5 +175,9 @@ jobs:
                 ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
 
             - name: Run Build & Deploy Script
-              run: uv run --directory .build_and_deploy -m console --remote-directory ${{secrets.REMOTE_DIRECTORY}}
-                --remote-user ${{secrets.REMOTE_USERNAME}} ${{secrets.REMOTE_IP}}
+              env:
+                STATIC_WEBSITES_BUILDER_REMOTE_DIRECTORY: ${{secrets.REMOTE_DIRECTORY}}
+                STATIC_WEBSITES_BUILDER_REMOTE_IP: ${{secrets.REMOTE_IP}}
+                STATIC_WEBSITES_BUILDER_REMOTE_USERNAME: ${{secrets.REMOTE_USERNAME}}
+
+              run: uv run --directory .build_and_deploy -m console

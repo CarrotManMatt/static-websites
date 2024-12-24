@@ -1,162 +1,78 @@
 """Console entry point for the static websites builder and deployment script."""
 
 import logging
+import os
 import sys
-from argparse import ArgumentParser
-from pathlib import Path
-from typing import TYPE_CHECKING, Final, Literal
+from typing import TYPE_CHECKING
 
 import build
 import cleanup
 import deploy
-from exceptions import MutuallyExclusiveArgsError
 from utils import logging_setup
-from utils.validators import Hostname, Username
 
 if TYPE_CHECKING:
-    from argparse import Namespace
-    from argparse import _MutuallyExclusiveGroup as MutuallyExclusiveGroup
     from collections.abc import Sequence
     from collections.abc import Set as AbstractSet
     from logging import Logger
+    from pathlib import Path
+    from typing import Final, Literal
 
 __all__: "Sequence[str]" = ("run",)
 
-logger: Final["Logger"] = logging.getLogger("static-website-builder")
+logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
+ENVIRONMENT_VARIABLE_PREFIX: "Final[str]" = "STATIC_WEBSITES_BUILDER_"
 
 
-def _add_remote_arguments_to_parser(arg_parser: ArgumentParser) -> ArgumentParser:
-    arg_parser.add_argument(
-        "remote-ip",
-        type=Hostname,
-        help="The IP address or hostname of the webserver to deploy static websites to.",
-    )
+def _get_true_dry_run() -> bool:
+    raw_dry_run: str = os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN", "false").lower()
 
-    if arg_parser.usage:
-        arg_parser.usage += "\n       REMOTE_IP"
+    if raw_dry_run == "true":
+        return True
 
-    return arg_parser
+    if raw_dry_run == "false":
+        return False
 
-
-def _set_up_arg_parser(
-    given_arguments: "Sequence[str] | None" = None,
-) -> ArgumentParser:
-    arg_parser: ArgumentParser = ArgumentParser(
-        prog="build-and-deploy-static-websites",
-        description="Render all sites HTML pages & deploy to given webserver.",
-        usage=(
-            "[-h/--help]\n       "
-            "[-d/--remote-directory REMOTE_DIRECTORY]\n       "
-            "[-u/--remote-user REMOTE_USER]\n       "
-            "[-D/--dry-run]\n       "
-            "[-v/--verbose | -q/--quiet]"
-        ),
-    )
-
-    arg_parser.add_argument(
-        "-d",
-        "--remote-directory",
-        type=Path,
-        help=(
-            "The remote directory of the webserver to deploy static websites to. "
-            "(This is relative to the home directory of the remote user "
-            "and will have the site names appended to it.)"
-        ),
-    )
-
-    arg_parser.add_argument(
-        "-u",
-        "--remote-user",
-        type=Username,
-        help=(
-            "The username of the user on the webserver to deploy static websites to. "
-            "(Defaults to the root user if not specified.)"
-        ),
-    )
-
-    arg_parser.add_argument(
-        "-D",
-        "--dry-run",
-        action="store_true",
-        help=(
-            "Perform all operations apart from saving rendered files "
-            "or the final deployment of the static websites."
-        ),
-    )
-
-    verbosity_args_group: MutuallyExclusiveGroup = arg_parser.add_mutually_exclusive_group()
-
-    verbosity_args_group.add_argument(
-        "-v",
-        "--verbose",
-        action="count",
-        default=0,
-        dest="verbosity",
-        help="Increase output verbosity. (Mutually exclusive with `--quiet`.)",
-    )
-
-    verbosity_args_group.add_argument(
-        "-q",
-        "--quiet",
-        action="store_true",
-        help="Produce no output while running. (Mutually exclusive with `--verbose`.)",
-    )
-
-    known_parsed_args: Namespace
-    remaining_arg_values: Sequence[str]
-    known_parsed_args, remaining_arg_values = arg_parser.parse_known_args(given_arguments)
-
-    if not known_parsed_args.dry_run or remaining_arg_values:
-        return _add_remote_arguments_to_parser(arg_parser)
-
-    return arg_parser
+    raise ValueError
 
 
-def _get_true_verbosity(
-    raw_verbosity: int, *, is_quiet: bool, is_dry_run: bool
-) -> Literal[0, 1, 2, 3]:
-    if is_quiet and is_dry_run:
-        raise MutuallyExclusiveArgsError(
-            mutually_exclusive_arguments={{"-q", "--quiet"}, {"-D", "--dry-run"}},
+def _get_true_verbosity(*, is_dry_run: bool) -> "Literal[0, 1, 2, 3]":
+    raw_verbosity: int = int(os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}VERBOSITY", "0"))
+    if raw_verbosity < 0 and is_dry_run:
+        MUTUALLY_EXCLUSIVE_MESSAGE: Final[str] = (
+            f"The environment variable {ENVIRONMENT_VARIABLE_PREFIX}VERBOSITY "
+            f"cannot be less than 0 when {ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN is enabled."
         )
+        raise ValueError(MUTUALLY_EXCLUSIVE_MESSAGE)
 
-    raw_verbosity = 0 if is_quiet else raw_verbosity + 1
-
-    if raw_verbosity > 3:
-        return 3
-
-    if raw_verbosity == 3:
+    if raw_verbosity > 2:
         return 3
 
     if raw_verbosity == 2:
-        return 2
+        return 3
 
     if raw_verbosity == 1:
-        return 1
+        return 2
 
     if raw_verbosity == 0:
         if is_dry_run:
-            return 1
+            return 2
 
+        return 1
+
+    if raw_verbosity == -1:
+        return 0
+
+    if raw_verbosity < -1:
         return 0
 
     raise ValueError
 
 
-def run(argv: "Sequence[str] | None" = None) -> int:
+def run() -> int:
     """Run the static websites builder and deployment script."""
-    arg_parser: ArgumentParser = _set_up_arg_parser(argv)
+    dry_run: bool = _get_true_dry_run()
 
-    parsed_args: Namespace = arg_parser.parse_args(argv)
-
-    try:
-        verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(
-            parsed_args.verbosity,
-            is_quiet=parsed_args.quiet,
-            is_dry_run=parsed_args.dry_run,
-        )
-    except MutuallyExclusiveArgsError as mutually_exclusive_args_error:
-        arg_parser.error(mutually_exclusive_args_error.message)
+    verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(is_dry_run=dry_run)
 
     # noinspection PyUnboundLocalVariable
     logging_setup.setup(verbosity=verbosity)
@@ -171,10 +87,14 @@ def run(argv: "Sequence[str] | None" = None) -> int:
         deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
             built_site_paths,
             verbosity=verbosity,
-            remote_hostname=getattr(parsed_args, "remote-ip", None),
-            remote_username=parsed_args.remote_user,
-            remote_directory=parsed_args.remote_directory,
-            dry_run=parsed_args.dry_run,
+            remote_hostname=os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP", None),
+            remote_username=os.environ.get(
+                f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_USERNAME", None
+            ),
+            remote_directory=os.environ.get(
+                f"{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_DIRECTORY", None
+            ),
+            dry_run=dry_run,
         )
 
         if not deployed_site_names:
@@ -185,8 +105,8 @@ def run(argv: "Sequence[str] | None" = None) -> int:
         return 0
 
     finally:
-        if parsed_args.dry_run:
-            cleanup.cleanup_all_sites(dry_run=parsed_args.dry_run)
+        if dry_run:
+            cleanup.cleanup_all_sites(dry_run=dry_run)
 
 
 if __name__ == "__main__":
