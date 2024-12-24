@@ -6,12 +6,15 @@
 {% block copyright_comments %}
     {# COPYRIGHT_COMMENT "HTML5 UP" #}
 {% endblock copyright_comments %}
+
 {% block site_meta_image %}
     https://carrotmanmatt.com/static/carrot_icon.png
 {% endblock site_meta_image %}
+
 {% block site_content_type %}
     profile
 {% endblock site_content_type %}
+
 {% block stylesheets %}
     {{ block.super }}
     <noscript>
@@ -19,9 +22,11 @@
         <link rel="stylesheet" href="/static/css/noscript.css" />
     </noscript>
 {% endblock stylesheets %}
+
 {% block extra_body_classes %}
     landing is-preload
 {% endblock extra_body_classes %}
+
 {% block body %}
     <body class="landing is-preload">
         {# Page Wrapper #}
@@ -32,10 +37,12 @@
                     <a href="">CarrotManMatt.com</a>
                 </h1>
             </header>
+
             {# Banner #}
             <section id="banner">
                 <div class="inner">
                     <h2 style="text-shadow: 2px 2px #1c1001;">Carrot Man Matt</h2>
+
                     <ul class="icons" style="font-size: 20px; text-shadow: 2px 2px #1c1001;">
                         {% generate_icons_details_list as icon_details_list %}
                         {% for icon_details in icon_details_list %}
@@ -48,6 +55,7 @@
                             </li>
                         {% endfor %}
                     </ul>
+
                     <!--suppress HtmlUnknownTarget -->
                     <img src="/static/images/Avatar.png"
                          alt="Smiling carrot avatar"
@@ -57,13 +65,16 @@
                                 padding-top: 25px;
                                 shadow: 2px 2px #1c1001" />
                 </div>
+
                 <a href="#one" class="more scrolly" style="text-shadow: 2px 2px #1c1001">Learn More</a>
             </section>
+
             {# One #}
             <section id="one" class="wrapper style1 special">
                 <div class="inner">
                     <header class="major">
                         <h2>About Me</h2>
+
                         <p>
                             I'm CarrotManMatt.
                             {% carrotmanmatt_age %},
@@ -74,11 +85,13 @@
                             so feel free to look around!
                         </p>
                     </header>
+
                     <span class="icon solid fa-carrot major">
                         <span class="label">Carrot</span>
                     </span>
                 </div>
             </section>
+
             {# Two #}
             <section id="two" class="wrapper alt style2">
                 <section class="spotlight">
@@ -89,8 +102,10 @@
                              height="100%"
                              alt="Woman leaning against a counter, eating a bowl of salad. A plastic bottle of water and a bowl of apples are on the counter." />
                     </div>
+
                     <div class="content">
                         <h2>What is CarrotManMatt?</h2>
+
                         <p>
                             That's me!
                             I love veggies;
@@ -100,6 +115,7 @@
                         </p>
                     </div>
                 </section>
+
                 <section class="spotlight">
                     <div class="image">
                         <!--suppress HtmlUnknownTarget -->
@@ -108,8 +124,10 @@
                              height="100%"
                              alt="Three people sat on stools around a table in a cafe, talking and eating cake, sandwiches & pastries." />
                     </div>
+
                     <div class="content">
                         <h2 style="font-size: 18px;">Communicate | Contemplate | Appreciate</h2>
+
                         <p>
                             These are the three words I strive to live by.
                             I think it's a simple way for us all to act
@@ -138,6 +156,7 @@
                         </p>
                     </div>
                 </section>
+
                 <section class="spotlight">
                     <div class="image">
                         <!--suppress HtmlUnknownTarget -->
@@ -146,8 +165,10 @@
                              height="100%"
                              alt="Two people practising a theatre dialogue script in front of a white background, with two rows of theatre lights behind them." />
                     </div>
+
                     <div class="content">
                         <h2>The Little Things</h2>
+
                         <p>
                             I'm quite extroverted
                             and often take a leadership role in group activities,
@@ -161,11 +182,13 @@
                     </div>
                 </section>
             </section>
+
             {# Three #}
             <section id="three" class="wrapper style3 special">
                 <div class="inner">
                     <header class="major">
                         <h2>Hobbies & Interests</h2>
+
                         <p>
                             I'm grateful to have had the opportunity
                             to try an astonishing range of activities so far.
@@ -175,9 +198,11 @@
                             I guess these all stem from my love for technology and learning!
                         </p>
                     </header>
+
                     <ul class="features">
                         <li class="icon solid fa-laptop-code">
                             <h3>Coding</h3>
+
                             <p>
                                 As you can see from this website I made and hosted from scratch,
                                 I really enjoy improving my productivity
@@ -186,8 +211,10 @@
                                 if you can make a computer do it for you!
                             </p>
                         </li>
+
                         <li class="icon solid fa-guitar">
                             <h3>Playing Guitar</h3>
+
                             <p>
                                 I love music and the way it can bring people together;
                                 I feel at my best when performing for others.
@@ -196,8 +223,10 @@
                                 and love to try my hand at performing the newest riffs & licks
                             </p>
                         </li>
+
                         <li class="icon solid fa-lightbulb">
                             <h3>Live Events Technology</h3>
+
                             <p>
                                 Putting on a great show can't be beat.
                                 Even from more of a backstage role,
@@ -208,8 +237,10 @@
                                 is always a rewarding experience
                             </p>
                         </li>
+
                         <li class="icon solid fa-video">
                             <h3>Video Production</h3>
+
                             <p>
                                 Both presenting and editing videos are useful skills
                                 for me to take into the workplace,
@@ -220,8 +251,10 @@
                                 especially when shared with others after completion
                             </p>
                         </li>
+
                         <li class="icon solid fa-city">
                             <h3>The UK</h3>
+
                             <p>
                                 My home country is something I am both proud of and in awe of.
                                 I love to explore all it has to offer
@@ -233,8 +266,10 @@
                                 not too far away
                             </p>
                         </li>
+
                         <li class="icon solid fa-microscope">
                             <h3>Maths & Science</h3>
+
                             <p>
                                 I have a passion for exploring complex maths and physics
                                 at a level of detail that few do.
@@ -248,10 +283,12 @@
                     </ul>
                 </div>
             </section>
+
             {# Footer #}
             <footer id="footer">
                 <ul class="icons">
                     {% generate_icons_details_list as icon_details_list %}
+
                     {% for icon_details in icon_details_list %}
                         <li>
                             <!--suppress HtmlUnknownTarget -->
@@ -262,20 +299,23 @@
                         </li>
                     {% endfor %}
                 </ul>
+
                 <ul class="copyright">
                     <li>
                         {# djlint:off T002,H008,H014 #}
                         {% include ".common/fragments/site_copyright.html" with site_copyright_styles="border: none;" site_copyright_extra_tags="<span class='icon solid fa-carrot' style='margin-left: 7px'></span>" %}
-
                         {# djlint:on #}
                     </li>
+
                     <li id="css-sponsorship">
                         <a href="https://cssbham.com/join" style="border: none;">Sponsored by UoB&nbsp;CSS</a>
                     </li>
+
                     <li>
                         Design:
                         <a href="https://html5up.net">HTML5&nbsp;UP</a>
                     </li>
+
                     <li>
                         Illustrations:
                         <a href="https://storyset.com">Storyset</a>
@@ -283,6 +323,7 @@
                 </ul>
             </footer>
         </div>
+
         {# Scripts #}
         <!--suppress HtmlUnknownTarget -->
         <script src="/static/js/jquery.min.js"></script>
@@ -300,6 +341,7 @@
         <script src="/static/js/main.js"></script>
     </body>
 {% endblock body %}
+
 {% block after_body %}
     <style id="custom-page-zoom-css"></style>
 {% endblock after_body %}
