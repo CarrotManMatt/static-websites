@@ -2,25 +2,32 @@
 
 {% load simple_dates %}
 
-{% block title %}Car Points Game | {{ block.super }}{% endblock title %}
-
-{% block embed_title %}Car Points Game | {{ block.super }}{% endblock embed_title %}
-
-{% block site_description %}CarrotManMatt's web car points counting game.{% endblock site_description %}
-
-{% block site_url %}https://car-points.carrotmanmatt.com{% endblock site_url %}
-
-{% block site_meta_image %}https://car-points.carrotmanmatt.com/static/Logo.png{% endblock site_meta_image %}
-
-{% block site_content_type %}game{% endblock site_content_type %}
-
-{% block site_keywords %}{{ block.super }},game,car-points,overtaking,undertaking,vehicles,video game{% endblock site_keywords %}
-
+{% block title %}
+    Car Points Game | {{ block.super }}
+{% endblock title %}
+{% block embed_title %}
+    Car Points Game | {{ block.super }}
+{% endblock embed_title %}
+{% block site_description %}
+    CarrotManMatt's web car points counting game.
+{% endblock site_description %}
+{% block site_url %}
+    https://car-points.carrotmanmatt.com
+{% endblock site_url %}
+{% block site_meta_image %}
+    https://car-points.carrotmanmatt.com/static/Logo.png
+{% endblock site_meta_image %}
+{% block site_content_type %}
+    game
+{% endblock site_content_type %}
+{% block site_keywords %}
+    {{ block.super }},game,car-points,overtaking,undertaking,vehicles,video game
+{% endblock site_keywords %}
 {% block stylesheets %}
+    <!--suppress HtmlUnknownTarget -->
     <link rel="stylesheet"
           href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css" />
 {% endblock stylesheets %}
-
 {% block extra_styles %}
     <!--suppress CssUnusedSymbol -->
     <style>
@@ -38,72 +45,63 @@
         }
     </style>
 {% endblock extra_styles %}
-
 {% block header %}
     <div class="row mx-0 mt-4">
         <div class="w-auto mx-auto">
             <div class="col col-auto">
                 <a href="" class="text-reset text-decoration-none">
-                    <img src="/static/images/Logo.png" alt="a carrot within a blue car"
-                         height="100vh" width="100%"/>
+                    <img src="/static/images/Logo.png"
+                         alt="a carrot within a blue car"
+                         height="100vh"
+                         width="100%" />
                 </a>
             </div>
         </div>
     </div>
-
     <h1 class="text-center fs-1 my-0 pb-1">Car Points Game</h1>
 {% endblock header %}
-
 {% block main %}
     <h1 class="text-center fs-3 mb-0" id="counter">0</h1>
-
     {% for counter in "123456789" %}
         <div class="row mx-0{% if counter != "1" %} mt-2{% endif %}">
             <div class="w-auto mx-auto">
-                <button type="button" class="btn btn-success fw-bold"
-                        onclick="increase({{ counter }})">
-                    +
-                </button>
-
+                <button type="button"
+                        class="btn btn-success fw-bold"
+                        onclick="increase({{ counter }})">+</button>
                 <p class="d-inline fs-5 align-middle mx-2" id="button-{{ counter }}"></p>
-
-                <button type="button" disabled onclick="decrease({{ counter }})"
-                        class="btn btn-danger fw-bold decrease">
-                    -
-                </button>
+                <button type="button"
+                        disabled
+                        onclick="decrease({{ counter }})"
+                        class="btn btn-danger fw-bold decrease">-</button>
             </div>
         </div>
     {% endfor %}
-
     <div class="row mx-0 mt-4">
         <div class="w-auto mx-auto">
             <div onclick="names()">
-                <input class="form-check-input" type="radio"
-                       name="namesOrPoints" id="names" checked />
-
-                <label class="ms-1 form-check-label" for="names">
-                    Category Names
-                </label>
+                <input class="form-check-input"
+                       type="radio"
+                       name="namesOrPoints"
+                       id="names"
+                       checked />
+                <label class="ms-1 form-check-label" for="names">Category Names</label>
             </div>
-
             <div class="mt-2" onclick="points()">
-                <input class="form-check-input" type="radio"
-                       name="namesOrPoints" id="points" />
-
-                <label class="ms-1 form-check-label" for="points">
-                    Points Rewarded
-                </label>
+                <input class="form-check-input"
+                       type="radio"
+                       name="namesOrPoints"
+                       id="points" />
+                <label class="ms-1 form-check-label" for="points">Points Rewarded</label>
             </div>
         </div>
     </div>
 {% endblock main %}
-
 {% block footer %}
     <p class="text-center fs-5 my-3">
         {% include ".common/fragments/site_copyright.html" with site_copyright_classes="text-secondary text-decoration-none" %}
+
     </p>
 {% endblock footer %}
-
 {% block scripts %}
     <script>
         function increase(amount) {

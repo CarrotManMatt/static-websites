@@ -1,71 +1,89 @@
 <!DOCTYPE HTML>
 
-{% block copyright_comments %}{% endblock copyright_comments %}
+{% block copyright_comments %}
+{% endblock copyright_comments %}
 
 <html lang="en-GB">
     <head>
-        <title>{% block _title1 %}{% endblock _title1 %}</title>
-        <meta content="{% block _title2 %}{% endblock _title2 %}" property="og:title" />
-        <meta property="og:description"
-              content="{% block _site_description1 %}{% endblock _site_description1 %}" />
-        <meta property="og:url"
-              content="{% block site_url %}https://carrotmanmatt.com{% endblock site_url %}" />
-        <meta property="og:image"
-              content="{% block _site_meta_image1 %}{% endblock _site_meta_image1 %}" />
-        <meta name="twitter:card"
-              content="{% block _site_meta_image2 %}{% endblock _site_meta_image2 %}" />
-        <meta content="#ff9f0e" data-react-helmet="true" name="theme-color" />
-        <meta itemprop="name" content="{% block _title3 %}{% endblock _title3 %}" />
-        <meta itemprop="description"
-              content="{% block _site_description2 %}{% endblock _site_description2 %}" />
-        <meta property="og:type"
-              content="{% block site_content_type %}article{% endblock site_content_type %}" />
-        <meta name="description"
-              content="{% block _site_description3 %}{% endblock _site_description3 %}"/>
-        <meta name="keywords"
-              content="{% block site_keywords %}CarrotManMatt{% endblock site_keywords %}"/>
+        <title>
+            {% block _title1 %}
+            {% endblock _title1 %}
+        </title>
 
+        <meta content="{% block _title2 %}{% endblock _title2 %}"
+              property="og:title" />
+        <meta property="og:description"
+              content="{% block _site_description1 %}{% endblock _site_description1 %} " />
+        <meta property="og:url"
+              content="{% block site_url %}https://carrotmanmatt.com{% endblock site_url %} " />
+        <meta property="og:image"
+              content="{% block _site_meta_image1 %}{% endblock _site_meta_image1 %} " />
+        <meta name="twitter:card"
+              content="{% block _site_meta_image2 %}{% endblock _site_meta_image2 %} " />
+        <meta content="#ff9f0e" data-react-helmet="true" name="theme-color" />
+        <meta itemprop="name" content="{% block _title3 %}{% endblock _title3 %} " />
+        <meta itemprop="description"
+              content="{% block _site_description2 %}{% endblock _site_description2 %} " />
+        <meta property="og:type"
+              content="{% block site_content_type %}article{% endblock site_content_type %} " />
+        <meta name="description"
+              content="{% block _site_description3 %}{% endblock _site_description3 %} " />
+        <meta name="keywords"
+              content="{% block site_keywords %}CarrotManMatt{% endblock site_keywords %} " />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
         {% block viewport_meta %}
-            <meta name="viewport"
-                  content="width=device-width, initial-scale=1" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
         {% endblock viewport_meta %}
 
         {% block stylesheets %}
+            <!--suppress HtmlUnknownTarget -->
             <link rel="stylesheet" href="/static/css/main.css" />
         {% endblock stylesheets %}
 
-        <link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+        <!--suppress HtmlUnknownTarget -->
+        <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+        <!--suppress HtmlUnknownTarget -->
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <!--suppress HtmlUnknownTarget -->
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <!--suppress HtmlUnknownTarget -->
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <!--suppress HtmlUnknownTarget -->
         <link rel="manifest" href="/site.webmanifest" />
+        <!--suppress HtmlUnknownTarget -->
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9f0e" />
 
         <meta name="msapplication-TileColor" content="#ff9f0e" />
         <meta name="theme-color" content="#ffbb56" />
 
-        {% block extra_styles %}{% endblock extra_styles %}
+        {% block extra_styles %}
+        {% endblock extra_styles %}
     </head>
 
     {% block body %}
         <body>
             <header>
-                {% block header %}{% endblock header %}
+                {% block header %}
+                {% endblock header %}
             </header>
 
             <main>
-                {% block main %}{% endblock main %}
+                {% block main %}
+                {% endblock main %}
             </main>
 
             <footer>
-                {% block footer %}{% endblock footer %}
+                {% block footer %}
+                {% endblock footer %}
             </footer>
 
-            {% block scripts %}{% endblock scripts %}
+            {% block scripts %}
+            {% endblock scripts %}
         </body>
     {% endblock body %}
 
-    {% block after_body %}{% endblock after_body %}
+    {% block after_body %}
+    {% endblock after_body %}
 </html>

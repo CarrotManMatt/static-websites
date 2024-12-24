@@ -5,7 +5,7 @@ dev = [
     { include-group = "test" },
     { include-group = "type-check" },
 ]
-lint-format = ["djlint>=1.35", "ruff>=0.4"]
+lint-format = ["ruff>=0.4"]
 pre-commit = ["pre-commit"]
 test = []
 type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
@@ -43,9 +43,10 @@ version = "1.0.0"
 Repository = "https://github.com/CarrotManMatt/static-websites"
 
 [tool.djlint]
-blank_line_after_tag = "load,extends,include"
+blank_line_after_tag = "load,extends"
 ignore = "H021,D004"
 include = "H017,H035"
+max_blank_lines = 1
 profile = "django"
 use_gitignore = true
 
