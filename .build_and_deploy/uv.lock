@@ -111,11 +111,11 @@ wheels = [
 
 [[package]]
 name = "identify"
-version = "2.6.3"
+version = "2.6.4"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/1a/5f/05f0d167be94585d502b4adf8c7af31f1dc0b1c7e14f9938a88fdbbcf4a7/identify-2.6.3.tar.gz", hash = "sha256:62f5dae9b5fef52c84cc188514e9ea4f3f636b1d8799ab5ebc475471f9e47a02", size = 99179 }
+sdist = { url = "https://files.pythonhosted.org/packages/49/a5/7de3053524ee006b91099968d7ecb2e0b420f7ae728094394c33e8a2a2b9/identify-2.6.4.tar.gz", hash = "sha256:285a7d27e397652e8cafe537a6cc97dd470a970f48fb2e9d979aa38eae5513ac", size = 99209 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/f5/09644a3ad803fae9eca8efa17e1f2aef380c7f0b02f7ec4e8d446e51d64a/identify-2.6.3-py2.py3-none-any.whl", hash = "sha256:9edba65473324c2ea9684b1f944fe3191db3345e50b6d04571d10ed164f8d7bd", size = 99049 },
+    { url = "https://files.pythonhosted.org/packages/a2/9d/52f036403ae86474804f699c0d084b4b071e333a390b20269bb8accc65e0/identify-2.6.4-py2.py3-none-any.whl", hash = "sha256:993b0f01b97e0568c179bb9196391ff391bfb88a99099dbf5ce392b68f42d0af", size = 99072 },
 ]
 
 [[package]]
@@ -333,11 +333,11 @@ type-check = [
 
 [[package]]
 name = "typed-classproperties"
-version = "1.1.0"
+version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/50/e9/50069e8006cde5fdce43bd5ed66e92015f9c02d50b539a638e34990d2cf0/typed_classproperties-1.1.0.tar.gz", hash = "sha256:8d47dac5d3a66befa2f098f50c66db5c5e1f4522f4db9504def5e4bc7d50a105", size = 5674 }
+sdist = { url = "https://files.pythonhosted.org/packages/dc/f8/eca09b814d5111dfed1a83da49766a3bf4abfdba8e9bcbfd427eda08c092/typed_classproperties-1.1.1.tar.gz", hash = "sha256:da4de2e191872fef2caefdd8c65b848ac778b4f1af517f16af1111c7bb194c01", size = 6169 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/6b/aea042f7448fde844f69aea0a3ea3b3222d6c469f2a6bfec9547ca31e257/typed_classproperties-1.1.0-py3-none-any.whl", hash = "sha256:ed4524d53d1f0091640c3c8061ab61ed6245e5c92b613a8b7798b433df1c99a7", size = 4606 },
+    { url = "https://files.pythonhosted.org/packages/3a/e1/2bb1405dd50424d4beebb3bc1c0cdc07cfe573d8b704150fd0360274fab1/typed_classproperties-1.1.1-py3-none-any.whl", hash = "sha256:44eb5e9384c9c92ae9cb1068e86f322c15c7c96a13f444aaf9dc784b88d5622b", size = 5034 },
 ]
 
 [[package]]
