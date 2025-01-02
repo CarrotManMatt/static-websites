@@ -9,7 +9,7 @@
     ],
     "extends": [
         "github>CarrotManMatt/renovate-config"
-    ]
+    ],
     "pep621": {
         "fileMatch": [
             "^\\.build_and_deploy/pyproject\\.toml$"
