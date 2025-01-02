@@ -76,7 +76,7 @@ repos:
           args: [--configuration, .build_and_deploy/pyproject.toml]
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.8.4
+      rev: v0.8.5
       hooks:
         - id: ruff
           args: [--fix]
