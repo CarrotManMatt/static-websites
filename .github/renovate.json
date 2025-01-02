@@ -14,5 +14,5 @@
         "fileMatch": [
             "^\\.build_and_deploy/pyproject\\.toml$"
         ]
-    },
+    }
 }
