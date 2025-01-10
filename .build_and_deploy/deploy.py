@@ -82,7 +82,7 @@ def deploy_single_site(
     dry_run_site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
         extra_context_logger,
         {
-            "extra_context": f"{FORMATTED_SITE_NAME}{" | dry_run=True" if dry_run else ""}",
+            "extra_context": f"{FORMATTED_SITE_NAME}{' | dry_run=True' if dry_run else ''}",
         },
     )
 
@@ -133,7 +133,7 @@ def deploy_single_site(
         (
             f"{site_path}{os.sep}",
             (
-                f"{f"{remote_username}@" if remote_username else ""}"
+                f"{f'{remote_username}@' if remote_username else ''}"
                 f"{remote_hostname}:"
                 f"{POSIX_REMOTE_DIRECTORY}"
             ),
@@ -150,7 +150,7 @@ def deploy_single_site(
         )
     except FileNotFoundError as no_rsync_command_error:
         NO_RSYNC_COMMAND_MESSAGE: Final[str] = (
-            f"{"rsync"!r} command not found. (Ensure it is installed on your system.)"
+            f"{'rsync'!r} command not found. (Ensure it is installed on your system.)"
         )
         raise RuntimeError(NO_RSYNC_COMMAND_MESSAGE) from no_rsync_command_error
 
@@ -200,7 +200,7 @@ def deploy_all_sites(
     deployed_sites: dict[str, CaughtException | None] = {}
 
     if not dry_run and not remote_hostname:
-        NO_REMOTE_HOSTNAME_MESSAGE: Final[str] = f"No {"remote_hostname"!r} was specified."
+        NO_REMOTE_HOSTNAME_MESSAGE: Final[str] = f"No {'remote_hostname'!r} was specified."
         raise ValueError(NO_REMOTE_HOSTNAME_MESSAGE)
 
     real_hostname: Hostname = (
