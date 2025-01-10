@@ -31,7 +31,7 @@ def cleanup_single_site(*, site_root_directory: "Path", dry_run: bool = True) ->
     dry_run_site_name_logger: Final[LoggerAdapter[Logger]] = LoggerAdapter(
         extra_context_logger,
         {
-            "extra_context": f"{FORMATTED_SITE_NAME}{" | dry_run=True" if dry_run else ""}",
+            "extra_context": f"{FORMATTED_SITE_NAME}{' | dry_run=True' if dry_run else ''}",
         },
     )
 

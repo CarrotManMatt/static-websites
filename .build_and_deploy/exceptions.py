@@ -40,8 +40,7 @@ class BaseError(BaseException, abc.ABC):
                 ", ".join(
                     {
                         f"{attribute_name}={attribute_value!r}"
-                        for attribute_name, attribute_value
-                        in attributes.items()
+                        for attribute_name, attribute_value in attributes.items()
                     }
                 )
             })"""
@@ -99,7 +98,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         if not first_argument:
             raise no_argument_values_provided_exception
 
-        constructed_message: str = f"argument `{"`/`".join(first_argument)}` not allowed"
+        constructed_message: str = f"argument `{'`/`'.join(first_argument)}` not allowed"
 
         if len(mutually_exclusive_arguments) == 1:
             return constructed_message + " on its own"
@@ -108,13 +107,13 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
         if not second_argument:
             raise no_argument_values_provided_exception
 
-        constructed_message += f" with argument `{"`/`".join(second_argument)}`"
+        constructed_message += f" with argument `{'`/`'.join(second_argument)}`"
 
         argument: AbstractSet[str]
         for argument in remaining_arguments:
             if not argument:
                 raise no_argument_values_provided_exception
 
-            constructed_message += f"or with argument `{"`/`".join(second_argument)}`"
+            constructed_message += f"or with argument `{'`/`'.join(second_argument)}`"
 
         return constructed_message
