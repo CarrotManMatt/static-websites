@@ -2,45 +2,27 @@
 dev = [
     { include-group = "lint-format" },
     { include-group = "pre-commit" },
-    { include-group = "test" },
     { include-group = "type-check" },
 ]
 lint-format = ["ruff>=0.4"]
-pre-commit = ["pre-commit"]
-test = []
-type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
-
-[project] # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
-authors = [{ name = "Matt Norton", email = "matt@carrotmanmatt.com" }]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "License :: OSI Approved :: Apache Software License",
-    "Natural Language :: English",
-    "Operating System :: OS Independent",
-    "Private :: Do Not Upload",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Internet",
-    "Typing :: Typed",
-]
-dependencies = [
+main = [
     "django>=5.1",
     "gitpython>=3.1",
     "minify-html>=0.15",
     "python-dateutil>=2.9",
-    "typed_classproperties",
+    "typed_classproperties>=1.1",
 ]
-description = "My own personal static websites. Available at https://carrotmanmatt.com & subdomains."
-keywords = ["HTML5up", "carrot", "django-templates", "html", "static-site", "website"]
-license = "Apache-2.0"
-license-files = ["LICENSE"]
+pre-commit = ["pre-commit"]
+type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
+
+[project] # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
 name = "static-websites"
 requires-python = ">=3.12,<3.13" # TODO: Allow Python 3.13 once minify-html makes a new release with support for it
 version = "1.0.0"
 
 [project.urls]
 Repository = "https://github.com/CarrotManMatt/static-websites"
+
 
 [tool.djlint]
 blank_line_after_tag = "load,extends"
@@ -49,6 +31,7 @@ include = "H017,H035"
 max_blank_lines = 1
 profile = "django"
 use_gitignore = true
+
 
 [tool.mypy]
 check_untyped_defs = true
@@ -69,6 +52,7 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
+
 
 [tool.ruff]
 indent-width = 4
@@ -147,10 +131,11 @@ max-returns = 10
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
 
+
 [tool.uv]
-default-groups = ["dev"]
+default-groups = ["dev", "main"]
 no-binary-package = ["cssbeautifier", "jsbeautifier", "static-websites"]
 no-build = true
 no-build-package = ["minify-html"]
 package = false
-required-version = ">=0.5.21"
+required-version = ">=0.5.8"
