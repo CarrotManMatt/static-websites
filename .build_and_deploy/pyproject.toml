@@ -153,3 +153,4 @@ no-binary-package = ["cssbeautifier", "jsbeautifier", "static-websites"]
 no-build = true
 no-build-package = ["minify-html"]
 package = false
+required-version = ">=0.5.21"
