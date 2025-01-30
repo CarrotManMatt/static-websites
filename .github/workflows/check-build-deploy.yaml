@@ -44,7 +44,7 @@ jobs:
               with:
                 enable-cache: true
 
-            - name: Install ruff From Locked Dependencies
+            - name: Install djLint From Locked Dependencies
               run: uv sync --project .build_and_deploy --only-group lint-format
 
             - name: Run djLint
