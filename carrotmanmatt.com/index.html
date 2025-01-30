@@ -41,9 +41,9 @@
             {# Banner #}
             <section id="banner">
                 <div class="inner">
-                    <h2 style="text-shadow: 2px 2px #1c1001;">Carrot Man Matt</h2>
+                    <h2 style="text-shadow: 2px 2px #1c1001">Carrot Man Matt</h2>
 
-                    <ul class="icons" style="font-size: 20px; text-shadow: 2px 2px #1c1001;">
+                    <ul class="icons" style="font-size: 20px; text-shadow: 2px 2px #1c1001">
                         {% generate_icons_details_list as icon_details_list %}
                         {% for icon_details in icon_details_list %}
                             <li>
@@ -122,7 +122,7 @@
                     </div>
 
                     <div class="content">
-                        <h2 style="font-size: 18px;">Communicate | Contemplate | Appreciate</h2>
+                        <h2 style="font-size: 18px">Communicate | Contemplate | Appreciate</h2>
 
                         <p>
                             These are the three words I strive to live by.
@@ -297,12 +297,15 @@
                 <ul class="copyright">
                     <li>
                         {# djlint:off T002,H008,H014 #}
-                        {% include ".common/fragments/site_copyright.html" with site_copyright_styles="border: none;" site_copyright_extra_tags="<span class='icon solid fa-carrot' style='margin-left: 7px'></span>" %}
+                        {% include ".common/fragments/site_copyright.html" with site_copyright_styles="border: none" site_copyright_extra_tags="<span class='icon solid fa-carrot' style='margin-left: 7px'></span>" %}
                         {# djlint:on #}
                     </li>
 
                     <li id="css-sponsorship">
-                        <a href="https://cssbham.com/join" style="border: none;">Sponsored by UoB&nbsp;CSS</a>
+                        <a href="https://cssbham.com/join" style="border: none">
+                            Sponsored by:
+                            <span style="border-bottom: dotted 1px">UoB&nbsp;CSS</span>
+                        </a>
                     </li>
 
                     <li>
