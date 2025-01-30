@@ -4,7 +4,7 @@ dev = [
     { include-group = "pre-commit" },
     { include-group = "type-check" },
 ]
-lint-format = ["ruff>=0.4"]
+lint-format = ["djlint>=1.35", "ruff>=0.4"]
 main = [
     "django>=5.1",
     "gitpython>=3.1",
