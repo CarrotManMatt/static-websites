@@ -76,6 +76,13 @@ class SimpleValidator[T](abc.ABC):
         """Return the truthiness of the wrapped validated value."""
         return bool(self._value)
 
+    @override
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return other._value == self._value
+
 
 class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
     @classmethod
