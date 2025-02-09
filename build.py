@@ -21,7 +21,6 @@ if TYPE_CHECKING:
     from typing import Final
 
     import htpy as h
-    from django.template import Template
 
     from utils import CaughtException
 
@@ -55,25 +54,12 @@ def build_single_page(
 
     DEPLOY_PAGE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-    template: Template = TEMPLATE_ENGINE.get_template(str(html_file_path))
+    rendered_page: str = str(page_content)
 
-    copyright_comment_match: re.Match[str] | None = re.search(
-        r"{# ?COPYRIGHT_COMMENT \"(?P<copyright_type>[A-Za-z0-9 +!?'£$^&*\-_=@;:~.,¬]+)\" ?#}",
-        template.source,
-    )
-
-    if copyright_comment_match:
-        PAGE_LOGGER.debug(
-            "Found copyright-comment that will later be re-added: %s",
-            copyright_comment_match.group("copyright_type"),
-        )
-
-    rendered_template: str = template.render(TemplateContext())
-
-    PAGE_LOGGER.debug("Django template successfully rendered.")
+    PAGE_LOGGER.debug("HTML successfully rendered.")
 
     minified_html: str = minify_html.minify(
-        rendered_template,
+        rendered_page,
         do_not_minify_doctype=True,
         keep_html_and_head_opening_tags=True,
         ensure_spec_compliant_unquoted_attribute_values=True,
@@ -101,31 +87,12 @@ def build_single_page(
 
     minified_html = re.sub(r"(?<=[A-Za-z]):<(?=a|span)", r": <", minified_html)
 
-    if copyright_comment_match:
-        copyright_comment_type: str = copyright_comment_match.group("copyright_type")
-
-        if copyright_comment_type == "HTML5 UP":
-            minified_html = minified_html.replace(
-                "<!DOCTYPE HTML>",
-                (
-                    "<!DOCTYPE HTML>\n"
-                    "<!--\n"
-                    "    Spectral by HTML5 UP\n"
-                    "    html5up.net | @ajlkn\n"
-                    "    Free for personal and commercial use under the CCA 3.0 license "
-                    "(html5up.net/license)\n"
-                    "-->\n"
-                ),
-            )
-        else:
-            UNKNOWN_COPYRIGHT_COMMENT_TYPE_MESSAGE: Final[str] = (
-                f"Unknown copyright comment type: {copyright_comment_type}"
-            )
-            raise NotImplementedError(UNKNOWN_COPYRIGHT_COMMENT_TYPE_MESSAGE)
-
-        PAGE_LOGGER.debug(
-            "Copyright-comment successfully re-added: %s", copyright_comment_type
-        )
+    "<!--\n"
+    "    Spectral by HTML5 UP\n"
+    "    html5up.net | @ajlkn\n"
+    "    Free for personal and commercial use under the CCA 3.0 license "
+    "(html5up.net/license)\n"
+    "-->\n"
 
     DEPLOY_PAGE_PATH.write_text(f"{minified_html.strip()}\n", encoding="utf-8")
 
