@@ -4,33 +4,18 @@ dev = [
     { include-group = "pre-commit" },
     { include-group = "type-check" },
 ]
-lint-format = ["djlint>=1.35", "ruff>=0.4"]
-main = [
-    "django>=5.1",
-    "gitpython>=3.1",
-    "minify-html>=0.15",
-    "python-dateutil>=2.9",
-    "typed_classproperties>=1.1",
-]
+lint-format = ["ruff>=0.4"]
+main = ["gitpython>=3.1", "htpy>=25", "python-dateutil>=2.9", "typed_classproperties>=1.1"]
 pre-commit = ["pre-commit"]
-type-check = ["django-stubs[compatible-mypy]>=5.1", "mypy>=1.12", "types-python-dateutil>=2.9"]
+type-check = ["mypy>=1.12", "types-python-dateutil>=2.9"]
 
 [project] # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
 name = "static-websites"
-requires-python = ">=3.12,!=3.13" # TODO: Allow Python 3.13 once minify-html makes a new release with support for it
+requires-python = ">=3.12"
 version = "1.0.0"
 
 [project.urls]
 Repository = "https://github.com/CarrotManMatt/static-websites"
-
-
-[tool.djlint]
-blank_line_after_tag = "load,extends"
-ignore = "H021,D004"
-include = "H017,H035"
-max_blank_lines = 1
-profile = "django"
-use_gitignore = true
 
 
 [tool.mypy]

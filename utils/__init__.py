@@ -1,5 +1,6 @@
 """Common utils made available for use throughout this project."""
 
+import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -16,7 +17,18 @@ if TYPE_CHECKING:
         ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
     )
 
-__all__: "Sequence[str]" = ("PROJECT_ROOT", "CaughtException")
+__all__: "Sequence[str]" = ("PROJECT_ROOT", "CaughtException", "get_current_year")
+
+
+def get_current_year() -> int:
+    """
+    Get the current year as an integer.
+
+    The current year will be retrieved
+    based on a timezone-aware understanding of the current date,
+    according to the server this build script is running on.
+    """
+    return datetime.datetime.now(tz=datetime.UTC).year
 
 
 def _get_project_root() -> Path:
