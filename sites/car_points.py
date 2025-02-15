@@ -1,5 +1,6 @@
-""""""
+"""car-points.carrotmanmatt.com static site definition."""
 
+from pathlib import PurePosixPath
 from typing import TYPE_CHECKING
 
 import htpy as h
@@ -14,8 +15,8 @@ if TYPE_CHECKING:
 __all__: "Sequence[str]" = ("PAGES_MAP",)
 
 
-PAGES_MAP: "Final[Mapping[str, h.HTMLElement]]" = {
-    "index.html": component_base(
+PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
+    PurePosixPath("index.html"): component_base(
         body=component_body(
             header=(
                 h.div(class_=("row", "mx-0", "mt-4"))[
@@ -91,7 +92,7 @@ PAGES_MAP: "Final[Mapping[str, h.HTMLElement]]" = {
             ],
             scripts=h.script(type="text/javascript")["names()"],
         ),
-        page_title="Car Points Game",
+        page_title_prefix="Car Points Game",
         page_description="CarrotManMatt's web car points counting game.",
         site_url="https://car-points.carrotmanmatt.com",
         page_meta_image="https://car-points.carrotmanmatt.com/static/Logo.png",
@@ -108,8 +109,8 @@ PAGES_MAP: "Final[Mapping[str, h.HTMLElement]]" = {
             href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css", rel="stylesheet"
         ),
         extra_head=(
-            h.link(rel="stylesheet", type="text/css", href="/static/styles/main.css"),
-            h.script(src="/static/scripts/main.js", type="text/javascript"),
+            h.link(rel="stylesheet", type="text/css", href="/static/css/main.css"),
+            h.script(src="/static/js/main.js", type="text/javascript"),
         ),
     ),
 }

@@ -8,8 +8,6 @@ from logging import LoggerAdapter
 from subprocess import CalledProcessError
 from typing import TYPE_CHECKING
 
-import minify_html
-
 from sites import SITES_MAP
 from utils import PROJECT_ROOT
 
@@ -32,12 +30,43 @@ extra_context_logger: "Final[Logger]" = logging.getLogger(
 )
 
 
+def minify_single_page(rendered_page: str, PAGE_LOGGER: "Logger") -> str:  # noqa: N803
+    import minify_html
+
+    rendered_page = minify_html.minify(
+        rendered_page,
+        do_not_minify_doctype=True,
+        keep_html_and_head_opening_tags=True,
+        ensure_spec_compliant_unquoted_attribute_values=True,
+        keep_spaces_between_attributes=True,
+        minify_js=True,
+        minify_css=True,
+        keep_comments=False,
+    )
+    PAGE_LOGGER.debug("HTML file successfully minified.")
+
+    if re.search(r">\s+", rendered_page):
+        PAGE_LOGGER.warning(
+            "Found whitespace after HTML tag. Make sure to check validity of rendered output."
+        )
+        rendered_page = re.sub(r">\s+", ">", rendered_page)
+
+    if re.search(r"\s+<", rendered_page):
+        PAGE_LOGGER.warning(
+            "Found whitespace before HTML tag. Make sure to check validity of rendered output."
+        )
+        rendered_page = re.sub(r"\s+<", "<", rendered_page)
+
+    rendered_page = re.sub(r"(?<=[A-Za-z]):<(?=a|span)", r": <", rendered_page)
+
+
 def build_single_page(
     *,
     page_path: "PurePosixPath",
     page_content: "h.Element",
     site_name: str,
     site_deploy_directory: "Path",
+    minify: bool = False,
 ) -> None:
     """Render a single HTML page into a string output."""
     if page_path.is_absolute():
@@ -50,7 +79,7 @@ def build_single_page(
         extra_context_logger, {"extra_context": f"{site_name}/{page_path.as_posix()}"}
     )
 
-    DEPLOY_PAGE_PATH: Path = site_deploy_directory / site_name / page_path
+    DEPLOY_PAGE_PATH: Path = site_deploy_directory / page_path
 
     DEPLOY_PAGE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
@@ -58,43 +87,10 @@ def build_single_page(
 
     PAGE_LOGGER.debug("HTML successfully rendered.")
 
-    minified_html: str = minify_html.minify(
-        rendered_page,
-        do_not_minify_doctype=True,
-        keep_html_and_head_opening_tags=True,
-        ensure_spec_compliant_unquoted_attribute_values=True,
-        keep_spaces_between_attributes=True,
-        minify_js=True,
-        minify_css=True,
-        keep_comments=False,
-    )
+    if minify:
+        minify_single_page(rendered_page, PAGE_LOGGER)
 
-    minified_html = minified_html.replace("<!doctype html>", "<!DOCTYPE HTML>")
-
-    PAGE_LOGGER.debug("HTML file successfully minified.")
-
-    if re.search(r">\s+", minified_html):
-        PAGE_LOGGER.warning(
-            "Found whitespace after HTML tag. Make sure to check validity of rendered output."
-        )
-        minified_html = re.sub(r">\s+", ">", minified_html)
-
-    if re.search(r"\s+<", minified_html):
-        PAGE_LOGGER.warning(
-            "Found whitespace before HTML tag. Make sure to check validity of rendered output."
-        )
-        minified_html = re.sub(r"\s+<", "<", minified_html)
-
-    minified_html = re.sub(r"(?<=[A-Za-z]):<(?=a|span)", r": <", minified_html)
-
-    "<!--\n"
-    "    Spectral by HTML5 UP\n"
-    "    html5up.net | @ajlkn\n"
-    "    Free for personal and commercial use under the CCA 3.0 license "
-    "(html5up.net/license)\n"
-    "-->\n"
-
-    DEPLOY_PAGE_PATH.write_text(f"{minified_html.strip()}\n", encoding="utf-8")
+    DEPLOY_PAGE_PATH.write_text(f"{rendered_page.strip()}\n", encoding="utf-8")
 
     PAGE_LOGGER.debug("Rendered HTML file successfully saved to `deploy/` directory.")
 
@@ -104,6 +100,7 @@ def build_single_site(
     site_name: str,
     site_pages: "Mapping[PurePosixPath, h.Element]",
     site_deploy_directory: "Path",
+    minify: bool = False,
 ) -> None:
     """Render a single site's HTML pages into string outputs."""
     SITE_LOGGER: Final[LoggerAdapter[Logger]] = LoggerAdapter(
@@ -116,7 +113,7 @@ def build_single_site(
 
     if site_deploy_directory.exists():
         shutil.rmtree(site_deploy_directory)
-    site_deploy_directory.mkdir()
+    site_deploy_directory.mkdir(parents=True)
 
     SITE_LOGGER.debug(
         "Creating symlink to original static directory from inside `deploy/` directory."
@@ -128,18 +125,19 @@ def build_single_site(
 
     page_path: PurePosixPath
     page_content: h.Element
-    for page_path, page_content in site_pages:
+    for page_path, page_content in site_pages.items():
         build_single_page(
             page_path=page_path,
             page_content=page_content,
             site_name=site_name,
             site_deploy_directory=site_deploy_directory,
+            minify=minify,
         )
 
     SITE_LOGGER.debug("Completed building single site successfully.")
 
 
-def build_all_sites() -> "AbstractSet[Path]":
+def build_all_sites(*, minify: bool = False) -> "AbstractSet[Path]":
     """Render all sites HTML pages into string outputs."""
     logger.info("Begin building all sites.")
 
@@ -150,12 +148,12 @@ def build_all_sites() -> "AbstractSet[Path]":
     for site_name, site_pages in SITES_MAP.items():
         site_deploy_directory: Path = PROJECT_ROOT / f"deploy/{site_name}"
 
-        caught_exception: CaughtException
         try:
             build_single_site(
                 site_name=site_name,
                 site_pages=site_pages,
                 site_deploy_directory=site_deploy_directory,
+                minify=minify,
             )
         except (
             ValueError,

@@ -1,4 +1,4 @@
-""""""
+"""Generic HTML component constructors for use accross sites."""
 
 from collections.abc import Iterable
 from typing import TYPE_CHECKING
@@ -40,7 +40,7 @@ def component_site_copyright(
     styles: h.Attribute | None = None,
     extra_tags: h.Node | None = None,
 ) -> h.Element:
-    """"""
+    """Copyright link to return to main webpage from site footers."""
     return h.a(class_=classes, href="https://carrotmanmatt.com", style=styles)[
         Markup(f"©&nbsp;CarrotManMatt&nbsp;2022-{utils.get_current_year()}"), extra_tags
     ]
@@ -52,7 +52,7 @@ def component_body(
     footer: h.Node | None = None,
     scripts: h.Node | None = None,
 ) -> h.Element:
-    """"""
+    """Generate main body component."""
     return h.body[
         h.header[header] if header is not None else None,
         h.main[main],
@@ -74,12 +74,13 @@ def component_base(  # noqa: PLR0913
     after_body: h.Node | None = None,
     copyright_comment: h.Node | None = None,
     stylesheets: h.Node = h.link(href="/static/css/main.css", rel="stylesheet"),  # noqa: B008
+    stylesheets_extend: h.Node | None = None,
     viewport_meta: h.Node = h.meta(  # noqa: B008
         content="width=device-width, initial-scale=1", name="viewport"
     ),
     extra_head: h.Node | None = None,
 ) -> h.HTMLElement:
-    """"""
+    """Generate base site component."""
     if page_title_prefix is not None:
         if not isinstance(page_title, str | int | bool | None):
             INVALID_PAGE_TITLE_TYPE_MESSAGE: Final[str] = (
@@ -88,11 +89,13 @@ def component_base(  # noqa: PLR0913
             raise TypeError(INVALID_PAGE_TITLE_TYPE_MESSAGE)
 
         page_title = f"{page_title_prefix} | {page_title}"
+        del page_title_prefix
 
     if page_keywords_extend is not None:
         if not isinstance(page_keywords, str | int | bool | Iterable):
             INVALID_PAGE_KEYWORDS_TYPE_MESSAGE: Final[str] = (
-                f"Cannot use 'page_keywords_extend' with type of 'page_keywords': {type(page_keywords)}"
+                "Cannot use 'page_keywords_extend' with type of 'page_keywords': "
+                f"{type(page_keywords)}"
             )
             raise TypeError(INVALID_PAGE_KEYWORDS_TYPE_MESSAGE)
 
@@ -101,12 +104,17 @@ def component_base(  # noqa: PLR0913
             if isinstance(page_keywords_extend, str | int | bool)
             else ','.join(str(page_keyword) for page_keyword in page_keywords_extend)
         }"
+        del page_keywords_extend
+
+    if stylesheets_extend is not None:
+        stylesheets = (stylesheets, stylesheets_extend)
+        del stylesheets_extend
 
     return h.html(lang="en-GB")[
         copyright_comment,
         h.head[
             h.title[page_title],
-            h.meta(content=4, property="og:title"),
+            h.meta(content=page_title, property="og:title"),
             h.meta(content=page_description, property="og:description"),
             h.meta(content=site_url, property="og:url"),
             h.meta(content=page_meta_image, property="og:image"),
