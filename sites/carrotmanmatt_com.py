@@ -291,7 +291,7 @@ PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
                     h.ul(class_=("copyright",))[
                         h.li[
                             h.a(styles="border: none", href="https://akpain.net")[
-                                Markup("&#8606; Abi Chrome")
+                                Markup("&#8606; Abi Pain")
                             ]
                         ],
                         h.li["Webring"],
