@@ -13,4 +13,3 @@ ignore = T1,B5,B6
 
 [title-must-not-contain-word]
 words = fuck,stupid,annoying,rubbish,shit,crap
-
