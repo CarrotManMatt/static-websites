@@ -297,7 +297,7 @@ PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
                         h.li["Webring"],
                         h.li[
                             h.a(style="border: none", href="https://charliew.net")[
-                                Markup("&#8608; Charlie W")
+                                Markup("Charlie W &#8608;")
                             ]
                         ],
                     ],
