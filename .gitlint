@@ -8,7 +8,7 @@ regex = \A.*\[bot\].*\Z
 ignore = T1,B1,B5,B6
 
 [ignore-by-title]
-regex = \AMerge\s+[a-f0-9]{8,64}\s+into\s+[a-f0-9]{8-64}\Z
+regex = \AMerge\s+[a-f0-9]{8,64}\s+into\s+[a-f0-9]{8,64}\Z
 ignore = T1,B5,B6
 
 [title-must-not-contain-word]
