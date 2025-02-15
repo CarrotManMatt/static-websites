@@ -1,4 +1,4 @@
-"""Generic HTML component constructors for use accross sites."""
+"""Generic HTML component constructors for use across sites."""
 
 from collections.abc import Iterable
 from typing import TYPE_CHECKING
@@ -30,7 +30,7 @@ def component_icons_list() -> h.Node:
                 ("brands", "fa-stack-overflow"),
                 Markup("Stack&nbsp;Overflow"),
             ),
-            ("mailto:matt@carrotmanmatt.com", ("brands", "fa-envelope"), "Email"),
+            ("mailto:matt@carrotmanmatt.com", ("solid", "fa-envelope"), "Email"),
         )
     )
 
@@ -40,7 +40,7 @@ def component_site_copyright(
     styles: h.Attribute | None = None,
     extra_tags: h.Node | None = None,
 ) -> h.Element:
-    """Copyright link to return to main webpage from site footers."""
+    """Copyright link to return to the main webpage from site footers."""
     return h.a(class_=classes, href="https://carrotmanmatt.com", style=styles)[
         Markup(f"©&nbsp;CarrotManMatt&nbsp;2022-{utils.get_current_year()}"), extra_tags
     ]
@@ -52,7 +52,7 @@ def component_body(
     footer: h.Node | None = None,
     scripts: h.Node | None = None,
 ) -> h.Element:
-    """Generate main body component."""
+    """Generate the main body component."""
     return h.body[
         h.header[header] if header is not None else None,
         h.main[main],
