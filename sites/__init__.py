@@ -1,4 +1,4 @@
-""""""
+"""Overall static site pages definition map."""
 
 from typing import TYPE_CHECKING
 
