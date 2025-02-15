@@ -219,7 +219,6 @@ def deploy_all_sites(
             site_path.parent.name if site_path.name == "deploy" else site_path.name
         )
 
-        caught_exception: CaughtException
         try:
             deploy_single_site(
                 site_path,

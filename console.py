@@ -110,9 +110,7 @@ def run() -> int:
     logging_setup.setup(verbosity=verbosity)
 
     try:
-        built_site_paths: AbstractSet[Path] = build.build_all_sites(
-            minify=_get_true_boolean("MINIFY")
-        )
+        built_site_paths: AbstractSet[Path] = build.build_all_sites()
 
         if not built_site_paths:
             logger.warning("All sites failed to build. (Or no sites exist.)")

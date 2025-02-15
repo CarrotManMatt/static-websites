@@ -1,7 +1,6 @@
 """Build and render functions for whole sites and single HTML pages."""
 
 import logging
-import re
 import shutil
 import traceback
 from logging import LoggerAdapter
@@ -30,43 +29,12 @@ extra_context_logger: "Final[Logger]" = logging.getLogger(
 )
 
 
-def minify_single_page(rendered_page: str, PAGE_LOGGER: "Logger") -> str:  # noqa: N803
-    import minify_html
-
-    rendered_page = minify_html.minify(
-        rendered_page,
-        do_not_minify_doctype=True,
-        keep_html_and_head_opening_tags=True,
-        ensure_spec_compliant_unquoted_attribute_values=True,
-        keep_spaces_between_attributes=True,
-        minify_js=True,
-        minify_css=True,
-        keep_comments=False,
-    )
-    PAGE_LOGGER.debug("HTML file successfully minified.")
-
-    if re.search(r">\s+", rendered_page):
-        PAGE_LOGGER.warning(
-            "Found whitespace after HTML tag. Make sure to check validity of rendered output."
-        )
-        rendered_page = re.sub(r">\s+", ">", rendered_page)
-
-    if re.search(r"\s+<", rendered_page):
-        PAGE_LOGGER.warning(
-            "Found whitespace before HTML tag. Make sure to check validity of rendered output."
-        )
-        rendered_page = re.sub(r"\s+<", "<", rendered_page)
-
-    rendered_page = re.sub(r"(?<=[A-Za-z]):<(?=a|span)", r": <", rendered_page)
-
-
 def build_single_page(
     *,
     page_path: "PurePosixPath",
     page_content: "h.Element",
     site_name: str,
     site_deploy_directory: "Path",
-    minify: bool = False,
 ) -> None:
     """Render a single HTML page into a string output."""
     if page_path.is_absolute():
@@ -87,9 +55,6 @@ def build_single_page(
 
     PAGE_LOGGER.debug("HTML successfully rendered.")
 
-    if minify:
-        minify_single_page(rendered_page, PAGE_LOGGER)
-
     DEPLOY_PAGE_PATH.write_text(f"{rendered_page.strip()}\n", encoding="utf-8")
 
     PAGE_LOGGER.debug("Rendered HTML file successfully saved to `deploy/` directory.")
@@ -100,7 +65,6 @@ def build_single_site(
     site_name: str,
     site_pages: "Mapping[PurePosixPath, h.Element]",
     site_deploy_directory: "Path",
-    minify: bool = False,
 ) -> None:
     """Render a single site's HTML pages into string outputs."""
     SITE_LOGGER: Final[LoggerAdapter[Logger]] = LoggerAdapter(
@@ -131,13 +95,12 @@ def build_single_site(
             page_content=page_content,
             site_name=site_name,
             site_deploy_directory=site_deploy_directory,
-            minify=minify,
         )
 
     SITE_LOGGER.debug("Completed building single site successfully.")
 
 
-def build_all_sites(*, minify: bool = False) -> "AbstractSet[Path]":
+def build_all_sites() -> "AbstractSet[Path]":
     """Render all sites HTML pages into string outputs."""
     logger.info("Begin building all sites.")
 
@@ -153,7 +116,6 @@ def build_all_sites(*, minify: bool = False) -> "AbstractSet[Path]":
                 site_name=site_name,
                 site_pages=site_pages,
                 site_deploy_directory=site_deploy_directory,
-                minify=minify,
             )
         except (
             ValueError,
