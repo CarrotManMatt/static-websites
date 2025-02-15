@@ -23,8 +23,11 @@ logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
 ENVIRONMENT_VARIABLE_PREFIX: "Final[str]" = "STATIC_WEBSITES_BUILDER_"
 
 
-def _get_true_dry_run() -> bool:
-    raw_dry_run: str = os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN", "false").lower()
+def _get_true_boolean(environment_variable_name: str, *, default_false: bool = True) -> bool:
+    raw_dry_run: str = os.environ.get(
+        f"{ENVIRONMENT_VARIABLE_PREFIX}{environment_variable_name.upper()}",
+        "false" if default_false else "true",
+    ).lower()
 
     if raw_dry_run == "true":
         return True
@@ -99,7 +102,7 @@ def _get_true_string_arg[T: validators.SimpleValidator[str]](
 
 def run() -> int:
     """Run the static websites builder and deployment script."""
-    dry_run: bool = _get_true_dry_run()
+    dry_run: bool = _get_true_boolean("DRY_RUN")
 
     verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(is_dry_run=dry_run)
 
