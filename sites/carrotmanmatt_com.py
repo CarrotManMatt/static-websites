@@ -288,9 +288,18 @@ PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
                 ],
                 h.footer(id="footer")[
                     h.ul(class_=("icons",))[component_icons_list()],
-                    h.ul[
-                        h.li[h.a(href="https://akpain.net")[Markup("&#8606; Abi Chrome")]],
-                        h.li[h.a(href="https://charliew.net")[Markup("&#8608; Charlie W")]],
+                    h.ul(class_=("copyright",))[
+                        h.li[
+                            h.a(styles="border: none", href="https://akpain.net")[
+                                Markup("&#8606; Abi Chrome")
+                            ]
+                        ],
+                        h.li["Webring"],
+                        h.li[
+                            h.a(styles="border: none", href="https://charliew.net")[
+                                Markup("&#8608; Charlie W")
+                            ]
+                        ],
                     ],
                     h.ul(class_=("copyright",))[
                         h.li[
