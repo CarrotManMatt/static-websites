@@ -290,19 +290,6 @@ PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
                     h.ul(class_=("icons",))[component_icons_list()],
                     h.ul(class_=("copyright",))[
                         h.li[
-                            h.a(style="border: none", href="https://akpain.net")[
-                                Markup("&#8606; Abi Pain")
-                            ]
-                        ],
-                        h.li["Webring"],
-                        h.li[
-                            h.a(style="border: none", href="https://charliew.net")[
-                                Markup("Charlie W &#8608;")
-                            ]
-                        ],
-                    ],
-                    h.ul(class_=("copyright",))[
-                        h.li[
                             component_site_copyright(
                                 styles="border: none",
                                 extra_tags=h.span(
