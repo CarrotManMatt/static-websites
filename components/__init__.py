@@ -42,7 +42,8 @@ def component_site_copyright(
 ) -> h.Element:
     """Copyright link to return to the main webpage from site footers."""
     return h.a(class_=classes, href="https://carrotmanmatt.com", style=styles)[
-        Markup(f"©&nbsp;CarrotManMatt&nbsp;2022-{utils.get_current_year()}"), extra_tags
+        Markup("©&nbsp;CarrotManMatt&nbsp;2022-{:d}").format(utils.get_current_year()),
+        extra_tags,
     ]
 
 
