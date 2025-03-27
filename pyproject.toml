@@ -136,8 +136,8 @@ keep-runtime-typing = true
 
 [tool.uv]
 default-groups = ["dev", "main"]
-no-binary-package = ["cssbeautifier", "jsbeautifier", "static-websites"]
+no-binary-package = ["cssbeautifier", "jsbeautifier"]
 no-build = true
 no-build-package = ["minify-html"]
 package = false
-required-version = ">=0.5.8"
+required-version = ">=0.6.10"
