@@ -98,10 +98,13 @@ jobs:
               run: uv run -- pre-commit install-hooks
 
             - name: Save pre-commit Checks Which Require Skipping
-              run: echo "SKIP=check-github-workflows,djlint-django,ruff,uv-lock" >> $GITHUB_ENV
+              run: echo "SKIP=check-github-workflows,ruff,uv-lock" >> $GITHUB_ENV
 
             - name: Run pre-commit
               run: uv run -- pre-commit run --all-files --hook-stage manual  # TODO: Add GitHub workflows output format
+
+            - uses: pre-commit-ci/lite-action@v1.1.0
+              if: ${{!cancelled()}}
 
     ruff-lint:
         runs-on: ubuntu-latest
