@@ -36,6 +36,7 @@ def component_icons_list() -> h.Node:
 
 
 def component_site_copyright(
+    *,
     classes: h.Attribute | None = None,
     styles: h.Attribute | None = None,
     extra_tags: h.Node | None = None,
@@ -48,6 +49,7 @@ def component_site_copyright(
 
 
 def component_body(
+    *,
     main: h.Node,
     header: h.Node | None = None,
     footer: h.Node | None = None,
@@ -63,6 +65,7 @@ def component_body(
 
 
 def component_base(  # noqa: PLR0913
+    *,
     body: h.Node,
     page_title: h.Attribute = "CarrotManMatt.com",
     page_title_prefix: str | int | bool | None = None,

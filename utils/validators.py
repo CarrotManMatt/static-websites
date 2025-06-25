@@ -83,6 +83,11 @@ class SimpleValidator[T](abc.ABC):
 
         return other._value == self._value
 
+    @override
+    def __hash__(self) -> int:
+        """Return the hash of the wrapped value."""
+        return hash(self._value)
+
 
 class _StrippedStringValidator(SimpleValidator[str], abc.ABC):
     @classmethod
