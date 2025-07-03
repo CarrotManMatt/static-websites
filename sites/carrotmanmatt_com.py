@@ -299,12 +299,8 @@ PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
                             )
                         ],
                         h.li(id="css-sponsorship")[
-                            h.a(href="https://cssbham.com", style="border: none")[
-                                "Sponsored by:",
-                                h.span(style="border-bottom: dotted 1px")[
-                                    Markup("UoB&nbsp;CSS")
-                                ],
-                            ]
+                            "Sponsored by: ",
+                            h.a(href="https://cssbham.com")[Markup("UoB&nbsp;CSS")],
                         ],
                         h.li[
                             "Design: ",
