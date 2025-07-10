@@ -2,7 +2,7 @@ default_install_hook_types: [pre-commit, commit-msg]
 default_stages: [pre-commit, pre-merge-commit, manual]
 
 default_language_version:
-    python: python3.12
+    python: python3.13
 
 repos:
     - repo: https://github.com/renovatebot/pre-commit-hooks
@@ -76,7 +76,7 @@ repos:
         - id: ruff-format
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.7.19
+      rev: 0.7.20
       hooks:
         - id: uv-lock
           always_run: true

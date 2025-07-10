@@ -13,10 +13,16 @@ if TYPE_CHECKING:
     from typing import Final
 
 
-__all__: "Sequence[str]" = ("component_base", "component_body", "component_site_copyright")
+__all__: "Sequence[str]" = (
+    "component_base",
+    "component_body",
+    "component_icons_list",
+    "component_site_copyright",
+)
 
 
 def component_icons_list() -> h.Node:
+    """Generate the icons list for links to social media."""
     return (
         h.li[h.a(href=link, class_=("icon", *classes))[h.span(class_=("label",))[label]]]
         for link, classes, label in (
@@ -41,7 +47,7 @@ def component_site_copyright(
     styles: h.Attribute | None = None,
     extra_tags: h.Node | None = None,
 ) -> h.Element:
-    """Copyright link to return to the main webpage from site footers."""
+    """Generate the copyright link to return to the main webpage from site footers."""
     return h.a(class_=classes, href="https://carrotmanmatt.com", style=styles)[
         Markup("©&nbsp;CarrotManMatt&nbsp;2022-{:d}").format(utils.get_current_year()),
         extra_tags,
