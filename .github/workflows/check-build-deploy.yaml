@@ -1,13 +1,13 @@
 name: Check, Build and Deploy All Websites
 
-on:
+"on":
     pull_request:
         branches: [main]
     push:
         branches: [main]
     schedule:
         - cron: 48 5 * * 1
-    workflow_dispatch:
+    workflow_dispatch: ~
 
 jobs:
     uv-check:
@@ -24,13 +24,14 @@ jobs:
             - name: Check uv.lock (ensure all dependencies up to date)
               run: uv lock --check
 
+    # yamllint disable-line rule:key-ordering
     mypy:
+        env:
+            UV_FROZEN: true
+            UV_NO_SYNC: true
+            UV_PYTHON_DOWNLOADS: never
         needs: [uv-check]
         runs-on: ubuntu-latest
-        env:
-            UV_NO_SYNC: true
-            UV_FROZEN: true
-            UV_PYTHON_DOWNLOADS: never
 
         steps:
             - uses: actions/checkout@v4
@@ -48,25 +49,26 @@ jobs:
             - name: Install mypy From Locked Dependencies
               run: uv sync --no-group dev --group type-check
 
-            - name: Store Hashed Python Version
-              id: store-hashed-python-version
+            - id: store-hashed-python-version
+              name: Store Hashed Python Version
               run: echo "hashed_python_version=$(uv run -- python -VV | sha256sum | cut -d' ' -f1)"
                 >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
-                path: ./.mypy_cache
                 key: mypy|${{steps.store-hashed-python-version.outputs.hashed_python_version}}
+                path: ./.mypy_cache
 
             - name: Run mypy
               run: uv run -- mypy .  # TODO: Add GitHub workflows output format
 
+    # yamllint disable-line rule:key-ordering
     pre-commit:
-        runs-on: ubuntu-latest
         env:
-            UV_NO_SYNC: true
             UV_FROZEN: true
+            UV_NO_SYNC: true
             UV_PYTHON_DOWNLOADS: never
+        runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
@@ -84,15 +86,15 @@ jobs:
             - name: Install pre-commit From Locked Dependencies
               run: uv sync --only-group pre-commit
 
-            - name: Store Hashed Python Version
-              id: store-hashed-python-version
+            - id: store-hashed-python-version
+              name: Store Hashed Python Version
               run: echo "hashed_python_version=$(uv run -- python -VV | sha256sum | cut -d' ' -f1)"
                 >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
-                path: ~/.cache/pre-commit
                 key: pre-commit|${{steps.store-hashed-python-version.outputs.hashed_python_version}}|${{hashFiles('.pre-commit-config.yaml')}}
+                path: ~/.cache/pre-commit
 
             - name: Setup pre-commit Environments
               run: uv run -- pre-commit install-hooks
@@ -103,15 +105,16 @@ jobs:
             - name: Run pre-commit
               run: uv run -- pre-commit run --all-files --hook-stage manual  # TODO: Add GitHub workflows output format
 
-            - uses: pre-commit-ci/lite-action@v1.1.0
-              if: ${{!cancelled()}}
+            - if: ${{!cancelled()}}
+              uses: pre-commit-ci/lite-action@v1.1.0
 
+    # yamllint disable-line rule:key-ordering
     ruff-lint:
-        runs-on: ubuntu-latest
         env:
-            UV_NO_SYNC: true
             UV_FROZEN: true
+            UV_NO_SYNC: true
             UV_PYTHON_DOWNLOADS: never
+        runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
@@ -129,29 +132,31 @@ jobs:
             - name: Install ruff From Locked Dependencies
               run: uv sync --only-group lint-format
 
-            - name: Store Hashed Python Version
-              id: store-hashed-python-version
+            - id: store-hashed-python-version
+              name: Store Hashed Python Version
               run: echo "hashed_python_version=$(uv run -- python -VV | sha256sum | cut -d' ' -f1)"
                 >> $GITHUB_OUTPUT
 
             - uses: actions/cache@v4
               with:
-                path: ./.ruff_cache
                 key: ruff|${{steps.store-hashed-python-version.outputs.hashed_python_version}}
+                path: ./.ruff_cache
 
             - name: Run Ruff
               run: uv run -- ruff check --no-fix --output-format=github
 
+    # yamllint disable-line rule:key-ordering
     build-and-deploy:
-        name: Build and Deploy All Websites
-        runs-on: ubuntu-latest
         environment: deploy
-        needs: [mypy, pre-commit, ruff-lint, uv-check]
-        permissions:
-            contents: read
 
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name ==
             'workflow_dispatch'
+
+        name: Build and Deploy All Websites
+        needs: [mypy, pre-commit, ruff-lint, uv-check]
+        permissions:
+            contents: read
+        runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
@@ -177,10 +182,9 @@ jobs:
               with:
                 ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
 
-            - name: Run Build & Deploy Script
-              env:
+            - env:
                 STATIC_WEBSITES_BUILDER_REMOTE_DIRECTORY: ${{secrets.REMOTE_DIRECTORY}}
                 STATIC_WEBSITES_BUILDER_REMOTE_IP: ${{secrets.REMOTE_IP}}
                 STATIC_WEBSITES_BUILDER_REMOTE_USERNAME: ${{secrets.REMOTE_USERNAME}}
-
+              name: Run Build & Deploy Script
               run: uv run -m console
