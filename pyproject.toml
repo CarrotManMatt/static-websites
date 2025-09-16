@@ -7,7 +7,7 @@ dev = [
 lint-format = ["ruff>=0.4"]
 main = ["gitpython>=3.1", "htpy>=25", "python-dateutil>=2.9", "typed_classproperties>=1.1"]
 pre-commit = ["pre-commit"]
-type-check = ["mypy>=1.12", "types-python-dateutil>=2.9"]
+type-check = ["mypy>=1.18.2", "types-python-dateutil>=2.9"]
 
 [project] # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
 name = "static-websites"
@@ -135,8 +135,11 @@ keep-runtime-typing = true
 
 [tool.uv]
 default-groups = ["dev", "main"]
-no-binary-package = ["cssbeautifier", "jsbeautifier"]
+no-binary-package = ["cssbeautifier", "jsbeautifier", "static-websites", "mypy"]
 no-build = true
 no-build-package = ["minify-html"]
 package = false
 required-version = ">=0.6.10"
+
+[tool.uv.sources]
+mypy = { git = "https://github.com/python/mypy", tag = "release-1.18" }
