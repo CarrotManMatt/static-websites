@@ -135,7 +135,7 @@ keep-runtime-typing = true
 
 [tool.uv]
 default-groups = ["dev", "main"]
-no-binary-package = ["cssbeautifier", "jsbeautifier", "static-websites", "mypy"]
+no-binary-package = ["cssbeautifier", "jsbeautifier", "mypy"]
 no-build = true
 no-build-package = ["minify-html"]
 package = false
