@@ -142,4 +142,4 @@ package = false
 required-version = ">=0.6.10"
 
 [tool.uv.sources]
-mypy = { git = "https://github.com/python/mypy", tag = "release-1.18" }
+mypy = { git = "https://github.com/python/mypy", tag = "release-1.18" }  # TODO: Remove git source once full release is made

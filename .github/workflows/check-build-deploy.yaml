@@ -154,6 +154,10 @@ jobs:
 
     # yamllint disable-line rule:key-ordering
     build-and-deploy:
+        env:
+            UV_FROZEN: true
+            UV_NO_SYNC: true
+            UV_PYTHON_DOWNLOADS: never
         environment: deploy
 
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name ==
