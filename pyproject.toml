@@ -135,11 +135,6 @@ keep-runtime-typing = true
 
 [tool.uv]
 default-groups = ["dev", "main"]
-no-binary-package = ["cssbeautifier", "jsbeautifier", "mypy"]
 no-build = true
-no-build-package = ["minify-html"]
 package = false
 required-version = ">=0.6.10"
-
-[tool.uv.sources]
-mypy = { git = "https://github.com/python/mypy", tag = "v1.18.2" } # TODO: Remove git source once full release is made
