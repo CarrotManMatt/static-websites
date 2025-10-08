@@ -21,20 +21,20 @@ if TYPE_CHECKING:
 
     from utils import CaughtException
 
-__all__: "Sequence[str]" = ("build_all_sites", "build_single_page", "build_single_site")
+__all__: Sequence[str] = ("build_all_sites", "build_single_page", "build_single_site")
 
-logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
-extra_context_logger: "Final[Logger]" = logging.getLogger(
+logger: Final[Logger] = logging.getLogger("static-websites-builder")
+extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
 )
 
 
 def build_single_page(
     *,
-    page_path: "PurePosixPath",
-    page_content: "h.Element",
+    page_path: PurePosixPath,
+    page_content: h.Element,
     site_name: str,
-    site_deploy_directory: "Path",
+    site_deploy_directory: Path,
 ) -> None:
     """Render a single HTML page into a string output."""
     if page_path.is_absolute():
@@ -63,8 +63,8 @@ def build_single_page(
 def build_single_site(
     *,
     site_name: str,
-    site_pages: "Mapping[PurePosixPath, h.Element]",
-    site_deploy_directory: "Path",
+    site_pages: Mapping[PurePosixPath, h.Element],
+    site_deploy_directory: Path,
 ) -> None:
     """Render a single site's HTML pages into string outputs."""
     SITE_LOGGER: Final[LoggerAdapter[Logger]] = LoggerAdapter(
@@ -100,7 +100,7 @@ def build_single_site(
     SITE_LOGGER.debug("Completed building single site successfully.")
 
 
-def build_all_sites() -> "AbstractSet[Path]":
+def build_all_sites() -> AbstractSet[Path]:
     """Render all sites HTML pages into string outputs."""
     logger.info("Begin building all sites.")
 

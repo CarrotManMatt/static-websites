@@ -17,7 +17,7 @@ if TYPE_CHECKING:
         ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
     )
 
-__all__: "Sequence[str]" = ("PROJECT_ROOT", "CaughtException", "get_current_year")
+__all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException", "get_current_year")
 
 
 def get_current_year() -> int:
@@ -60,4 +60,4 @@ def _get_readme_root() -> Path:
     raise FileNotFoundError(NO_ROOT_DIRECTORY_MESSAGE)
 
 
-PROJECT_ROOT: "Final[Path]" = _get_project_root()
+PROJECT_ROOT: Final[Path] = _get_project_root()

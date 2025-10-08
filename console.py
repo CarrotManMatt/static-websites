@@ -17,10 +17,10 @@ if TYPE_CHECKING:
     from logging import Logger
     from typing import Final, Literal
 
-__all__: "Sequence[str]" = ("run",)
+__all__: Sequence[str] = ("run",)
 
-logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
-ENVIRONMENT_VARIABLE_PREFIX: "Final[str]" = "STATIC_WEBSITES_BUILDER_"
+logger: Final[Logger] = logging.getLogger("static-websites-builder")
+ENVIRONMENT_VARIABLE_PREFIX: Final[str] = "STATIC_WEBSITES_BUILDER_"
 
 
 def _get_true_boolean(environment_variable_name: str, *, default_false: bool = True) -> bool:
@@ -38,7 +38,7 @@ def _get_true_boolean(environment_variable_name: str, *, default_false: bool = T
     raise ValueError
 
 
-def _get_true_verbosity(*, is_dry_run: bool) -> "Literal[0, 1, 2, 3]":
+def _get_true_verbosity(*, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
     raw_verbosity: int = int(os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}VERBOSITY", "0"))
     if raw_verbosity < 0 and is_dry_run:
         MUTUALLY_EXCLUSIVE_MESSAGE: Final[str] = (

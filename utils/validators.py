@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
     from typing import Final
 
-__all__: "Sequence[str]" = ("Hostname", "SimpleValidator", "Username")
+__all__: Sequence[str] = ("Hostname", "SimpleValidator", "Username")
 
 
 class SimpleValidator[T](abc.ABC):

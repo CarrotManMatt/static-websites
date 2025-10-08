@@ -21,10 +21,10 @@ if TYPE_CHECKING:
     from utils import CaughtException
     from utils.validators import Username
 
-__all__: "Sequence[str]" = ("deploy_all_sites", "deploy_single_site")
+__all__: Sequence[str] = ("deploy_all_sites", "deploy_single_site")
 
-logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
-extra_context_logger: "Final[Logger]" = logging.getLogger(
+logger: Final[Logger] = logging.getLogger("static-websites-builder")
+extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
 )
 
@@ -33,7 +33,7 @@ def _get_posix_remote_directory(
     raw_remote_directory: Path | None,
     *,
     site_name: str,
-    remote_username: "Username | None" = None,
+    remote_username: Username | None = None,
 ) -> str:
     if raw_remote_directory is not None:
         if remote_username:
@@ -60,9 +60,9 @@ def _get_posix_remote_directory(
 def deploy_single_site(
     site_path: Path,
     *,
-    verbosity: "Literal[0, 1, 2, 3]" = 1,
+    verbosity: Literal[0, 1, 2, 3] = 1,
     remote_hostname: Hostname,
-    remote_username: "Username | None" = None,
+    remote_username: Username | None = None,
     remote_directory: Path | None = None,
     dry_run: bool = False,
 ) -> None:
@@ -170,14 +170,14 @@ def deploy_single_site(
 
 
 def deploy_all_sites(
-    site_paths: "AbstractSet[Path]",
+    site_paths: AbstractSet[Path],
     *,
-    verbosity: "Literal[0, 1, 2, 3]" = 1,
+    verbosity: Literal[0, 1, 2, 3] = 1,
     remote_hostname: Hostname | None = None,
-    remote_username: "Username | None" = None,
+    remote_username: Username | None = None,
     remote_directory: Path | None = None,
     dry_run: bool = False,
-) -> "AbstractSet[str]":
+) -> AbstractSet[str]:
     """
     Deploy all static websites.
 

@@ -8,20 +8,22 @@ if TYPE_CHECKING:
     from logging import Logger
     from typing import Final, Literal, TextIO
 
-__all__: "Sequence[str]" = ("setup",)
-logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
-extra_context_logger: "Final[Logger]" = logging.getLogger(
+__all__: Sequence[str] = ("setup",)
+logger: Final[Logger] = logging.getLogger("static-websites-builder")
+extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
 )
 
-LOG_LEVEL_MAPS: "Final[Mapping[Literal[1, 2, 3], Literal['DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL']]]" = {  # noqa: E501
+LOG_LEVEL_MAPS: Final[
+    Mapping[Literal[1, 2, 3], Literal["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]]
+] = {
     1: "INFO",
     2: "DEBUG",
     3: "DEBUG",
 }
 
 
-def setup(*, verbosity: "Literal[0, 1, 2, 3]" = 1) -> None:
+def setup(*, verbosity: Literal[0, 1, 2, 3] = 1) -> None:
     """Set up a console logger with the output level according to the given verbosity."""
     logger.setLevel(1)
     logger.propagate = False

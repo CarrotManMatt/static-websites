@@ -12,10 +12,10 @@ if TYPE_CHECKING:
     from typing import Final
 
 
-__all__: "Sequence[str]" = ("PAGES_MAP",)
+__all__: Sequence[str] = ("PAGES_MAP",)
 
 
-PAGES_MAP: "Final[Mapping[PurePosixPath, h.HTMLElement]]" = {
+PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
     PurePosixPath("index.html"): component_base(
         body=component_body(
             header=(

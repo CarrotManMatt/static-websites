@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from typing import Final
 
 
-__all__: "Sequence[str]" = (
+__all__: Sequence[str] = (
     "component_base",
     "component_body",
     "component_icons_list",
@@ -79,7 +79,7 @@ def component_base(  # noqa: PLR0913
     page_meta_image: h.Attribute = "https://carrotmanmatt.com/static/website_icon.png",
     page_content_type: h.Attribute = "article",
     page_keywords: h.Attribute = "CarrotManMatt",
-    page_keywords_extend: "str | int | bool | None | Iterable[str | int | bool]" = None,
+    page_keywords_extend: str | int | bool | None | Iterable[str | int | bool] = None,
     site_url: h.Attribute = "https://carrotmanmatt.com",
     after_body: h.Node | None = None,
     copyright_comment: h.Node | None = None,

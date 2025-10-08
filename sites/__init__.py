@@ -11,9 +11,9 @@ if TYPE_CHECKING:
 
     import htpy as h
 
-__all__: "Sequence[str]" = ("SITES_MAP",)
+__all__: Sequence[str] = ("SITES_MAP",)
 
-SITES_MAP: "Final[Mapping[str, Mapping[PurePosixPath, h.HTMLElement]]]" = {
+SITES_MAP: Final[Mapping[str, Mapping[PurePosixPath, h.HTMLElement]]] = {
     "car-points": car_points.PAGES_MAP,
     "carrotmanmatt.com": carrotmanmatt_com.PAGES_MAP,
 }

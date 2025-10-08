@@ -13,10 +13,10 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import Final
 
-__all__: "Sequence[str]" = ("cleanup_all_sites",)
+__all__: Sequence[str] = ("cleanup_all_sites",)
 
-logger: "Final[Logger]" = logging.getLogger("static-websites-builder")
-extra_context_logger: "Final[Logger]" = logging.getLogger(
+logger: Final[Logger] = logging.getLogger("static-websites-builder")
+extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
 )
 

@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from collections.abc import Set as AbstractSet
     from typing import Final
 
-__all__: "Sequence[str]" = ("BaseError", "MutuallyExclusiveArgsError")
+__all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
 
 
 class BaseError(BaseException, abc.ABC):
@@ -61,7 +61,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
     def __init__(
         self,
         message: str | None = None,
-        mutually_exclusive_arguments: "AbstractSet[AbstractSet[str]] | None" = None,
+        mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = None,
     ) -> None:
         self.mutually_exclusive_arguments: AbstractSet[AbstractSet[str]] | None = (
             mutually_exclusive_arguments
@@ -79,7 +79,7 @@ class MutuallyExclusiveArgsError(BaseError, ValueError):
 
     @classmethod
     def format_mutually_exclusive_arguments_to_message(
-        cls, mutually_exclusive_arguments: "AbstractSet[AbstractSet[str]]"
+        cls, mutually_exclusive_arguments: AbstractSet[AbstractSet[str]]
     ) -> str:
         """Create the exception message based on the set of mutually exclusive arguments."""
         if not mutually_exclusive_arguments:
