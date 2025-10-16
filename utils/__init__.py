@@ -55,7 +55,6 @@ def _get_readme_root() -> Path:
         if any(path.stem == "README" for path in project_root.iterdir()):
             return project_root
 
-    # noinspection PyFinal
     NO_ROOT_DIRECTORY_MESSAGE: Final[str] = "Could not locate project root directory."
     raise FileNotFoundError(NO_ROOT_DIRECTORY_MESSAGE)
 

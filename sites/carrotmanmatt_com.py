@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 
 __all__: Sequence[str] = ("PAGES_MAP",)
 
+
 PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
     PurePosixPath("index.html"): component_base(
         copyright_comment=h.comment(

@@ -9,6 +9,8 @@ if TYPE_CHECKING:
     from typing import Final, Literal, TextIO
 
 __all__: Sequence[str] = ("setup",)
+
+
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
@@ -31,14 +33,12 @@ def setup(*, verbosity: Literal[0, 1, 2, 3] = 1) -> None:
     extra_context_logger.propagate = False
 
     if verbosity != 0:
-        # noinspection SpellCheckingInspection
         info_format_string: str = "{asctime} | static-websites-builder | {levelname:^8} - "
 
         console_logging_handler: logging.StreamHandler[TextIO] = logging.StreamHandler()
         console_logging_handler.setFormatter(
             logging.Formatter(f"{info_format_string}{{message}}", style="{"),
         )
-        # noinspection PyTypeChecker
         console_logging_handler.setLevel(LOG_LEVEL_MAPS[verbosity])
         logger.addHandler(console_logging_handler)
 
@@ -49,11 +49,9 @@ def setup(*, verbosity: Literal[0, 1, 2, 3] = 1) -> None:
                 style="{",
             ),
         )
-        # noinspection PyTypeChecker
         console_logging_handler.setLevel(LOG_LEVEL_MAPS[verbosity])
         extra_context_logger.addHandler(console_logging_handler)
 
-        # noinspection PyTypeChecker
         logger.debug(
             "Logger set up with minimum output level: %s",
             LOG_LEVEL_MAPS[verbosity],

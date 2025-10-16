@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 
 __all__: Sequence[str] = ("run",)
 
+
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 ENVIRONMENT_VARIABLE_PREFIX: Final[str] = "STATIC_WEBSITES_BUILDER_"
 
@@ -106,7 +107,6 @@ def run() -> int:
 
     verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(is_dry_run=dry_run)
 
-    # noinspection PyUnboundLocalVariable
     logging_setup.setup(verbosity=verbosity)
 
     try:

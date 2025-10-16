@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 
 __all__: Sequence[str] = ("deploy_all_sites", "deploy_single_site")
 
+
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
@@ -102,13 +103,11 @@ def deploy_single_site(
 
     site_name_logger.debug("Successfully retrieved resolved remote directory path.")
 
-    # noinspection SpellCheckingInspection
     dry_run_site_name_logger.debug(
         "Beginning %supload of `deploy/` directory to remote server.",
         "mock " if dry_run else "",
     )
 
-    # noinspection SpellCheckingInspection
     rsync_args: list[str] = [
         "rsync",
         "--recursive",
@@ -207,7 +206,6 @@ def deploy_all_sites(
         Hostname("192.168.0.1") if remote_hostname is None else remote_hostname
     )
 
-    # noinspection SpellCheckingInspection
     dry_run_logger.debug(
         "Opening %sconnection to remote deployment server.",
         "mock " if dry_run else "",

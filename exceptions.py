@@ -51,7 +51,6 @@ class BaseError(BaseException, abc.ABC):
 class MutuallyExclusiveArgsError(BaseError, ValueError):
     """Exception class for when two or more mutually exclusive arguments are provided."""
 
-    # noinspection PyMethodParameters,PyPep8Naming
     @classproperty
     @override
     def DEFAULT_MESSAGE(cls) -> str:

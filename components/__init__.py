@@ -92,7 +92,7 @@ def component_base(  # noqa: PLR0913
 ) -> h.HTMLElement:
     """Generate base site component."""
     if page_title_prefix is not None:
-        if not isinstance(page_title, str | int | bool | None):
+        if not isinstance(page_title, (str, int, bool, None)):
             INVALID_PAGE_TITLE_TYPE_MESSAGE: Final[str] = (
                 f"Cannot use 'page_title_prefix' with type of 'page_title': {type(page_title)}"
             )
@@ -102,7 +102,7 @@ def component_base(  # noqa: PLR0913
         del page_title_prefix
 
     if page_keywords_extend is not None:
-        if not isinstance(page_keywords, str | int | bool | Iterable):
+        if not isinstance(page_keywords, (str, int, bool, Iterable)):
             INVALID_PAGE_KEYWORDS_TYPE_MESSAGE: Final[str] = (
                 "Cannot use 'page_keywords_extend' with type of 'page_keywords': "
                 f"{type(page_keywords)}"
@@ -111,7 +111,7 @@ def component_base(  # noqa: PLR0913
 
         page_keywords = f"{page_keywords},{
             page_keywords_extend
-            if isinstance(page_keywords_extend, str | int | bool)
+            if isinstance(page_keywords_extend, (str, int, bool))
             else ','.join(str(page_keyword) for page_keyword in page_keywords_extend)
         }"
         del page_keywords_extend

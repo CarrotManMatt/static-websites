@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 
 __all__: Sequence[str] = ("build_all_sites", "build_single_page", "build_single_site")
 
+
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
