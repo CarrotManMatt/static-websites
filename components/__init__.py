@@ -92,7 +92,7 @@ def component_base(  # noqa: PLR0913
 ) -> h.HTMLElement:
     """Generate base site component."""
     if page_title_prefix is not None:
-        if not isinstance(page_title, (str, int, bool, None)):
+        if not isinstance(page_title, (str, int, bool)):
             INVALID_PAGE_TITLE_TYPE_MESSAGE: Final[str] = (
                 f"Cannot use 'page_title_prefix' with type of 'page_title': {type(page_title)}"
             )
