@@ -336,7 +336,9 @@ main = [
     { name = "typed-classproperties" },
 ]
 pre-commit = [
+    { name = "flake8-carrot" },
     { name = "pre-commit" },
+    { name = "ruff" },
 ]
 type-check = [
     { name = "mypy" },
@@ -350,12 +352,12 @@ dev = [
     { name = "flake8-carrot", specifier = ">=0.1.1" },
     { name = "mypy", specifier = ">=1.18.2" },
     { name = "pre-commit" },
-    { name = "ruff", specifier = ">=0.4" },
+    { name = "ruff", specifier = ">=0.14" },
     { name = "types-python-dateutil", specifier = ">=2.9" },
 ]
 lint-format = [
     { name = "flake8-carrot", specifier = ">=0.1.1" },
-    { name = "ruff", specifier = ">=0.4" },
+    { name = "ruff", specifier = ">=0.14" },
 ]
 main = [
     { name = "gitpython", specifier = ">=3.1" },
@@ -363,7 +365,11 @@ main = [
     { name = "python-dateutil", specifier = ">=2.9" },
     { name = "typed-classproperties", specifier = ">=1.1" },
 ]
-pre-commit = [{ name = "pre-commit" }]
+pre-commit = [
+    { name = "flake8-carrot", specifier = ">=0.1.1" },
+    { name = "pre-commit" },
+    { name = "ruff", specifier = ">=0.14" },
+]
 type-check = [
     { name = "mypy", specifier = ">=1.18.2" },
     { name = "types-python-dateutil", specifier = ">=2.9" },

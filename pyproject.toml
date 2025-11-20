@@ -1,22 +1,21 @@
+[project]  # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
+name = "static-websites"
+version = "1.0.0"
+requires-python = ">=3.14"
+
+[project.urls]
+Repository = "https://github.com/CarrotManMatt/static-websites"
+
 [dependency-groups]
 dev = [
     { include-group = "lint-format" },
     { include-group = "pre-commit" },
     { include-group = "type-check" },
 ]
-lint-format = ["flake8-carrot>=0.1.1", "ruff>=0.4"]
+lint-format = ["flake8-carrot>=0.1.1", "ruff>=0.14"]
 main = ["gitpython>=3.1", "htpy>=25", "python-dateutil>=2.9", "typed_classproperties>=1.1"]
-pre-commit = ["pre-commit"]
+pre-commit = ["pre-commit", { include-group = "lint-format" }]
 type-check = ["mypy>=1.18.2", "types-python-dateutil>=2.9"]
-
-[project] # TODO: Remove [project] table once https://github.com/astral-sh/uv/issues/8582 is completed
-name = "static-websites"
-requires-python = ">=3.14"
-version = "1.0.0"
-
-[project.urls]
-Repository = "https://github.com/CarrotManMatt/static-websites"
-
 
 [tool.mypy]
 check_untyped_defs = true
@@ -44,13 +43,15 @@ enable_error_code = [
 ]
 extra_checks = true
 no_implicit_reexport = true
+strict_bytes = true
 strict_equality = true
+strict_equality_for_none = true  # tombi: lint.rules.key-not-allowed.disabled = true
 warn_redundant_casts = true
 warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
-
+warn_incomplete_stub = true
 
 [tool.ruff]
 indent-width = 4
@@ -133,6 +134,9 @@ max-returns = 10
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
 
+[tool.tombi.format.rules]
+indent-width = 4
+line-width = 95
 
 [tool.uv]
 default-groups = ["dev", "main"]
