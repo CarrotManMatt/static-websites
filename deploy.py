@@ -40,9 +40,9 @@ def _get_posix_remote_directory(
         if remote_username:
             return (
                 Path("/home")
-                / remote_username
+                / remote_username  # NOTE: This will only prepend the user's home directory if raw_remote_directory is not absolute
                 / raw_remote_directory
-                / site_name  # NOTE: This will only prepend the user's home directory if raw_remote_directory is not absolute
+                / site_name
             ).as_posix()
 
         relative_posix: str = (raw_remote_directory / site_name).as_posix()
