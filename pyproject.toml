@@ -12,10 +12,15 @@ dev = [
     { include-group = "pre-commit" },
     { include-group = "type-check" },
 ]
-lint-format = ["flake8-carrot>=0.1.1", "ruff>=0.14"]
+lint-format = ["flake8-carrot>=0.1.1", "flake8-pyproject>=1.2", "ruff>=0.14"]
 main = ["gitpython>=3.1", "htpy>=25", "python-dateutil>=2.9", "typed_classproperties>=1.1"]
 pre-commit = ["pre-commit", { include-group = "lint-format" }]
 type-check = ["mypy>=1.18.2", "types-python-dateutil>=2.9"]
+
+[tool.flake8]
+select = ["CAR"]
+extend_exclude = [".venv/"]
+require_plugins = ["flake8-carrot"]
 
 [tool.mypy]
 check_untyped_defs = true
