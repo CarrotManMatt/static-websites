@@ -3,9 +3,6 @@ name = "static-websites"
 version = "1.0.0"
 requires-python = ">=3.14"
 
-[project.urls]
-Repository = "https://github.com/CarrotManMatt/static-websites"
-
 [dependency-groups]
 dev = [
     { include-group = "lint-format" },
