@@ -40,7 +40,7 @@ def _get_project_root() -> Path:
     except InvalidGitRepositoryError:
         raw_project_root = None
 
-    if raw_project_root is None:
+    if not raw_project_root:
         return _get_readme_root()
 
     return Path(raw_project_root)

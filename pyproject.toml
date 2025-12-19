@@ -11,7 +11,7 @@ dev = [
 ]
 lint-format = ["flake8-carrot>=0.1.1", "flake8-pyproject>=1.2", "ruff>=0.14"]
 main = ["gitpython>=3.1", "htpy>=25", "python-dateutil>=2.9", "typed_classproperties>=1.1"]
-pre-commit = ["pre-commit", { include-group = "lint-format" }]
+pre-commit = ["prek>=0.2"]
 type-check = ["mypy>=1.18.2", "types-python-dateutil>=2.9"]
 
 [tool.flake8]
