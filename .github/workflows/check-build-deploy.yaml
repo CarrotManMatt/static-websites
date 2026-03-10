@@ -9,6 +9,9 @@ name: Check, Build and Deploy All Websites
         - cron: 48 5 * * 1
     workflow_dispatch: ~
 
+permissions:
+    contents: read
+
 jobs:
     uv-check:
         runs-on: ubuntu-latest
@@ -142,7 +145,7 @@ jobs:
               run: "if grep -q '^warning: ' /tmp/prek.log; then exit 1; fi"
 
             - if: "!cancelled()"
-              uses: pre-commit-ci/lite-action@v1.1.0
+              uses: autofix-ci/action@v1.3.3
 
     # yamllint disable-line rule:key-ordering
     ruff-lint:
@@ -194,8 +197,6 @@ jobs:
 
         name: Build and Deploy All Websites
         needs: [flake8, mypy, pre-commit, ruff-lint, uv-check]
-        permissions:
-            contents: read
         runs-on: ubuntu-latest
 
         steps:
