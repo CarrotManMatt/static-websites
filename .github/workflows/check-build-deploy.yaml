@@ -95,6 +95,8 @@ jobs:
     # yamllint disable-line rule:key-ordering
     pre-commit:
         uses: ./.github/workflows/autofix-pre-commit.yaml
+        with:
+            run-autofix: false
 
     # yamllint disable-line rule:key-ordering
     ruff-lint:

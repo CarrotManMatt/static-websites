@@ -1,7 +1,14 @@
 name: autofix.ci
 
 "on":
-    workflow_call: ~
+    pull_request:
+        branches: [main]
+    workflow_call:
+        inputs:
+            run-autofix:
+                default: true
+                required: false
+                type: boolean
 
 permissions:
     contents: read
@@ -58,5 +65,5 @@ jobs:
             - name: Ensure No Warnings
               run: "if grep -q '^warning: ' /tmp/prek.log; then exit 1; fi"
 
-            - if: "!cancelled()"
+            - if: "!cancelled() && inputs.run-autofix"
               uses: autofix-ci/action@v1.3.3
