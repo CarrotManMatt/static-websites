@@ -231,18 +231,6 @@ wheels = [
 ]
 
 [[package]]
-name = "python-dateutil"
-version = "2.9.0.post0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432, upload-time = "2024-03-01T18:36:20.211Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892, upload-time = "2024-03-01T18:36:18.57Z" },
-]
-
-[[package]]
 name = "ruff"
 version = "0.15.4"
 source = { registry = "https://pypi.org/simple" }
@@ -268,15 +256,6 @@ wheels = [
 ]
 
 [[package]]
-name = "six"
-version = "1.17.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
-]
-
-[[package]]
 name = "smmap"
 version = "5.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -297,7 +276,6 @@ dev = [
     { name = "mypy" },
     { name = "prek" },
     { name = "ruff" },
-    { name = "types-python-dateutil" },
 ]
 lint-format = [
     { name = "flake8-carrot" },
@@ -307,7 +285,6 @@ lint-format = [
 main = [
     { name = "gitpython" },
     { name = "htpy" },
-    { name = "python-dateutil" },
     { name = "typed-classproperties" },
 ]
 pre-commit = [
@@ -315,7 +292,6 @@ pre-commit = [
 ]
 type-check = [
     { name = "mypy" },
-    { name = "types-python-dateutil" },
 ]
 
 [package.metadata]
@@ -327,7 +303,6 @@ dev = [
     { name = "mypy", specifier = ">=1.18.2" },
     { name = "prek", specifier = ">=0.3.1" },
     { name = "ruff", specifier = ">=0.14" },
-    { name = "types-python-dateutil", specifier = ">=2.9" },
 ]
 lint-format = [
     { name = "flake8-carrot", specifier = ">=0.1.1" },
@@ -337,14 +312,10 @@ lint-format = [
 main = [
     { name = "gitpython", specifier = ">=3.1" },
     { name = "htpy", specifier = ">=25" },
-    { name = "python-dateutil", specifier = ">=2.9" },
     { name = "typed-classproperties", specifier = ">=1.1" },
 ]
 pre-commit = [{ name = "prek", specifier = ">=0.3.1" }]
-type-check = [
-    { name = "mypy", specifier = ">=1.18.2" },
-    { name = "types-python-dateutil", specifier = ">=2.9" },
-]
+type-check = [{ name = "mypy", specifier = ">=1.18.2" }]
 
 [[package]]
 name = "typed-classproperties"
@@ -353,15 +324,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e5/23/6339ea6db274cf94d072aea65721a8ce5b085223cda4e3888c0df862e23f/typed_classproperties-1.5.0.tar.gz", hash = "sha256:d5ff283e292616b6555bd0a853f7ac10ab532f887330c997c180f5733dca1215", size = 9546, upload-time = "2026-02-05T11:43:40.188Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8d/37/44050894a82595185c9ab018001d7f9698fc4478b8efc58bde547a055fbb/typed_classproperties-1.5.0-py3-none-any.whl", hash = "sha256:5e5d65ae5f17658d82f181125e96f68eb3b68afb1b0d1955aa373e918bdb26e7", size = 5688, upload-time = "2026-02-05T11:43:39.414Z" },
-]
-
-[[package]]
-name = "types-python-dateutil"
-version = "2.9.0.20260302"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/06/7d/4eb84ea2d4ea72b14f180ed2a5c2e7ac3c8e9fd425f7d69a6516cf127f3b/types_python_dateutil-2.9.0.20260302.tar.gz", hash = "sha256:05a3580c790e6ccad228411ed45245ed739c81e78ba49b1cfdbeb075f42bcab0", size = 16885, upload-time = "2026-03-02T04:02:05.012Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/91/80dca6ca3da5078de2a808b648aec2a27c83b3dee1b832ae394a683ebe51/types_python_dateutil-2.9.0.20260302-py3-none-any.whl", hash = "sha256:6e7e65e190fb78c267e58a7426b00f0dd41a6dfb02c12aab910263cfa0bcc3ca", size = 18334, upload-time = "2026-03-02T04:02:04.01Z" },
 ]
 
 [[package]]
