@@ -96,7 +96,7 @@ jobs:
     pre-commit:
         uses: ./.github/workflows/autofix-pre-commit.yaml
         with:
-            run-autofix: false
+            skip-autofix: true
 
     # yamllint disable-line rule:key-ordering
     ruff-lint:

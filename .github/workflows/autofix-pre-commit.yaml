@@ -5,8 +5,8 @@ name: autofix.ci
         branches: [main]
     workflow_call:
         inputs:
-            run-autofix:
-                default: true
+            skip-autofix:
+                default: false
                 required: false
                 type: boolean
 
@@ -65,5 +65,5 @@ jobs:
             - name: Ensure No Warnings
               run: "if grep -q '^warning: ' /tmp/prek.log; then exit 1; fi"
 
-            - if: "!cancelled() && inputs.run-autofix"
+            - if: "!cancelled() && inputs.skip-autofix != true"
               uses: autofix-ci/action@v1.3.3
