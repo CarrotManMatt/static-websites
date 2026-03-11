@@ -170,7 +170,7 @@ jobs:
               with:
                 service-key: ${{secrets.TWINGATE_SERVICE_KEY}}
 
-            - uses: webfactory/ssh-agent@v0.9.1
+            - uses: webfactory/ssh-agent@v0.10.0
               with:
                 ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
 
