@@ -108,6 +108,18 @@ exempt-modules = []
 quote-annotations = true
 strict = true
 
+[tool.ruff.lint.isort]
+known-first-party = [
+    "build",
+    "cleanup",
+    "components",
+    "console",
+    "deploy",
+    "exceptions",
+    "sites",
+    "utils"
+]
+
 [tool.ruff.lint.pep8-naming]
 classmethod-decorators = [
     "typed_classproperties.cached_classproperty",
