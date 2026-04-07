@@ -24,7 +24,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             "Free for personal and commercial use under the CCA 3.0 license "
             "(html5up.net/license)"
         ),
-        page_meta_image="https://carrotmanmatt.com/static/carrot_icon.png",
+        page_meta_image="https://carrotmanmatt.com/static/images/carrot_icon.png",
         page_content_type="profile",
         stylesheets_extend=h.noscript[
             h.link(rel="stylesheet", href="/static/css/noscript.css")

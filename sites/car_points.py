@@ -95,7 +95,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         page_title_prefix="Car Points Game",
         page_description="CarrotManMatt's web car points counting game.",
         site_url="https://car-points.carrotmanmatt.com",
-        page_meta_image="https://car-points.carrotmanmatt.com/static/Logo.png",
+        page_meta_image="https://car-points.carrotmanmatt.com/static/images/Logo.png",
         page_content_type="game",
         page_keywords_extend=(
             "game",

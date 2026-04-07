@@ -22,7 +22,7 @@ __all__: Sequence[str] = (
 
 
 def component_icons_list() -> h.Node:
-    """Generate the icons list for links to social media."""
+    """Generate the icon list for links to social media."""
     return (
         h.li[h.a(href=link, class_=("icon", *classes))[h.span(class_=("label",))[label]]]
         for link, classes, label in (
@@ -76,9 +76,9 @@ def component_base(  # noqa: PLR0913
     page_title: h.Attribute = "CarrotManMatt.com",
     page_title_prefix: str | int | bool | None = None,
     page_description: h.Attribute = "CarrotManMatt's personal website.",
-    page_meta_image: h.Attribute = "https://carrotmanmatt.com/static/website_icon.png",
+    page_meta_image: h.Attribute = "https://carrotmanmatt.com/static/images/website_icon.png",
     page_content_type: h.Attribute = "article",
-    page_keywords: h.Attribute = "CarrotManMatt",
+    page_keywords: h.Attribute | Iterable[str | int | bool] = "CarrotManMatt",
     page_keywords_extend: str | int | bool | None | Iterable[str | int | bool] = None,
     site_url: h.Attribute = "https://carrotmanmatt.com",
     after_body: h.Node | None = None,
@@ -100,6 +100,9 @@ def component_base(  # noqa: PLR0913
 
         page_title = f"{page_title_prefix} | {page_title}"
         del page_title_prefix
+
+    if not isinstance(page_keywords, (str, int, bool)) and isinstance(page_keywords, Iterable):
+        page_keywords = ",".join(str(page_keyword) for page_keyword in page_keywords)
 
     if page_keywords_extend is not None:
         if not isinstance(page_keywords, (str, int, bool, Iterable)):
