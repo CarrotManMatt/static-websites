@@ -24,22 +24,25 @@ logger: Final[Logger] = logging.getLogger("static-websites-builder")
 ENVIRONMENT_VARIABLE_PREFIX: Final[str] = "STATIC_WEBSITES_BUILDER_"
 
 
-def _get_true_boolean(environment_variable_name: str, *, default_false: bool = True) -> bool:
-    raw_dry_run: str = os.environ.get(
+def _get_boolean_env_variable(
+    environment_variable_name: str, *, default: bool = False
+) -> bool:
+    raw_boolean: str = os.environ.get(
         f"{ENVIRONMENT_VARIABLE_PREFIX}{environment_variable_name.upper()}",
-        "false" if default_false else "true",
-    ).lower()
+        "true" if default else "false",
+    )
 
-    if raw_dry_run == "true":
-        return True
+    match raw_boolean.lower().strip():
+        case "true":
+            return True
+        case "false":
+            return False
+        case _:
+            INVALID_BOOLEAN_MESSAGE: Final[str] = f"Invalid boolean value: {raw_boolean!r}."
+            raise ValueError(INVALID_BOOLEAN_MESSAGE)
 
-    if raw_dry_run == "false":
-        return False
 
-    raise ValueError
-
-
-def _get_true_verbosity(*, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
+def _get_verbosity_env_variable(*, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
     raw_verbosity: int = int(os.environ.get(f"{ENVIRONMENT_VARIABLE_PREFIX}VERBOSITY", "0"))
     if raw_verbosity < 0 and is_dry_run:
         MUTUALLY_EXCLUSIVE_MESSAGE: Final[str] = (
@@ -73,18 +76,18 @@ def _get_true_verbosity(*, is_dry_run: bool) -> Literal[0, 1, 2, 3]:
 
 
 @overload
-def _get_true_string_arg(
+def _get_validated_string_environment_variable(
     environment_variable_name: str, validator: type[Path]
 ) -> Path | None: ...
 
 
 @overload
-def _get_true_string_arg[T: validators.SimpleValidator[str]](
+def _get_validated_string_environment_variable[T: validators.SimpleValidator[str]](
     environment_variable_name: str, validator: type[T]
 ) -> T | None: ...
 
 
-def _get_true_string_arg[T: validators.SimpleValidator[str]](
+def _get_validated_string_environment_variable[T: validators.SimpleValidator[str]](
     environment_variable_name: str, validator: type[T | Path]
 ) -> T | Path | None:
     raw_value: str | None = os.environ.get(
@@ -103,11 +106,34 @@ def _get_true_string_arg[T: validators.SimpleValidator[str]](
 
 def run() -> int:
     """Run the static websites builder and deployment script."""
-    dry_run: bool = _get_true_boolean("DRY_RUN")
+    if sys.argv[1:]:
+        UNEXPECTED_ARGUMENTS_MESSAGE: Final[str] = (
+            f"Unexpected arguments: {', '.join(repr(arg) for arg in sys.argv[1:])}"
+        )
+        raise RuntimeError(UNEXPECTED_ARGUMENTS_MESSAGE)
 
-    verbosity: Literal[0, 1, 2, 3] = _get_true_verbosity(is_dry_run=dry_run)
+    dry_run: bool = _get_boolean_env_variable("DRY_RUN")
+
+    verbosity: Literal[0, 1, 2, 3] = _get_verbosity_env_variable(is_dry_run=dry_run)
 
     logging_setup.setup(verbosity=verbosity)
+
+    remote_hostname: validators.Hostname | None = _get_validated_string_environment_variable(
+        "REMOTE_IP", validators.Hostname
+    )
+    if remote_hostname is None and not dry_run:
+        MISSING_REMOTE_IP_MESSAGE: Final[str] = (
+            f'No "{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP" was specified '
+            f"when using {ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN=False."
+        )
+        raise RuntimeError(MISSING_REMOTE_IP_MESSAGE)
+
+    remote_username: validators.Username | None = _get_validated_string_environment_variable(
+        "REMOTE_USERNAME", validators.Username
+    )
+    remote_directory: Path | None = _get_validated_string_environment_variable(
+        "REMOTE_DIRECTORY", Path
+    )
 
     try:
         built_site_paths: AbstractSet[Path] = build.build_all_sites()
@@ -119,9 +145,9 @@ def run() -> int:
         deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
             built_site_paths,
             verbosity=verbosity,
-            remote_hostname=_get_true_string_arg("REMOTE_IP", validators.Hostname),
-            remote_username=_get_true_string_arg("REMOTE_USERNAME", validators.Username),
-            remote_directory=_get_true_string_arg("REMOTE_DIRECTORY", Path),
+            remote_hostname=remote_hostname,  # type: ignore[arg-type]
+            remote_username=remote_username,
+            remote_directory=remote_directory,
             dry_run=dry_run,
         )
 

@@ -7,7 +7,7 @@ import traceback
 from logging import LoggerAdapter
 from pathlib import Path
 from subprocess import CalledProcessError
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, overload
 
 from utils.validators import Hostname
 
@@ -166,6 +166,30 @@ def deploy_single_site(
         )
 
     site_name_logger.debug("Completed deploying single site successfully.")
+
+
+@overload
+def deploy_all_sites(
+    site_paths: AbstractSet[Path],
+    *,
+    dry_run: Literal[True],
+    verbosity: Literal[0, 1, 2, 3] = ...,
+    remote_username: Username | None = ...,
+    remote_hostname: None = ...,
+    remote_directory: Path | None = ...,
+) -> AbstractSet[str]: ...
+
+
+@overload
+def deploy_all_sites(
+    site_paths: AbstractSet[Path],
+    *,
+    remote_hostname: Hostname,
+    verbosity: Literal[0, 1, 2, 3] = ...,
+    remote_username: Username | None = ...,
+    remote_directory: Path | None = ...,
+    dry_run: bool = ...,
+) -> AbstractSet[str]: ...
 
 
 def deploy_all_sites(
