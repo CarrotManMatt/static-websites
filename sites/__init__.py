@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING
 
-from . import car_points, carrotmanmatt_com
+from . import car_points, carrotmanmatt_com, olympic_show_uk
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
@@ -17,4 +17,5 @@ __all__: Sequence[str] = ("SITES_MAP",)
 SITES_MAP: Final[Mapping[str, Mapping[PurePosixPath, h.HTMLElement]]] = {
     "car-points": car_points.PAGES_MAP,
     "carrotmanmatt.com": carrotmanmatt_com.PAGES_MAP,
+    "olympic-show": olympic_show_uk.PAGES_MAP,
 }

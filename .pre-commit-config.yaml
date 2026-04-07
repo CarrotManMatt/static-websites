@@ -19,6 +19,7 @@ repos:
       rev: v2.4.2
       hooks:
         - id: codespell
+          args: [--skip, "*.svg"]
 
     - repo: https://github.com/tombi-toml/tombi-pre-commit
       rev: v0.9.15
