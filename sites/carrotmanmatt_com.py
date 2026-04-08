@@ -29,6 +29,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         stylesheets_extend=h.noscript[
             h.link(rel="stylesheet", href="/static/css/noscript.css")
         ],
+        safari_pinned_tab_colour="#ff9f0e",
+        theme_colour_primary="#ff9f0e",
+        theme_colour_secondary="#ffbb56",
         body=h.body(class_=("landing", "is-preload"))[
             h.div(id="page-wrapper")[
                 h.header(id="header", class_=("alt",))[

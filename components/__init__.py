@@ -10,6 +10,7 @@ import utils
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+    from collections.abc import Set as AbstractSet
     from typing import Final
 
 
@@ -88,6 +89,10 @@ def component_base(  # noqa: PLR0913
     viewport_meta: h.Node = h.meta(  # noqa: B008
         content="width=device-width, initial-scale=1", name="viewport"
     ),
+    favicon_png_sizes: AbstractSet[int] = frozenset({16, 32}),
+    safari_pinned_tab_colour: str | None = None,
+    theme_colour_primary: str | None = None,
+    theme_colour_secondary: str | None = None,
     extra_head: h.Node | None = None,
 ) -> h.HTMLElement:
     """Generate base site component."""
@@ -144,12 +149,35 @@ def component_base(  # noqa: PLR0913
             stylesheets,
             h.link(href="/favicon.ico", rel="shortcut icon", type="image/png"),
             h.link(href="/apple-touch-icon.png", rel="apple-touch-icon", sizes="180x180"),
-            h.link(href="/favicon-32x32.png", rel="icon", sizes="32x32", type="image/png"),
-            h.link(href="/favicon-16x16.png", rel="icon", sizes="16x16", type="image/png"),
+            *(
+                h.link(
+                    href=f"/favicon-{favicon_png_size}x{favicon_png_size}.png",
+                    rel="icon",
+                    sizes=f"{favicon_png_size}x{favicon_png_size}",
+                    type="image/png",
+                )
+                for favicon_png_size in favicon_png_sizes
+            ),
             h.link(href="/site.webmanifest", rel="manifest"),
-            h.link(color="#ff9f0e", href="/safari-pinned-tab.svg", rel="mask-icon"),
-            h.meta(content="#ff9f0e", name="msapplication-TileColor"),
-            h.meta(content="#ffbb56", name="theme-color"),
+            (
+                h.link(
+                    color=f"#{safari_pinned_tab_colour.removeprefix('#')}",
+                    href="/safari-pinned-tab.svg",
+                    rel="mask-icon",
+                )
+                if safari_pinned_tab_colour is not None
+                else None
+            ),
+            (
+                h.meta(content=theme_colour_primary, name="msapplication-TileColor")
+                if theme_colour_primary is not None
+                else None
+            ),
+            (
+                h.meta(content=theme_colour_secondary, name="theme-color")
+                if theme_colour_secondary is not None
+                else None
+            ),
             extra_head,
         ],
         body,

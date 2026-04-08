@@ -42,5 +42,6 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             "student-written",
         ),
         site_url="https://olympic-show.uk",
+        favicon_png_sizes={96},
     )
 }
