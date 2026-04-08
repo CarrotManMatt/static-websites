@@ -24,14 +24,14 @@ body {
 
 img {
     max-width: 80%;
-    max-height: 60%;
+    max-height: 58.7%;
     display: block;
     filter: drop-shadow(10px 15px 10px rgba(0, 0, 0, 0.6));
 }
 
 h1 {
-    margin-top: 1.2em;
-    font-size: 4em;
-    max-height: 4em;
+    margin-top: 1em;
+    font-size: 3.8em;
+    max-height: 3.8em;
     font-family: "Verdana", sans-serif;
 }
