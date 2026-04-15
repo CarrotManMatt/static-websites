@@ -18,8 +18,24 @@ __all__: Sequence[str] = ("PAGES_MAP",)
 PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
     PurePosixPath("index.html"): component_base(
         body=h.body[
-            h.div(class_="container")[
-                h.img(src="/static/images/Logo.png"), h.h1["Coming Soon!"]
+            h.div(class_="primary-container")[
+                h.img(id="logo", src="/static/images/Logo.png"),
+                h.h1["Welcome Aboard!"],
+                h.div(class_="links-container")[
+                    h.a(href="/audition/pack")[
+                        "Audition Pack",
+                        h.i(class_="fa-solid fa-arrow-up-right-from-square fa-sm"),
+                    ],
+                    h.a(href="/audition/signup")[
+                        "Audition Sign-Ups",
+                        h.i(class_="fa-solid fa-arrow-up-right-from-square fa-sm"),
+                    ],
+                ],
+                h.div(class_="links-container")[
+                    h.a(href="https://www.instagram.com/3bugsfringe")[
+                        "@3bugsfringe", h.i(class_="fa-brands fa-instagram")
+                    ]
+                ],
             ]
         ],
         page_title="Olympic - 3BUGS Fringe",
@@ -43,5 +59,12 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         ),
         site_url="https://olympic-show.uk",
         favicon_png_sizes={96},
+        stylesheets_extend=(
+            h.link(
+                href="/static/fontawesome-free-7.2.0-web/css/fontawesome.css", rel="stylesheet"
+            ),
+            h.link(href="/static/fontawesome-free-7.2.0-web/css/solid.css", rel="stylesheet"),
+            h.link(href="/static/fontawesome-free-7.2.0-web/css/brands.css", rel="stylesheet"),
+        ),
     )
 }
