@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    background-image: url('file:///media/fuse/crostini_e07cd694dad43836e5a93b9c04d304f1dcddc478_termina_penguin/PycharmProjects/static-websites/deploy/olympic-show//static/images/bg-medium.png');
+    background-image: url('/static/images/bg-medium.png');
     background-repeat: repeat;
     background-attachment: fixed;
     background-size: 100vh;
