@@ -303,7 +303,6 @@ type-check = [
 ]
 
 [package.metadata]
-
 [package.metadata.requires-dev]
 dev = [
     { name = "flake8-carrot", specifier = ">=0.1.1" },
