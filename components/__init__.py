@@ -85,9 +85,7 @@ def component_base(  # noqa: PLR0913
     after_body: h.Node | None = None,
     copyright_comment: h.Node | None = None,
     stylesheets: h.Node = h.link(  # noqa: B008
-        href="file:///media/fuse/crostini_e07cd694dad43836e5a93b9c04d304f1dcddc478_termina_penguin/PycharmProjects/static-websites/deploy/olympic-show/static/css/main.css",
-        rel="stylesheet",
-        type="text/css",
+        href="/static/css/main.css", rel="stylesheet", type="text/css"
     ),
     stylesheets_extend: h.Node | None = None,
     viewport_meta: h.Node = h.meta(  # noqa: B008
