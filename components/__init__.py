@@ -9,7 +9,7 @@ from markupsafe import Markup
 import utils
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Mapping, Sequence
     from collections.abc import Set as AbstractSet
     from typing import Final
 
@@ -84,7 +84,11 @@ def component_base(  # noqa: PLR0913
     site_url: h.Attribute = "https://carrotmanmatt.com",
     after_body: h.Node | None = None,
     copyright_comment: h.Node | None = None,
-    stylesheets: h.Node = h.link(href="/static/css/main.css", rel="stylesheet"),  # noqa: B008
+    stylesheets: h.Node = h.link(  # noqa: B008
+        href="file:///media/fuse/crostini_e07cd694dad43836e5a93b9c04d304f1dcddc478_termina_penguin/PycharmProjects/static-websites/deploy/olympic-show/static/css/main.css",
+        rel="stylesheet",
+        type="text/css",
+    ),
     stylesheets_extend: h.Node | None = None,
     viewport_meta: h.Node = h.meta(  # noqa: B008
         content="width=device-width, initial-scale=1", name="viewport"
@@ -94,6 +98,7 @@ def component_base(  # noqa: PLR0913
     theme_colour_primary: str | None = None,
     theme_colour_secondary: str | None = None,
     extra_head: h.Node | None = None,
+    extra_html_tag_properties: Mapping[str, h.Attribute] | None = None,
 ) -> h.HTMLElement:
     """Generate base site component."""
     if page_title_prefix is not None:
@@ -103,7 +108,7 @@ def component_base(  # noqa: PLR0913
             )
             raise TypeError(INVALID_PAGE_TITLE_TYPE_MESSAGE)
 
-        page_title = f"{page_title_prefix} | {page_title}"
+        page_title = Markup("{} | {}").format(page_title_prefix, page_title)
         del page_title_prefix
 
     if not isinstance(page_keywords, (str, int, bool)) and isinstance(page_keywords, Iterable):
@@ -117,21 +122,31 @@ def component_base(  # noqa: PLR0913
             )
             raise TypeError(INVALID_PAGE_KEYWORDS_TYPE_MESSAGE)
 
-        page_keywords = f"{page_keywords},{
-            page_keywords_extend
-            if isinstance(page_keywords_extend, (str, int, bool))
-            else ','.join(str(page_keyword) for page_keyword in page_keywords_extend)
-        }"
+        page_keywords = Markup("{},{}").format(
+            page_keywords,
+            (
+                page_keywords_extend
+                if isinstance(page_keywords_extend, (str, int, bool))
+                else Markup(",").join(
+                    page_keyword if isinstance(page_keyword, str) else str(page_keyword)
+                    for page_keyword in page_keywords_extend
+                )
+            ),
+        )
         del page_keywords_extend
 
     if stylesheets_extend is not None:
         stylesheets = (stylesheets, stylesheets_extend)
         del stylesheets_extend
 
-    return h.html(lang="en-GB")[
+    if extra_html_tag_properties is None:
+        extra_html_tag_properties = {}
+
+    return h.html(lang="en-GB", **extra_html_tag_properties)[
         copyright_comment,
         h.head[
             h.title[page_title],
+            h.meta(content=page_title, property="og:site_name"),
             h.meta(content=page_title, property="og:title"),
             h.meta(content=page_description, property="og:description"),
             h.meta(content=site_url, property="og:url"),
@@ -146,6 +161,7 @@ def component_base(  # noqa: PLR0913
             h.meta(charset="utf-8"),
             h.meta(content="IE=edge", http_equiv="X-UA-Compatible"),
             viewport_meta,
+            h.link(href=site_url, rel="canonical"),
             stylesheets,
             h.link(href="/favicon.ico", rel="shortcut icon", type="image/png"),
             h.link(href="/apple-touch-icon.png", rel="apple-touch-icon", sizes="180x180"),
@@ -161,7 +177,9 @@ def component_base(  # noqa: PLR0913
             h.link(href="/site.webmanifest", rel="manifest"),
             (
                 h.link(
-                    color=f"#{safari_pinned_tab_colour.removeprefix('#')}",
+                    color=f"#{
+                        safari_pinned_tab_colour.removeprefix('#').replace(' ', '').upper()
+                    }",
                     href="/safari-pinned-tab.svg",
                     rel="mask-icon",
                 )
