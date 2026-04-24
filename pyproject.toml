@@ -15,7 +15,7 @@ pre-commit = ["prek>=0.3.8"]
 type-check = ["mypy>=1.18.2"]
 
 [tool.codespell]
-skip = "static/*/bootstrap-*,static/*/js/*.min.js,static/*/webfonts/**,*.svg,static/*/fontawesome-*,entry-server-routing.js"
+skip = "static/*/bootstrap-*,static/*/js/*.min.js,static/*/webfonts/**,*.svg,static/*/fontawesome-*,static/olympic-show/*/entry-server-routing.js,static/olympic-show/*/pages_index.js"
 
 [tool.flake8]
 select = ["CAR"]
