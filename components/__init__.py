@@ -92,7 +92,6 @@ def component_base(  # noqa: PLR0913
         content="width=device-width, initial-scale=1", name="viewport"
     ),
     favicon_png_sizes: AbstractSet[int] = frozenset({16, 32}),
-    safari_pinned_tab_colour: str | None = None,
     theme_colour_primary: str | None = None,
     theme_colour_secondary: str | None = None,
     extra_head: h.Node | None = None,
@@ -151,7 +150,17 @@ def component_base(  # noqa: PLR0913
             h.meta(content=page_meta_image, property="og:image"),
             h.meta(content=page_content_type, property="og:type"),
             h.meta(content=page_meta_image, name="twitter:card"),
-            h.meta(content="#ff9f0e", data_react_helmet="true", name="theme-color"),
+            (
+                h.meta(
+                    content=(
+                        f"#{theme_colour_primary.removeprefix('#').replace(' ', '').upper()}"
+                    ),
+                    data_react_helmet="true",
+                    name="theme-color",
+                )
+                if theme_colour_primary is not None
+                else None
+            ),
             h.meta(content=page_title, itemprop="name"),
             h.meta(content=page_description, itemprop="description"),
             h.meta(content=page_description, name="description"),
@@ -175,22 +184,32 @@ def component_base(  # noqa: PLR0913
             h.link(href="/site.webmanifest", rel="manifest"),
             (
                 h.link(
-                    color=f"#{
-                        safari_pinned_tab_colour.removeprefix('#').replace(' ', '').upper()
-                    }",
+                    color=(
+                        f"#{theme_colour_primary.removeprefix('#').replace(' ', '').upper()}"
+                    ),
                     href="/safari-pinned-tab.svg",
                     rel="mask-icon",
                 )
-                if safari_pinned_tab_colour is not None
-                else None
-            ),
-            (
-                h.meta(content=theme_colour_primary, name="msapplication-TileColor")
                 if theme_colour_primary is not None
                 else None
             ),
             (
-                h.meta(content=theme_colour_secondary, name="theme-color")
+                h.meta(
+                    content=(
+                        f"#{theme_colour_primary.removeprefix('#').replace(' ', '').upper()}"
+                    ),
+                    name="msapplication-TileColor",
+                )
+                if theme_colour_primary is not None
+                else None
+            ),
+            (
+                h.meta(
+                    content=(
+                        f"#{theme_colour_secondary.removeprefix('#').replace(' ', '').upper()}"
+                    ),
+                    name="theme-color",
+                )
                 if theme_colour_secondary is not None
                 else None
             ),

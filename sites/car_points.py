@@ -108,7 +108,6 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         stylesheets=h.link(
             href="/static/bootstrap-5.3.8-dist/css/bootstrap.min.css", rel="stylesheet"
         ),
-        safari_pinned_tab_colour="#ff9f0e",
         theme_colour_primary="#ff9f0e",
         theme_colour_secondary="#ffbb56",
         extra_head=(

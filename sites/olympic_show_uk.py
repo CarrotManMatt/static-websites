@@ -358,6 +358,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             "play",
             "student-written",
         ),
+        theme_colour_primary="#b4d7d3",
+        theme_colour_secondary="#99d1d3",
         site_url=_site_url,
         favicon_png_sizes={96},
         stylesheets_extend=(
