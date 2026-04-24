@@ -16,6 +16,16 @@ if TYPE_CHECKING:
 __all__: Sequence[str] = ("PAGES_MAP",)
 
 
+_site_description: str = Markup(
+    "Step back in time aboard Olympic to discover heroism and heartbreak.\n"
+    "Show dates: 12th, 13th & 15th June 2026 "
+    "@ University of Birmingham Guild of Students"
+)
+_site_title: str = Markup("Olympic - 3BUGS Fringe")
+_logo_location: str = "/static/images/Logo.png"
+_site_url: str = "https://olympic-show.uk"
+
+
 PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
     PurePosixPath("index.html"): component_base(
         body=h.body(
@@ -44,17 +54,17 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         ),
                         width="917",
                         height="917",
-                        src="/static/images/Logo.png",
+                        src=_logo_location,
                         class_="w-image cgb3bj cd086ag c1grhjej",
                         sizes="100vw",
                         srcset=(
-                            "/static/images/Logo.png 16w, /static/images/Logo.png 32w, "
-                            "/static/images/Logo.png 48w, /static/images/Logo.png 64w, "
-                            "/static/images/Logo.png 96w, /static/images/Logo.png 128w, "
-                            "/static/images/Logo.png 256w, /static/images/Logo.png 384w, "
-                            "/static/images/Logo.png 640w, /static/images/Logo.png 750w, "
-                            "/static/images/Logo.png 828w, /static/images/Logo.png 1080w, "
-                            "/static/images/Logo.png 1200w, /static/images/Logo.png 1920w"
+                            f"{_logo_location} 16w, {_logo_location} 32w, "
+                            f"{_logo_location} 48w, {_logo_location} 64w, "
+                            f"{_logo_location} 96w, {_logo_location} 128w, "
+                            f"{_logo_location} 256w, {_logo_location} 384w, "
+                            f"{_logo_location} 640w, {_logo_location} 750w, "
+                            f"{_logo_location} 828w, {_logo_location} 1080w, "
+                            f"{_logo_location} 1200w, {_logo_location} 1920w"
                         ),
                         decoding="async",
                         loading="lazy",
@@ -317,13 +327,11 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                 '{"_urlRewrite":null,"pageId":"/pages/index","routeParams":{},"data":{'
                 '"url":"https://url/","system":{'
                 '"params":{},"search":{},"origin":"https://url","pathname":"/"},'
-                '"resources":{},"pageMeta":{"title":"Olympic - 3BUGS Fringe",'
-                '"description": "Step back in time aboard Olympic to discover '
-                "heroism and heartbreak.\nShow dates: 12th, 13th & 15th June 2026 "
-                '@ University of Birmingham Guild of Students",'
+                f'"resources":{{}},"pageMeta":{{"title":"{_site_title.strip('\n\r\t ",')}",'
+                f'"description": "{_site_description.strip('\n\r\t ",')}",'
                 '"excludePageFromSearch":"!undefined","language":"en-GB",'
                 '"socialImageAssetName":"!undefined",'
-                '"socialImageUrl":"https://olympic-show.uk/static/images/Logo.png",'
+                f'"socialImageUrl":"{_site_url}{_logo_location}",'
                 '"status":"!undefined","redirect":"!undefined","custom":[]}}}'
             ],
             h.script(id="vike_globalContext", type="application/json")[" {}"],
@@ -335,13 +343,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                 type="text/javascript",
             ),
         ],
-        page_title="Olympic - 3BUGS Fringe",
-        page_description=Markup(
-            "Step back in time aboard Olympic to discover heroism and heartbreak.\n"
-            "Show dates: 12th, 13th & 15th June 2026 "
-            "@ University of Birmingham Guild of Students"
-        ),
-        page_meta_image="https://olympic-show.uk/static/images/Logo.png",
+        page_title=_site_title,
+        page_description=_site_description,
+        page_meta_image=f"{_site_url}{_logo_location}",
         page_content_type="website",
         page_keywords=(
             "olympic",
@@ -354,7 +358,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             "play",
             "student-written",
         ),
-        site_url="https://olympic-show.uk",
+        site_url=_site_url,
         favicon_png_sizes={96},
         stylesheets_extend=(
             h.link(
@@ -367,8 +371,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         ),
         extra_head=(
             h.script(type="application/ld+json")[
-                '{"@context":"https://schema.org","@type":"WebSite",'
-                '"name":"Olympic - 3BUGS Fringe"}'
+                f'{{"@context":"https://schema.org","@type":"WebSite","name":"{_site_title}"}}'
             ],
         ),
     )
