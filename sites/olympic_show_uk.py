@@ -37,7 +37,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             h.div(
                 class_=(
                     "w-element c15vmzu4 c1mdww5 cu52st3 c171p6yf ca9ya4b c1v5aa9w c8mdnw5 "
-                    "c18kgj1i ca3r2u7 c13h23pr c1e3bsof ck5ipzl"
+                    "c18kgj1i ca3r2u7 ck5ipzl cgb3bj"
                 )
             )[
                 h.div(
@@ -115,8 +115,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 href="/audition/pack",
                                 class_=(
                                     "w-element c19y3cjm c15vmzu4 c1idw5j2 crpyobo c14wber8 "
-                                    "c1lglyie chy0adt ckr079c cwfy5au cusinh7 c1hya6s0 "
-                                    "cq6mi0e c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn"
+                                    "c1lglyie chy0adt ckr079c c1dvhfh7 c1wptrdj cj9275l "
+                                    "c1hya6s0 cq6mi0e cwfy5au cusinh7 cpl7cs3 c1ksjzrn"
                                 ),
                             )[
                                 h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
@@ -125,7 +125,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 h.svg(
                                     xmlns="http://www.w3.org/2000/svg",
                                     viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb c4ljo6n",
+                                    class_="w-element c17ga2gb",
                                 )[
                                     h.path(
                                         fill="rgb(255, 255, 255)",
@@ -159,7 +159,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             )
                         )[
                             h.a(
-                                href="/audition/signup",
+                                href="mailto:auditions@olympic-show.uk",
                                 class_=(
                                     "w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 "
                                     "c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 "
@@ -167,36 +167,33 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 ),
                             )[
                                 h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Audition Sign-Ups"
+                                    "Send Us Your Audition Video!"
                                 ],
                                 h.svg(
                                     xmlns="http://www.w3.org/2000/svg",
                                     viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb c4ljo6n",
+                                    class_="w-element c17ga2gb",
                                 )[
                                     h.path(
                                         fill="rgb(255, 255, 255)",
                                         d=(
-                                            "M505 122.9L517.1 135C526.5 144.4 526.5 159.6 "
-                                            "517.1 168.9L488 198.1L441.9 152L471 122.9C480.4 "
-                                            "113.5 495.6 113.5 504.9 122.9zM273.8 320.2L408 "
-                                            "185.9L454.1 232L319.8 366.2C316.9 369.1 313.3 "
-                                            "371.2 309.4 372.3L250.9 389L267.6 330.5C268.7 "
-                                            "326.6 270.8 323 273.7 320.1zM437.1 89L239.8 "
-                                            "286.2C231.1 294.9 224.8 305.6 221.5 317.3L192.9 "
-                                            "417.3C190.5 425.7 192.8 434.7 199 440.9C205.2 "
-                                            "447.1 214.2 449.4 222.6 447L322.6 418.4C334.4 "
-                                            "415 345.1 408.7 353.7 400.1L551 202.9C579.1 "
-                                            "174.8 579.1 129.2 551 101.1L538.9 89C510.8 60.9 "
-                                            "465.2 60.9 437.1 89zM152 128C103.4 128 64 167.4 "
-                                            "64 216L64 488C64 536.6 103.4 576 152 576L424 "
-                                            "576C472.6 576 512 536.6 512 488L512 376C512 "
-                                            "362.7 501.3 352 488 352C474.7 352 464 362.7 464 "
-                                            "376L464 488C464 510.1 446.1 528 424 528L152 "
-                                            "528C129.9 528 112 510.1 112 488L112 216C112 "
-                                            "193.9 129.9 176 152 176L264 176C277.3 176 288 "
-                                            "165.3 288 152C288 138.7 277.3 128 264 128L152 "
-                                            "128z"
+                                            "M192 112L304 112L304 200C304 239.8 336.2 272 376 "
+                                            "272L464 272L464 512C464 520.8 456.8 528 448 "
+                                            "528L192 528C183.2 528 176 520.8 176 512L176 "
+                                            "128C176 119.2 183.2 112 192 112zM352 131.9L444.1 "
+                                            "224L376 224C362.7 224 352 213.3 352 200L352 "
+                                            "131.9zM192 64C156.7 64 128 92.7 128 128L128 "
+                                            "512C128 547.3 156.7 576 192 576L448 576C483.3 "
+                                            "576 512 547.3 512 512L512 250.5C512 233.5 505.3 "
+                                            "217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 "
+                                            "325.5 64L192 64zM208 352L208 448C208 465.7 222.3 "
+                                            "480 240 480L336 480C353.7 480 368 465.7 368 "
+                                            "448L368 424L403 459C406.2 462.2 410.5 464 415 "
+                                            "464C424.4 464 432 456.4 432 447L432 352.9C432 "
+                                            "343.5 424.4 335.9 415 335.9C410.5 335.9 406.2 "
+                                            "337.7 403 340.9L368 375.9L368 351.9C368 334.2 "
+                                            "353.7 319.9 336 319.9L240 319.9C222.3 319.9 208 "
+                                            "334.2 208 351.9z"
                                         ),
                                         class_="w-element",
                                     )
@@ -328,7 +325,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                 '"url":"https://url/","system":{'
                 '"params":{},"search":{},"origin":"https://url","pathname":"/"},'
                 f'"resources":{{}},"pageMeta":{{"title":"{_site_title.strip('\n\r\t ",')}",'
-                f'"description": "{_site_description.strip('\n\r\t ",')}",'
+                f'"description":"{_site_description.strip('\n\r\t ",')}",'
                 '"excludePageFromSearch":"!undefined","language":"en-GB",'
                 '"socialImageAssetName":"!undefined",'
                 f'"socialImageUrl":"{_site_url}{_logo_location}",'
