@@ -18,7 +18,7 @@ __all__: Sequence[str] = ("PAGES_MAP",)
 
 _site_description: str = Markup(
     "Step back in time aboard Olympic to discover heroism and heartbreak.\n"
-    "Show dates: 12th, 13th & 15th June 2026 "
+    "Show dates: 19th, 20th & 21st June 2026 "
     "@ University of Birmingham Guild of Students"
 )
 _site_title: str = Markup("Olympic - 3BUGS Fringe")
@@ -94,7 +94,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                     )[
                         Markup(
                             "Show&nbsp;dates: "
-                            "12th,&nbsp;13th&nbsp;&amp;&nbsp;15th&nbsp;June&nbsp;2026 "
+                            "19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026 "
                             "@&nbsp;University&nbsp;of&nbsp;Birmingham "
                             "Guild&nbsp;of&nbsp;Students"
                         ),
