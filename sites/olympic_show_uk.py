@@ -106,21 +106,14 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         )
                     )[
                         h.li(
-                            class_=(
-                                "w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng "
-                                "cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                            )
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
                         )[
                             h.a(
-                                href="/audition/pack",
-                                class_=(
-                                    "w-element c19y3cjm c15vmzu4 c1idw5j2 crpyobo c14wber8 "
-                                    "c1lglyie chy0adt ckr079c c1dvhfh7 c1wptrdj cj9275l "
-                                    "c1hya6s0 cq6mi0e cwfy5au cusinh7 cpl7cs3 c1ksjzrn"
-                                ),
+                                href="/audition/callback/nancy",
+                                class_="w-element c19y3cjm c15vmzu4 c1idw5j2 crpyobo c14wber8 c1lglyie chy0adt ckr079c c1dvhfh7 c1wptrdj cj9275l c1hya6s0 cq6mi0e cwfy5au cusinh7 cpl7cs3 c1ksjzrn",
                             )[
                                 h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Audition Pack"
+                                    "Nancy Callback Pack"
                                 ],
                                 h.svg(
                                     xmlns="http://www.w3.org/2000/svg",
@@ -129,45 +122,21 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 )[
                                     h.path(
                                         fill="rgb(255, 255, 255)",
-                                        d=(
-                                            "M192 112L304 112L304 200C304 239.8 336.2 272 376 "
-                                            "272L464 272L464 512C464 520.8 456.8 528 448 "
-                                            "528L192 528C183.2 528 176 520.8 176 512L176 "
-                                            "128C176 119.2 183.2 112 192 112zM352 131.9L444.1 "
-                                            "224L376 224C362.7 224 352 213.3 352 200L352 "
-                                            "131.9zM192 64C156.7 64 128 92.7 128 128L128 "
-                                            "512C128 547.3 156.7 576 192 576L448 576C483.3 "
-                                            "576 512 547.3 512 512L512 250.5C512 233.5 505.3 "
-                                            "217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 "
-                                            "325.5 64L192 64zM248 320C234.7 320 224 330.7 224 "
-                                            "344C224 357.3 234.7 368 248 368L392 368C405.3 "
-                                            "368 416 357.3 416 344C416 330.7 405.3 320 392 "
-                                            "320L248 320zM248 416C234.7 416 224 426.7 224 "
-                                            "440C224 453.3 234.7 464 248 464L392 464C405.3 "
-                                            "464 416 453.3 416 440C416 426.7 405.3 416 392 "
-                                            "416L248 416z"
-                                        ),
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
                                         class_="w-element",
                                     )
                                 ],
                             ]
                         ],
                         h.li(
-                            class_=(
-                                "w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng "
-                                "cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                            )
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
                         )[
                             h.a(
-                                href="mailto:auditions@olympic-show.uk",
-                                class_=(
-                                    "w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 "
-                                    "c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 "
-                                    "cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn"
-                                ),
+                                href="mailto:/audition/callback/betty",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
                             )[
                                 h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Send Us Your Audition Video!"
+                                    "Betty Callback Pack"
                                 ],
                                 h.svg(
                                     xmlns="http://www.w3.org/2000/svg",
@@ -176,25 +145,145 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 )[
                                     h.path(
                                         fill="rgb(255, 255, 255)",
-                                        d=(
-                                            "M192 112L304 112L304 200C304 239.8 336.2 272 376 "
-                                            "272L464 272L464 512C464 520.8 456.8 528 448 "
-                                            "528L192 528C183.2 528 176 520.8 176 512L176 "
-                                            "128C176 119.2 183.2 112 192 112zM352 131.9L444.1 "
-                                            "224L376 224C362.7 224 352 213.3 352 200L352 "
-                                            "131.9zM192 64C156.7 64 128 92.7 128 128L128 "
-                                            "512C128 547.3 156.7 576 192 576L448 576C483.3 "
-                                            "576 512 547.3 512 512L512 250.5C512 233.5 505.3 "
-                                            "217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 "
-                                            "325.5 64L192 64zM208 352L208 448C208 465.7 222.3 "
-                                            "480 240 480L336 480C353.7 480 368 465.7 368 "
-                                            "448L368 424L403 459C406.2 462.2 410.5 464 415 "
-                                            "464C424.4 464 432 456.4 432 447L432 352.9C432 "
-                                            "343.5 424.4 335.9 415 335.9C410.5 335.9 406.2 "
-                                            "337.7 403 340.9L368 375.9L368 351.9C368 334.2 "
-                                            "353.7 319.9 336 319.9L240 319.9C222.3 319.9 208 "
-                                            "334.2 208 351.9z"
-                                        ),
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/james",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "James Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/edmund",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "Edmund Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/helena",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "Helena Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/fred",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "Fred Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/douglas",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "Douglas Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
+                                        class_="w-element",
+                                    )
+                                ],
+                            ]
+                        ],
+                        h.li(
+                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
+                        )[
+                            h.a(
+                                href="/audition/callback/annie",
+                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
+                            )[
+                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
+                                    "Annie Callback Pack"
+                                ],
+                                h.svg(
+                                    xmlns="http://www.w3.org/2000/svg",
+                                    viewbox="0 0 640 640",
+                                    class_="w-element c17ga2gb",
+                                )[
+                                    h.path(
+                                        fill="rgb(255, 255, 255)",
+                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
                                         class_="w-element",
                                     )
                                 ],
