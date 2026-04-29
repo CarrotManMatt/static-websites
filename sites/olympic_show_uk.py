@@ -100,10 +100,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         ),
                     ],
                     h.ul(
-                        class_=(
-                            "w-element c1fjw25m crpyobo c15vmzu4 c1idw5j2 c12n57os cynrmcb "
-                            "cytjnj c1n5tuq8 c1jaogku c13un27p cdbs8w5 cj9ef26"
-                        )
+                        class_="w-element c1fjw25m crpyobo c15vmzu4 c1idw5j2 c12n57os cynrmcb cytjnj c1n5tuq8 c138yzzz cgtv1h1 cnzpwoq cdbs8w5 cj9ef26"
                     )[
                         h.li(
                             class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
