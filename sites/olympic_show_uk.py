@@ -42,8 +42,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             )[
                 h.div(
                     class_=(
-                        "w-element c1fjw25m ccpzds6 cur4pzc c171p6yf celrdu8 cz48kyy "
-                        "cmyd10q ckeo1df c15vmzu4 c14m3ca4 cmcx9xc c16bjgbz c1fa8gcm"
+                        "w-element c1fjw25m ccpzds6 cur4pzc c171p6yf celrdu8 cz48kyy cmyd10q "
+                        "ckeo1df c15vmzu4 c14m3ca4 cmcx9xc c16bjgbz c1fa8gcm"
                     )
                 )[
                     h.img(
@@ -99,193 +99,14 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             "Guild&nbsp;of&nbsp;Students"
                         ),
                     ],
-                    h.ul(
-                        class_="w-element c1fjw25m crpyobo c15vmzu4 c1idw5j2 c12n57os cynrmcb cytjnj c1n5tuq8 c138yzzz cgtv1h1 cnzpwoq cdbs8w5 cj9ef26"
+                    h.p(
+                        class_=(
+                            "w-element ckr079c ca4u039 ckupqx5 c1bleucc c9895ho c7uxvde "
+                            "cz0qqdo c1p7rcrf c1tgzf95"
+                        )
                     )[
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/nancy",
-                                class_="w-element c19y3cjm c15vmzu4 c1idw5j2 crpyobo c14wber8 c1lglyie chy0adt ckr079c c1dvhfh7 c1wptrdj cj9275l c1hya6s0 cq6mi0e cwfy5au cusinh7 cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Nancy Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="mailto:/audition/callback/betty",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Betty Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/james",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "James Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/edmund",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Edmund Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/helena",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Helena Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/fred",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Fred Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/douglas",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Douglas Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
-                        h.li(
-                            class_="w-element cu52st3 caaqcxl c1jya48a c1lfbz0f cr4uoqw c5ak6ng cutr2ab c1l0nypv cl583l7 ccyx7t7 c2ijs9 c79tq8k c1gh997e"
-                        )[
-                            h.a(
-                                href="/audition/callback/annie",
-                                class_="w-element c19y3cjm c14wber8 c1lglyie crpyobo c15vmzu4 c1idw5j2 ckr079c chy0adt c1hya6s0 cq6mi0e cusinh7 cwfy5au c1dvhfh7 c1wptrdj cj9275l cpl7cs3 c1ksjzrn",
-                            )[
-                                h.span(class_="w-element c1g74my3 c19102et c1tgzf95")[
-                                    "Annie Callback Pack"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element c17ga2gb",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z",
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
+                        "Casting emails have now been sent, "
+                        "please check your inbox for more information!"
                     ],
                 ],
                 h.div(
