@@ -16,11 +16,15 @@ if TYPE_CHECKING:
 __all__: Sequence[str] = ("PAGES_MAP",)
 
 
-_site_description: str = Markup(
-    "Step back in time aboard Olympic to discover heroism and heartbreak.\n"
-    "Show dates: 19th, 20th & 21st June 2026 "
-    "@ University of Birmingham Guild of Students"
+_show_description: str = Markup(
+    "Step&nbsp;back&nbsp;in&nbsp;time aboard&nbsp;The&nbsp;Olympic, "
+    "to&nbsp;discover heroism&nbsp;and&nbsp;heartbreak."
 )
+_show_dates: str = Markup(
+    "Show&nbsp;dates: 19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026 "
+    "@&nbsp;University&nbsp;of&nbsp;Birmingham Guild&nbsp;of&nbsp;Students"
+)
+_site_description: str = Markup("{}\n{}").format(_show_description, _show_dates)
 _site_title: str = Markup("Olympic - 3BUGS Fringe")
 _logo_location: str = "/static/images/Logo.png"
 _site_url: str = "https://olympic-show.uk"
@@ -80,25 +84,13 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             "w-element ckr079c ca4u039 c1b5291m c1bleucc c18ygeq2 cz0qqdo "
                             "c1p7rcrf c1ozzal9"
                         )
-                    )[
-                        Markup(
-                            "Step&nbsp;back&nbsp;in&nbsp;time aboard&nbsp;The&nbsp;Olympic, "
-                            "to&nbsp;discover heroism&nbsp;and&nbsp;heartbreak."
-                        ),
-                    ],
+                    )[_show_description],
                     h.p(
                         class_=(
                             "w-element ckr079c ca4u039 c19102et c1bleucc c9895ho c622mpl "
                             "cz0qqdo c1p7rcrf c1tgzf95"
                         )
-                    )[
-                        Markup(
-                            "Show&nbsp;dates: "
-                            "19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026 "
-                            "@&nbsp;University&nbsp;of&nbsp;Birmingham "
-                            "Guild&nbsp;of&nbsp;Students"
-                        ),
-                    ],
+                    )[_show_dates],
                     h.p(
                         class_=(
                             "w-element ckr079c ca4u039 ckupqx5 c1bleucc c9895ho c7uxvde "
