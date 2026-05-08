@@ -121,7 +121,7 @@ def run() -> int:
     remote_hostname: validators.Hostname | None = _get_validated_string_environment_variable(
         "REMOTE_IP", validators.Hostname
     )
-    if remote_hostname is None and not dry_run:
+    if not dry_run and remote_hostname is None:
         MISSING_REMOTE_IP_MESSAGE: Final[str] = (
             f'No "{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP" was specified '
             f"when using {ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN=False."
@@ -142,10 +142,10 @@ def run() -> int:
             logger.warning("All sites failed to build. (Or no sites exist.)")
             return 1
 
-        deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
+        deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(  # type: ignore[call-overload]  # ty: ignore[no-matching-overload]  # noqa: CAR123
             built_site_paths,
             verbosity=verbosity,
-            remote_hostname=remote_hostname,  # type: ignore[arg-type]
+            remote_hostname=remote_hostname,
             remote_username=remote_username,
             remote_directory=remote_directory,
             dry_run=dry_run,

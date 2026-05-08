@@ -172,11 +172,11 @@ def deploy_single_site(
 def deploy_all_sites(
     site_paths: AbstractSet[Path],
     *,
-    dry_run: Literal[True],
+    remote_hostname: Hostname,
     verbosity: Literal[0, 1, 2, 3] = ...,
     remote_username: Username | None = ...,
-    remote_hostname: None = ...,
     remote_directory: Path | None = ...,
+    dry_run: Literal[False] = ...,
 ) -> AbstractSet[str]: ...
 
 
@@ -184,11 +184,11 @@ def deploy_all_sites(
 def deploy_all_sites(
     site_paths: AbstractSet[Path],
     *,
-    remote_hostname: Hostname,
+    dry_run: Literal[True],
     verbosity: Literal[0, 1, 2, 3] = ...,
     remote_username: Username | None = ...,
+    remote_hostname: Hostname | None = ...,
     remote_directory: Path | None = ...,
-    dry_run: bool = ...,
 ) -> AbstractSet[str]: ...
 
 
