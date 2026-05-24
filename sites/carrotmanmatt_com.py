@@ -129,7 +129,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 (
                                     "• Communicate - "
                                     "Talking clearly to others is imperative for "
-                                    "understanding and will quickly solve many issues."
+                                    "understanding and will quickly solve many issues. "
                                     "Try to truly listen to others rather than just talking "
                                     "at them"
                                 ),
