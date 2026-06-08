@@ -22,7 +22,8 @@ _show_description: str = Markup(
 )
 _show_dates: str = Markup(
     "Show&nbsp;dates: 19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026 "
-    "@&nbsp;University&nbsp;of&nbsp;Birmingham Guild&nbsp;of&nbsp;Students"
+    "Doors&nbsp;-&nbsp;7pm,&nbsp;Show&nbsp;-&nbsp;7:30pm "
+    "Amos&nbsp;Room&nbsp;@&nbsp;University&nbsp;of&nbsp;Birmingham Guild&nbsp;of&nbsp;Students"
 )
 _site_description: str = Markup("{}\n{}").format(_show_description, _show_dates)
 _site_title: str = Markup("Olympic - 3BUGS Fringe")
@@ -146,7 +147,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             )
                         )[
                             h.a(
-                                href="/character-guide",
+                                href="/reserve-ticket",
                                 class_=(
                                     "w-element c19y3cjm c1lglyie c14wber8 c1hya6s0 cvp7t4m "
                                     "cwfy5au cusinh7 c15vmzu4 c1idw5j2 crpyobo c1u759pa "
@@ -154,7 +155,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                 ),
                             )[
                                 h.span(class_="w-element ca4u039 cryncd3 cj9275l")[
-                                    "Character Guide"
+                                    "Ticket Reservation Form"
                                 ],
                                 h.svg(
                                     xmlns="http://www.w3.org/2000/svg",
@@ -164,35 +165,19 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                     h.path(
                                         fill="rgb(255, 255, 255)",
                                         d=(
-                                            "M27 182L55.5 343.7C69.5 423.2 131.8 485.5 211.3 "
-                                            "499.5L224 501.7C207.5 473.1 196.9 441 193.4 "
-                                            "407.2L169.3 411.5C159.6 413.2 150.5 405.7 152.4 "
-                                            "396C157.2 371.3 171.5 349.4 192.1 335.1L192.1 "
-                                            "260.5C190.7 261.3 189.1 261.8 187.4 262.1L124.4 "
-                                            "273.2C115.7 274.7 107.1 268.8 108.5 260.1C111.6 "
-                                            "240.5 126.9 224.1 147.6 220.4C164.8 217.4 181.5 "
-                                            "223.9 192.2 236.2L192.2 213.5C192.2 191 199.1 "
-                                            "161.1 224.5 140.1C250.5 118.6 292.2 96.2 349.4 "
-                                            "85.9C318.9 69.6 263.1 53.9 185.6 67.5C105.3 81.7 "
-                                            "57.6 117.6 35.5 143.6C26.5 154.1 24.7 168.5 27.1 "
-                                            "182.1zM240 202.7L240 377.5C240 458.2 290.5 530.4 "
-                                            "366.4 557.9L394.1 568C408.2 573.1 423.7 573.1 "
-                                            "437.8 568L465.6 558C541.5 530.4 592 458.3 592 "
-                                            "377.5L592 202.7C592 195.8 589.9 188.9 585 "
-                                            "184.1C562.4 161.6 506.8 128.1 416 128.1C325.2 "
-                                            "128.1 269.6 161.7 247 184.1C242.1 189 240 195.8 "
-                                            "240 202.7zM306.1 389.8C304.7 382.8 313.1 378.8 "
-                                            "318.8 383.2C345.7 403.8 379.4 416.1 416 "
-                                            "416.1C452.6 416.1 486.2 403.8 513.2 383.2C518.9 "
-                                            "378.8 527.3 382.8 525.9 389.8C515.8 441.2 470.4 "
-                                            "480.1 416 480.1C361.6 480.1 316.2 441.3 306.1 "
-                                            "389.8zM306.6 288.3C313.2 269.5 331 256 352 "
-                                            "256C373 256 390.9 269.5 397.4 288.3C400.3 296.7 "
-                                            "392.9 304 384 304L320 304C311.2 304 303.7 296.6 "
-                                            "306.6 288.3zM512 304L448 304C439.2 304 431.7 "
-                                            "296.6 434.6 288.3C441.1 269.5 459 256 480 "
-                                            "256C501 256 518.9 269.5 525.4 288.3C528.3 296.7 "
-                                            "520.9 304 512 304z"
+                                            "M96 128C60.7 128 32 156.7 32 192L32 256C32 264.8 "
+                                            "39.4 271.7 47.7 274.6C66.5 281.1 80 299 80 "
+                                            "320C80 341 66.5 358.9 47.7 365.4C39.4 368.3 32 "
+                                            "375.2 32 384L32 448C32 483.3 60.7 512 96 512L544 "
+                                            "512C579.3 512 608 483.3 608 448L608 384C608 "
+                                            "375.2 600.6 368.3 592.3 365.4C573.5 358.9 560 "
+                                            "341 560 320C560 299 573.5 281.1 592.3 "
+                                            "274.6C600.6 271.7 608 264.8 608 256L608 192C608 "
+                                            "156.7 579.3 128 544 128L96 128zM448 400L448 "
+                                            "240L192 240L192 400L448 400zM144 224C144 206.3 "
+                                            "158.3 192 176 192L464 192C481.7 192 496 206.3 "
+                                            "496 224L496 416C496 433.7 481.7 448 464 448L176 "
+                                            "448C158.3 448 144 433.7 144 416L144 224z"
                                         ),
                                         class_="w-element",
                                     )
@@ -200,6 +185,45 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             ]
                         ],
                     ],
+                    h.div(data_ws_subject_for="_Rcm_", class_="w-video-animation")[
+                        h.video(
+                            src="/trailer",
+                            preload="auto",
+                            muted="",
+                            playsinline="",
+                            crossorigin="anonymous",
+                            controls="",
+                            class_="w-video",
+                            data_ws_video_id=":R9sm:",
+                        )
+                    ],
+                    h.style[
+                        "#_Rcm_ {\n"
+                        "    position: fixed;\n"
+                        "    visibility: hidden;\n"
+                        "    pointer-events: none;\n"
+                        "    top: -10000px;\n"
+                        "    right: 10000px;\n"
+                        "    contain: strict;\n"
+                        "}\n\n"
+                        "#_Rcm_-sample {\n"
+                        "    position: fixed;\n"
+                        "    visibility: hidden;\n"
+                        "    pointer-events: none;\n"
+                        "    top: -9000px;\n"
+                        "    right: 9000px;\n"
+                        "    willchange: translate, scale, opacity;\n"
+                        "    contain: strict;\n"
+                        "}"
+                    ],
+                    h.div(id="_Rcm_", inert="true", data_ws_no_initial_animation=""),
+                    h.div(id="_Rcm_-sample", inert="true", data_ws_no_initial_animation=""),
+                    h.p(
+                        class_=(
+                            "w-element ckr079c ca4u039 c1b5291m c1bleucc c18ygeq2 cz0qqdo "
+                            "c1p7rcrf c1ozzal9"
+                        )
+                    )[" VIP Tickets also available!"],
                 ],
                 h.div(
                     class_=(
