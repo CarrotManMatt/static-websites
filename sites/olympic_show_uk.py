@@ -193,8 +193,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         h.video(
                             src="/trailer",
                             preload="auto",
-                            muted="",
-                            playsinline="",
+                            loop="",
                             crossorigin="anonymous",
                             controls="",
                             class_="w-video",
