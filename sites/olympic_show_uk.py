@@ -21,11 +21,15 @@ _show_description: str = Markup(
     "to&nbsp;discover heroism&nbsp;and&nbsp;heartbreak."
 )
 _show_dates: str = Markup(
-    "Show&nbsp;dates: 19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026 "
-    "Doors&nbsp;-&nbsp;7pm,&nbsp;Show&nbsp;-&nbsp;7:30pm "
+    "Show&nbsp;dates: 19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026"
+)
+_show_times: str = Markup("Doors&nbsp;-&nbsp;7pm,&nbsp;Show&nbsp;-&nbsp;7:30pm")
+_show_location: str = Markup(
     "Amos&nbsp;Room&nbsp;@&nbsp;University&nbsp;of&nbsp;Birmingham Guild&nbsp;of&nbsp;Students"
 )
-_site_description: str = Markup("{}\n{}").format(_show_description, _show_dates)
+_site_description: str = Markup("{}\n{} {} {}").format(
+    _show_description, _show_dates, _show_times, _show_location
+)
 _site_title: str = Markup("Olympic - 3BUGS Fringe")
 _logo_location: str = "/static/images/Logo.png"
 _site_url: str = "https://olympic-show.uk"
@@ -91,7 +95,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             "w-element ckr079c ca4u039 c19102et c1bleucc c9895ho c622mpl "
                             "cz0qqdo c1p7rcrf c1tgzf95"
                         )
-                    )[_show_dates],
+                    )[_show_dates, h.br, _show_times, h.br, _show_location],
                     h.ul(
                         class_=(
                             "w-element c1n5tuq8 c1fjw25m cnzpwoq crpyobo c15vmzu4 c1idw5j2 "
