@@ -86,6 +86,12 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                     )["Olympic"],
                     h.p(
                         class_=(
+                            "w-element ckr079c ca4u039 cmp4g7p c1bleucc c9895ho c622mpl "
+                            "cz0qqdo c1p7rcrf c1tgzf95"
+                        )
+                    )["Thank you for coming to see our show!"],
+                    h.p(
+                        class_=(
                             "w-element ckr079c ca4u039 c1b5291m c1bleucc c18ygeq2 cz0qqdo "
                             "c1p7rcrf c1ozzal9"
                         )
@@ -110,12 +116,12 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             )
                         )[
                             h.a(
-                                href="/script",
                                 class_=(
                                     "w-element c19y3cjm c1lglyie c14wber8 cwfy5au cusinh7 "
                                     "c1hya6s0 cq6mi0e c15vmzu4 c1idw5j2 crpyobo c1u759pa "
                                     "c1gm7vb"
                                 ),
+                                href="/script",
                             )[
                                 h.span(class_="w-element ca4u039 cj9275l")["Script"],
                                 h.svg(
@@ -142,54 +148,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                                     )
                                 ],
                             ]
-                        ],
-                        h.li(
-                            class_=(
-                                "w-element cu52st3 caaqcxl c18y1yfe c1uom0t8 c1b3o6vr cc1a8ib "
-                                "cryncd3 cd3i0tr c21ee66 c1l6ehxo cbvcuo2 c69pgid c79tq8k "
-                                "c1gh997e"
-                            )
-                        )[
-                            h.a(
-                                href="/reserve-ticket",
-                                class_=(
-                                    "w-element c19y3cjm c1lglyie c14wber8 c1hya6s0 cvp7t4m "
-                                    "cwfy5au cusinh7 c15vmzu4 c1idw5j2 crpyobo c1u759pa "
-                                    "c1gm7vb"
-                                ),
-                            )[
-                                h.span(class_="w-element ca4u039 cryncd3 cj9275l")[
-                                    "Ticket Reservation Form"
-                                ],
-                                h.svg(
-                                    xmlns="http://www.w3.org/2000/svg",
-                                    viewbox="0 0 640 640",
-                                    class_="w-element czzn447",
-                                )[
-                                    h.path(
-                                        fill="rgb(255, 255, 255)",
-                                        d=(
-                                            "M96 128C60.7 128 32 156.7 32 192L32 256C32 264.8 "
-                                            "39.4 271.7 47.7 274.6C66.5 281.1 80 299 80 "
-                                            "320C80 341 66.5 358.9 47.7 365.4C39.4 368.3 32 "
-                                            "375.2 32 384L32 448C32 483.3 60.7 512 96 512L544 "
-                                            "512C579.3 512 608 483.3 608 448L608 384C608 "
-                                            "375.2 600.6 368.3 592.3 365.4C573.5 358.9 560 "
-                                            "341 560 320C560 299 573.5 281.1 592.3 "
-                                            "274.6C600.6 271.7 608 264.8 608 256L608 192C608 "
-                                            "156.7 579.3 128 544 128L96 128zM448 400L448 "
-                                            "240L192 240L192 400L448 400zM144 224C144 206.3 "
-                                            "158.3 192 176 192L464 192C481.7 192 496 206.3 "
-                                            "496 224L496 416C496 433.7 481.7 448 464 448L176 "
-                                            "448C158.3 448 144 433.7 144 416L144 224z"
-                                        ),
-                                        class_="w-element",
-                                    )
-                                ],
-                            ]
-                        ],
+                        ]
                     ],
-                    h.div(data_ws_subject_for="_Rcm_", class_="w-video-animation")[
+                    h.div(data_ws_subject_for="_Rem_", class_="w-video-animation")[
                         h.video(
                             src="/trailer",
                             preload="auto",
@@ -197,11 +158,11 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             crossorigin="anonymous",
                             controls="",
                             class_="w-video",
-                            data_ws_video_id=":R9sm:",
+                            data_ws_video_id=":Rjem:",
                         )
                     ],
                     h.style[
-                        "#_Rcm_ {\n"
+                        "#_Rem_ {\n"
                         "    position: fixed;\n"
                         "    visibility: hidden;\n"
                         "    pointer-events: none;\n"
@@ -209,7 +170,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         "    right: 10000px;\n"
                         "    contain: strict;\n"
                         "}\n\n"
-                        "#_Rcm_-sample {\n"
+                        "#_Rem_-sample {\n"
                         "    position: fixed;\n"
                         "    visibility: hidden;\n"
                         "    pointer-events: none;\n"
@@ -219,14 +180,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         "    contain: strict;\n"
                         "}"
                     ],
-                    h.div(id="_Rcm_", inert="true", data_ws_no_initial_animation=""),
-                    h.div(id="_Rcm_-sample", inert="true", data_ws_no_initial_animation=""),
-                    h.p(
-                        class_=(
-                            "w-element ckr079c ca4u039 c1b5291m c1bleucc c18ygeq2 cz0qqdo "
-                            "c1p7rcrf c1ozzal9"
-                        )
-                    )[" VIP Tickets also available!"],
+                    h.div(id="_Rem_", inert="true", data_ws_no_initial_animation=""),
+                    h.div(id="_Rem_-sample", inert="true", data_ws_no_initial_animation=""),
                 ],
                 h.div(
                     class_=(
