@@ -80,7 +80,7 @@ def component_base(  # noqa: PLR0913
     page_meta_image: h.Attribute = "https://carrotmanmatt.com/static/images/website_icon.png",
     page_content_type: h.Attribute = "article",
     page_keywords: h.Attribute | Iterable[str | int | bool] = "CarrotManMatt",
-    page_keywords_extend: str | int | bool | None | Iterable[str | int | bool] = None,
+    page_keywords_extend: str | int | bool | Iterable[str | int | bool] | None = None,
     site_url: h.Attribute = "https://carrotmanmatt.com",
     after_body: h.Node | None = None,
     copyright_comment: h.Node | None = None,
