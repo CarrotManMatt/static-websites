@@ -17,14 +17,15 @@ __all__: Sequence[str] = ("PAGES_MAP",)
 
 
 _SITE_DESCRIPTION: Final[str] = Markup("Delivering successful IT change and transformation")
-_SITE_TITLE: Final[str] = Markup("InfraTek Consulting Ltd.")
+COMPANY_NAME: Final[str] = Markup("InfraTek Consulting Ltd.")
+_SITE_TITLE: Final[str] = COMPANY_NAME
 _SITE_URL: Final[str] = "https://infratek-consulting.com"
 _LINKEDIN_REDIRECT_URL: Final[str] = "https://linkedin.com/in/stevenorton"
 
 
 PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
     PurePosixPath("index.html"): component_base(
-        body=h.body(class_="w-element cn033n5 cajgq1a c1tnfgn4 cpd3ydb c1n5clc0")[
+        body=h.body(class_="w-element cn033n5 cajgq1a c1tnfgn4 cpd3ydb c60459u")[
             h.div(class_="w-element cajgq1a c14l0slq c1oqod1n cn033n5 c1tnfgn4 cpd3ydb")[
                 h.header(
                     class_=(
@@ -36,7 +37,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                     h.img(
                         class_="w-image ca23ba1 cpxwbrc c1lm51dm",
                         alt=(
-                            "Logo for InfraTek Consulting Ltd. featuring a blue square with "
+                            f"Logo for {COMPANY_NAME} featuring a blue square with "
                             'white stylised letters "iFT" on the left, next to pixelated grey '
                             'text reading "InfraTek" over a thin line and the word '
                             '"CONSULTING" in widely spaced, light uppercase letters.'
@@ -300,7 +301,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             ],
                         ],
                         h.a(
-                            href="https://linkedin.com/in/stevenorton",
+                            href=_LINKEDIN_REDIRECT_URL,
                             class_="w-element c1kimxow c2cb6r5 c1uvycdr",
                         )[
                             h.svg(
@@ -354,14 +355,14 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                     )
                 )[
                     h.li(class_="w-element c1bb622m c1nzsc5v c17ywm2f")[
-                        "© 2026 All Rights Reserved"
+                        Markup("&copy; 2026 All Rights Reserved")
                     ],
                     h.li(
                         class_=(
                             "w-element c1bb622m c1nzsc5v c1lkpj3b c17ywm2f cvhtrm7 c1lc8dit "
                             "c9eg06w c1gue4ip c1txv56f c1m96bp c1hx352w c1ggdnsd"
                         )
-                    )["InfraTek Consulting Ltd."],
+                    )[COMPANY_NAME],
                     h.li(
                         class_=(
                             "w-element c1bb622m c1nzsc5v c1lkpj3b cb7h0fs c18volup c1dxf3lp "
