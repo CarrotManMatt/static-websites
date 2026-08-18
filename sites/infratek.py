@@ -105,6 +105,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             h.a(
                                 class_="w-element c1kimxow cfijjxm c1rpijsf c1p6xz3y c6d58ts",
                                 href=_LINKEDIN_REDIRECT_URL,
+                                target="_blank",
+                                rel="noopener noreferrer",
                             )[
                                 h.svg(
                                     height="800px",
@@ -373,6 +375,8 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         h.a(
                             href="https://carrotmanmatt.com/",
                             class_="w-element c1kimxow c102m9ht c1gvfhvq cuzqjos",
+                            target="_blank",
+                            rel="noopener noreferrer",
                         )["CarrotManMatt.com"],
                     ],
                 ]
