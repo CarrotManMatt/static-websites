@@ -143,13 +143,17 @@ def component_base(  # noqa: PLR0913
         copyright_comment,
         h.head[
             h.title[page_title],
+            h.meta(content=page_title, name="title"),
             h.meta(content=page_title, property="og:site_name"),
             h.meta(content=page_title, property="og:title"),
             h.meta(content=page_description, property="og:description"),
             h.meta(content=site_url, property="og:url"),
             h.meta(content=page_meta_image, property="og:image"),
             h.meta(content=page_content_type, property="og:type"),
-            h.meta(content=page_meta_image, name="twitter:card"),
+            h.meta(content="summary_large_image", name="twitter:card"),
+            h.meta(content=page_title, name="twitter:title"),
+            h.meta(content=page_description, name="twitter:description"),
+            h.meta(content=page_meta_image, name="twitter:image"),
             (
                 h.meta(
                     content=(

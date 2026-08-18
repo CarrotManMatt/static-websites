@@ -16,23 +16,23 @@ if TYPE_CHECKING:
 __all__: Sequence[str] = ("PAGES_MAP",)
 
 
-_show_description: str = Markup(
+_SHOW_DESCRIPTION: Final[str] = Markup(
     "Step&nbsp;back&nbsp;in&nbsp;time aboard&nbsp;The&nbsp;Olympic, "
     "to&nbsp;discover heroism&nbsp;and&nbsp;heartbreak."
 )
-_show_dates: str = Markup(
+_SHOW_DATES: Final[str] = Markup(
     "Show&nbsp;dates: 19th,&nbsp;20th&nbsp;&amp;&nbsp;21st&nbsp;June&nbsp;2026"
 )
-_show_times: str = Markup("Doors&nbsp;-&nbsp;7pm,&nbsp;Show&nbsp;-&nbsp;7:30pm")
-_show_location: str = Markup(
+_SHOW_TIMES: Final[str] = Markup("Doors&nbsp;-&nbsp;7pm,&nbsp;Show&nbsp;-&nbsp;7:30pm")
+_SHOW_LOCATION: Final[str] = Markup(
     "Amos&nbsp;Room&nbsp;@&nbsp;University&nbsp;of&nbsp;Birmingham Guild&nbsp;of&nbsp;Students"
 )
-_site_description: str = Markup("{}\n{} {} {}").format(
-    _show_description, _show_dates, _show_times, _show_location
+_SITE_DESCRIPTION: Final[str] = Markup("{}\n{} {} {}").format(
+    _SHOW_DESCRIPTION, _SHOW_DATES, _SHOW_TIMES, _SHOW_LOCATION
 )
-_site_title: str = Markup("Olympic - 3BUGS Fringe")
-_logo_location: str = "/static/images/Logo.png"
-_site_url: str = "https://olympic-show.uk"
+_SITE_TITLE: Final[str] = Markup("Olympic - 3BUGS Fringe")
+_LOGO_LOCATION: Final[str] = "/static/images/Logo.png"
+_SITE_URL: Final[str] = "https://olympic-show.uk"
 
 
 PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
@@ -63,17 +63,17 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                         ),
                         width="917",
                         height="917",
-                        src=_logo_location,
+                        src=_LOGO_LOCATION,
                         class_="w-image cgb3bj cd086ag c1grhjej",
                         sizes="100vw",
                         srcset=(
-                            f"{_logo_location} 16w, {_logo_location} 32w, "
-                            f"{_logo_location} 48w, {_logo_location} 64w, "
-                            f"{_logo_location} 96w, {_logo_location} 128w, "
-                            f"{_logo_location} 256w, {_logo_location} 384w, "
-                            f"{_logo_location} 640w, {_logo_location} 750w, "
-                            f"{_logo_location} 828w, {_logo_location} 1080w, "
-                            f"{_logo_location} 1200w, {_logo_location} 1920w"
+                            f"{_LOGO_LOCATION} 16w, {_LOGO_LOCATION} 32w, "
+                            f"{_LOGO_LOCATION} 48w, {_LOGO_LOCATION} 64w, "
+                            f"{_LOGO_LOCATION} 96w, {_LOGO_LOCATION} 128w, "
+                            f"{_LOGO_LOCATION} 256w, {_LOGO_LOCATION} 384w, "
+                            f"{_LOGO_LOCATION} 640w, {_LOGO_LOCATION} 750w, "
+                            f"{_LOGO_LOCATION} 828w, {_LOGO_LOCATION} 1080w, "
+                            f"{_LOGO_LOCATION} 1200w, {_LOGO_LOCATION} 1920w"
                         ),
                         decoding="async",
                         loading="lazy",
@@ -95,13 +95,13 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                             "w-element ckr079c ca4u039 c1b5291m c1bleucc c18ygeq2 cz0qqdo "
                             "c1p7rcrf c1ozzal9"
                         )
-                    )[_show_description],
+                    )[_SHOW_DESCRIPTION],
                     h.p(
                         class_=(
                             "w-element ckr079c ca4u039 c19102et c1bleucc c9895ho c622mpl "
                             "cz0qqdo c1p7rcrf c1tgzf95"
                         )
-                    )[_show_dates, h.br, _show_times, h.br, _show_location],
+                    )[_SHOW_DATES, h.br, _SHOW_TIMES, h.br, _SHOW_LOCATION],
                     h.ul(
                         class_=(
                             "w-element c1n5tuq8 c1fjw25m cnzpwoq crpyobo c15vmzu4 c1idw5j2 "
@@ -304,12 +304,12 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
             h.script(id="vike_pageContext", type="application/json")[
                 '{"_urlRewrite":null,"pageId":"/pages/index","routeParams":{},"data":{'
                 f'"url":"https://url/","system":{{"resources":{{}},"pageMeta":{{"title":"{
-                    _site_title.strip('\n\r\t ",')
+                    _SITE_TITLE.strip('\n\r\t ",')
                 }","description":"{
-                    _site_description.strip('\n\r\t ",')
+                    _SITE_DESCRIPTION.strip('\n\r\t ",')
                 }","excludePageFromSearch":"!undefined","language":"en-GB",'
-                f'"socialImageAssetName":"!undefined","socialImageUrl":"{_site_url}{
-                    _logo_location
+                f'"socialImageAssetName":"!undefined","socialImageUrl":"{_SITE_URL}{
+                    _LOGO_LOCATION
                 }","status":"!undefined","redirect":"!undefined","custom":[]}}}}}}'
             ],
             h.script(id="vike_globalContext", type="application/json")[" {}"],
@@ -321,9 +321,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
                 type="text/javascript",
             ),
         ],
-        page_title=_site_title,
-        page_description=_site_description,
-        page_meta_image=f"{_site_url}{_logo_location}",
+        page_title=_SITE_TITLE,
+        page_description=_SITE_DESCRIPTION,
+        page_meta_image=f"{_SITE_URL}{_LOGO_LOCATION}",
         page_content_type="website",
         page_keywords=(
             "olympic",
@@ -338,7 +338,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         ),
         theme_colour_primary="#b4d7d3",
         theme_colour_secondary="#99d1d3",
-        site_url=_site_url,
+        site_url=_SITE_URL,
         favicon_png_sizes={96},
         stylesheets_extend=(
             h.link(
@@ -351,7 +351,7 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = {
         ),
         extra_head=(
             h.script(type="application/ld+json")[
-                f'{{"@context":"https://schema.org","@type":"WebSite","name":"{_site_title}"}}'
+                f'{{"@context":"https://schema.org","@type":"WebSite","name":"{_SITE_TITLE}"}}'
             ],
         ),
     )
