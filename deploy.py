@@ -145,7 +145,7 @@ def deploy_single_site(
             rsync_args,
             capture_output=True,
             text=True,
-            check=True,
+            check=False,
         )
     except FileNotFoundError as no_rsync_command_error:
         NO_RSYNC_COMMAND_MESSAGE: Final[str] = (
@@ -282,6 +282,17 @@ def deploy_all_sites(
 
         deployment_failed_logger.error(traceback_messages[-1].strip())
         site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
+        if isinstance(deployment_outcome, CalledProcessError):
+            site_name_logger.info(
+                "%s subprocess stdout:\n%s",
+                deployment_outcome.cmd[0],
+                f"{deployment_outcome.stdout.strip()}\n",
+            )
+            site_name_logger.info(
+                "%s subprocess stderr:\n%s",
+                deployment_outcome.cmd[0],
+                f"{deployment_outcome.stderr.strip()}\n",
+            )
 
     deployed_site_names: AbstractSet[str] = {
         site_name
