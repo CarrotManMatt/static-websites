@@ -42,7 +42,7 @@ repos:
       rev: v1.30.0
       hooks:
         - id: zizmor
-          args: [--no-progress, --fix]
+          args: [--no-progress, --fix, --persona=auditor]
 
     - repo: https://github.com/adrienverge/yamllint.git
       rev: v1.38.0
