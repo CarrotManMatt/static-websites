@@ -1,16 +1,14 @@
 """Validator classes that hold values guaranteed to be valid."""
 
-import abc
-import re
-import socket
-from pathlib import Path
-from typing import TYPE_CHECKING, final, overload, override
-
-if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from typing import Final
-
 __all__: Sequence[str] = ("Hostname", "SimpleValidator", "Username")
+
+import abc
+from typing import final, overload, override
+lazy import re
+lazy import socket
+lazy from collections.abc import Sequence
+lazy from pathlib import Path
+lazy from typing import Final
 
 
 class SimpleValidator[T](abc.ABC):

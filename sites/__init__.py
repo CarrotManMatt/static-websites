@@ -1,22 +1,20 @@
 """Overall static site pages definition map."""
 
-from typing import TYPE_CHECKING
+__all__: Sequence[str] = ("SITES_MAP",)
+
+lazy from collections.abc import Mapping, Sequence
+lazy from pathlib import PurePosixPath
+lazy from typing import Final
+
+lazy import htpy as h
 
 from . import car_points, carrotmanmatt_com, infratek, olympic_show_uk
 
-if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
-    from pathlib import PurePosixPath
-    from typing import Final
-
-    import htpy as h
-
-__all__: Sequence[str] = ("SITES_MAP",)
-
-
-SITES_MAP: Final[Mapping[str, Mapping[PurePosixPath, h.HTMLElement]]] = {
-    "car-points": car_points.PAGES_MAP,
-    "carrotmanmatt.com": carrotmanmatt_com.PAGES_MAP,
-    "olympic-show": olympic_show_uk.PAGES_MAP,
-    "infratek": infratek.PAGES_MAP,
-}
+SITES_MAP: Final[Mapping[str, Mapping[PurePosixPath, h.HTMLElement]]] = frozendict(
+    {
+        "car-points": car_points.PAGES_MAP,
+        "carrotmanmatt.com": carrotmanmatt_com.PAGES_MAP,
+        "olympic-show": olympic_show_uk.PAGES_MAP,
+        "infratek": infratek.PAGES_MAP,
+    }
+)

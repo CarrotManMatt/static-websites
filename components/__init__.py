@@ -1,25 +1,20 @@
 """Generic HTML component constructors for use across sites."""
 
-from collections.abc import Iterable
-from typing import TYPE_CHECKING
-
-import htpy as h
-from markupsafe import Markup
-
-import utils
-
-if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
-    from collections.abc import Set as AbstractSet
-    from typing import Final
-
-
 __all__: Sequence[str] = (
     "component_base",
     "component_body",
     "component_icons_list",
     "component_site_copyright",
 )
+
+lazy from collections.abc import Iterable, Mapping, Sequence
+lazy from collections.abc import Set as AbstractSet
+lazy from typing import Final
+
+import htpy as h
+lazy from markupsafe import Markup
+
+lazy import utils
 
 
 def component_icons_list() -> h.Node:

@@ -1,15 +1,11 @@
 """Set up logging."""
 
-import logging
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
-    from logging import Logger
-    from typing import Final, Literal, TextIO
-
 __all__: Sequence[str] = ("setup",)
 
+import logging
+lazy from collections.abc import Mapping, Sequence
+lazy from logging import Logger
+lazy from typing import Final, Literal, TextIO
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(
@@ -18,11 +14,7 @@ extra_context_logger: Final[Logger] = logging.getLogger(
 
 LOG_LEVEL_MAPS: Final[
     Mapping[Literal[1, 2, 3], Literal["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]]
-] = {
-    1: "INFO",
-    2: "DEBUG",
-    3: "DEBUG",
-}
+] = frozendict({1: "INFO", 2: "DEBUG", 3: "DEBUG"})
 
 
 def setup(*, verbosity: Literal[0, 1, 2, 3] = 1) -> None:
