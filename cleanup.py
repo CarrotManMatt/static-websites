@@ -1,20 +1,15 @@
 """Clean up temporary build/deploy directories."""
 
-import logging
-import shutil
-from logging import LoggerAdapter
-from typing import TYPE_CHECKING, Final
-
-from utils import PROJECT_ROOT
-
-if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from logging import Logger
-    from pathlib import Path
-    from typing import Final
-
 __all__: Sequence[str] = ("cleanup_all_sites",)
 
+import logging
+lazy import shutil
+lazy from collections.abc import Sequence
+lazy from logging import Logger, LoggerAdapter
+lazy from pathlib import Path
+lazy from typing import Final
+
+from utils import PROJECT_ROOT
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(

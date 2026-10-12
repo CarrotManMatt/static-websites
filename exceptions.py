@@ -1,16 +1,14 @@
 """Custom exception classes to be used within this project."""
 
+__all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
+
 import abc
-from typing import TYPE_CHECKING, override
+from typing import override
+lazy from collections.abc import Iterator, Sequence
+lazy from collections.abc import Set as AbstractSet
+lazy from typing import Final
 
 from typed_classproperties import classproperty
-
-if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
-    from collections.abc import Set as AbstractSet
-    from typing import Final
-
-__all__: Sequence[str] = ("BaseError", "MutuallyExclusiveArgsError")
 
 
 class BaseError(BaseException, abc.ABC):

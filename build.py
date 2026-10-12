@@ -1,28 +1,21 @@
 """Build and render functions for whole sites and single HTML pages."""
 
-import logging
-import shutil
-import traceback
-from logging import LoggerAdapter
-from subprocess import CalledProcessError
-from typing import TYPE_CHECKING
-
-from sites import SITES_MAP
-from utils import PROJECT_ROOT
-
-if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
-    from collections.abc import Set as AbstractSet
-    from logging import Logger
-    from pathlib import Path, PurePosixPath
-    from typing import Final
-
-    import htpy as h
-
-    from utils import CaughtException
-
 __all__: Sequence[str] = ("build_all_sites", "build_single_page", "build_single_site")
 
+import logging
+lazy import shutil
+lazy import traceback
+lazy from collections.abc import Mapping, Sequence
+lazy from collections.abc import Set as AbstractSet
+lazy from logging import Logger, LoggerAdapter
+lazy from pathlib import Path, PurePosixPath
+lazy from subprocess import CalledProcessError
+lazy from typing import Final
+
+lazy import htpy as h
+
+lazy from sites import SITES_MAP
+lazy from utils import PROJECT_ROOT, CaughtException
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(

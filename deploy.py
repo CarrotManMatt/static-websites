@@ -1,28 +1,21 @@
 """Deployment functions for whole static websites."""
 
-import logging
-import os
-import subprocess
-import traceback
-from logging import LoggerAdapter
-from pathlib import Path
-from subprocess import CalledProcessError
-from typing import TYPE_CHECKING, overload
-
-from utils.validators import Hostname
-
-if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from collections.abc import Set as AbstractSet
-    from logging import Logger
-    from subprocess import CompletedProcess
-    from typing import Final, Literal
-
-    from utils import CaughtException
-    from utils.validators import Username
-
 __all__: Sequence[str] = ("deploy_all_sites", "deploy_single_site")
 
+import logging
+from typing import overload
+lazy import os
+lazy import subprocess
+lazy import traceback
+lazy from collections.abc import Sequence
+lazy from collections.abc import Set as AbstractSet
+lazy from logging import Logger, LoggerAdapter
+lazy from pathlib import Path
+lazy from subprocess import CalledProcessError, CompletedProcess
+lazy from typing import Final, Literal
+
+lazy from utils import CaughtException
+lazy from utils.validators import Hostname, Username
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(

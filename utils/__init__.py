@@ -1,23 +1,18 @@
 """Common utils made available for use throughout this project."""
 
-import datetime
-from pathlib import Path
-from typing import TYPE_CHECKING
-
-from git import InvalidGitRepositoryError, Repo
-
-if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from subprocess import CalledProcessError
-    from typing import Final
-
-    from git import PathLike
-
-    type CaughtException = (
-        ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
-    )
-
 __all__: Sequence[str] = ("PROJECT_ROOT", "CaughtException", "get_current_year")
+
+lazy import datetime
+lazy from collections.abc import Sequence
+lazy from pathlib import Path
+lazy from subprocess import CalledProcessError
+lazy from typing import Final
+
+lazy from git import InvalidGitRepositoryError, PathLike, Repo
+
+type CaughtException = (
+    ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
+)
 
 
 def get_current_year() -> int:

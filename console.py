@@ -1,24 +1,21 @@
 """Console entry point for the static websites builder and deployment script."""
 
-import logging
-import os
-import sys
-from pathlib import Path
-from typing import TYPE_CHECKING, overload
-
-import build
-import cleanup
-import deploy
-from utils import logging_setup, validators
-
-if TYPE_CHECKING:
-    from collections.abc import Sequence
-    from collections.abc import Set as AbstractSet
-    from logging import Logger
-    from typing import Final, Literal
-
 __all__: Sequence[str] = ("run",)
 
+import logging
+from typing import overload
+lazy import os
+lazy import sys
+lazy from collections.abc import Sequence
+lazy from collections.abc import Set as AbstractSet
+lazy from logging import Logger
+lazy from pathlib import Path
+lazy from typing import Final, Literal
+
+lazy import build
+lazy import cleanup
+lazy import deploy
+lazy from utils import logging_setup, validators
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 ENVIRONMENT_VARIABLE_PREFIX: Final[str] = "STATIC_WEBSITES_BUILDER_"
