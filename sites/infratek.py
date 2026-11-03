@@ -9,6 +9,7 @@ lazy from typing import Final
 import htpy as h
 from markupsafe import Markup
 
+import utils
 from components import component_base
 
 _SITE_DESCRIPTION: Final[str] = Markup("Delivering successful IT change and transformation")
@@ -367,7 +368,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = frozendict(
                         )
                     )[
                         h.li(class_="w-element c1bb622m c1nzsc5v c17ywm2f")[
-                            Markup("&copy; 2026 All Rights Reserved")
+                            Markup("&copy;&nbsp;{:d} All Rights Reserved").format(
+                                utils.get_current_year()
+                            )
                         ],
                         h.li(
                             class_=(
