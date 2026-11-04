@@ -216,9 +216,9 @@ jobs:
             - name: Install project
               run: uv sync --no-group dev
 
-            - uses: twingate/github-action@v1
+            - uses: Alemiz112/netbird-connect@v1.0.2
               with:
-                service-key: ${{secrets.TWINGATE_SERVICE_KEY}}
+                setup-key: ${{secrets.NETBIRD_SETUP_KEY}}
 
             - uses: webfactory/ssh-agent@v0.10.0
               with:
