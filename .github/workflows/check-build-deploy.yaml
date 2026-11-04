@@ -218,6 +218,7 @@ jobs:
 
             - uses: Alemiz112/netbird-connect@v1.0.2
               with:
+                hostname: gh-${{github.run_id}}-${{github.run_attempt}}
                 setup-key: ${{secrets.NETBIRD_SETUP_KEY}}
 
             - uses: webfactory/ssh-agent@v0.10.0
