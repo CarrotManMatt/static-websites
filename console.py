@@ -152,6 +152,13 @@ def run() -> int:
             logger.warning("All sites failed to deploy.")
             return 1
 
+        if len(deployed_site_names) == len(built_site_paths):
+            logger.info("Deploying all sites completed successfully.")
+        else:
+            logger.info(
+                "%d sites failed to deploy.", len(built_site_paths) - len(deployed_site_names)
+            )
+
         sys.stdout.write(",".join(deployed_site_names))
         return 0
 

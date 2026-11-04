@@ -51,7 +51,10 @@ def build_single_page(
 
     DEPLOY_PAGE_PATH.write_text(f"{rendered_page.strip()}\n", encoding="utf-8")
 
-    PAGE_LOGGER.debug("Rendered HTML file successfully saved to `deploy/` directory.")
+    PAGE_LOGGER.debug(
+        "Rendered HTML file successfully saved to deploy directory: `%s/`.",
+        site_deploy_directory.relative_to(PROJECT_ROOT),
+    )
 
 
 def build_single_site(
@@ -67,14 +70,23 @@ def build_single_site(
 
     SITE_LOGGER.debug("Begin building single site.")
 
-    SITE_LOGGER.debug("Creating `deploy/` directory.")
-
     if site_deploy_directory.exists():
+        SITE_LOGGER.debug(
+            "Removing already existing directory: `%s/`.",
+            site_deploy_directory.relative_to(PROJECT_ROOT),
+        )
+
         shutil.rmtree(site_deploy_directory)
+
+    SITE_LOGGER.debug(
+        "Creating temporary deploy directory: `%s/`.",
+        site_deploy_directory.relative_to(PROJECT_ROOT),
+    )
+
     site_deploy_directory.mkdir(parents=True)
 
     SITE_LOGGER.debug(
-        "Creating symlink to original static directory from inside `deploy/` directory."
+        "Creating symlink to original static directory from inside deploy directory."
     )
 
     static_dir: Path = PROJECT_ROOT / f"static/{site_name}"
@@ -134,7 +146,11 @@ def build_all_sites() -> AbstractSet[Path]:
             extra_context_logger, {"extra_context": FORMATTED_SITE_NAME}
         )
         build_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
-            extra_context_logger, {"extra_context": f"{FORMATTED_SITE_NAME} | Build Failed"}
+            extra_context_logger,
+            {
+                "extra_context": FORMATTED_SITE_NAME,
+                "low_priority_extra_context": "Build Failed",
+            },
         )
 
         if build_outcome is None:

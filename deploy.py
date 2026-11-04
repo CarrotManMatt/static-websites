@@ -1,9 +1,9 @@
 """Deployment functions for whole static websites."""
 
-__all__: Sequence[str] = ("deploy_all_sites", "deploy_single_site")
+__all__: Sequence[str] = ("RsyncError", "deploy_all_sites", "deploy_single_site")
 
 import logging
-from typing import overload
+from typing import overload, override
 lazy import os
 lazy import subprocess
 lazy import traceback
@@ -14,13 +14,37 @@ lazy from pathlib import Path
 lazy from subprocess import CalledProcessError, CompletedProcess
 lazy from typing import Final, Literal
 
-lazy from utils import CaughtException
+lazy from utils import PROJECT_ROOT, CaughtException
 lazy from utils.validators import Hostname, Username
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 extra_context_logger: Final[Logger] = logging.getLogger(
     "static-websites-builder-extra-context"
 )
+
+
+class RsyncError(Exception):
+    """Custom exception for rsync subprocess deployment errors."""
+
+    @override
+    def __init__(self, return_code: int, stderr: str) -> None:
+        self._return_code: int = return_code
+        self._stderr: str = stderr
+
+    @override
+    def __str__(self) -> str:
+        CANNOT_CONVERT_TO_STRING_MESSAGE: Final[str] = (
+            f"Cannot convert {type(self).__name__} to string."
+        )
+        raise RuntimeError(CANNOT_CONVERT_TO_STRING_MESSAGE)
+
+    @property
+    def return_code(self) -> int:  # noqa: D102
+        return self._return_code
+
+    @property
+    def stderr(self) -> str:  # noqa: D102
+        return self._stderr
 
 
 def _get_posix_remote_directory(
@@ -63,8 +87,8 @@ def deploy_single_site(
     """
     Deploy the single given static website to the remote server.
 
-    This is done by copying the contents of the site's built/rendered `deploy/` directory
-    to the remote server with the given copy authentication credentials.
+    This is done by copying the contents of the site's built/rendered `deploy/site-name/`
+    directory to the remote server with the given copy authentication credentials.
     """
     FORMATTED_SITE_NAME: Final[str] = (
         site_path.parent.name if site_path.name == "deploy" else site_path.name
@@ -97,8 +121,9 @@ def deploy_single_site(
     site_name_logger.debug("Successfully retrieved resolved remote directory path.")
 
     dry_run_site_name_logger.debug(
-        "Beginning %supload of `deploy/` directory to remote server.",
+        "Beginning %supload of `%s/` directory to remote server.",
         "mock " if dry_run else "",
+        site_path.relative_to(PROJECT_ROOT),
     )
 
     rsync_args: list[str] = [
@@ -152,13 +177,72 @@ def deploy_single_site(
             f"{process_output.stdout.strip()}\n",
         )
 
+    if process_output.returncode in (
+        *range(1, 5 + 1),
+        *range(10, 14 + 1),
+        20,
+        *range(22, 25 + 1),
+        30,
+        35,
+        255,
+    ):
+        raise RsyncError(process_output.returncode, process_output.stderr)
+
     if process_output.stderr:
         site_name_logger.debug(
             "rsync subprocess stderr:\n%s",
             f"{process_output.stderr.strip()}\n",
         )
 
-    site_name_logger.debug("Completed deploying single site successfully.")
+    if process_output.returncode == 0:
+        site_name_logger.debug("Completed deploying single site successfully.")
+        return
+
+    UNKNOWN_RSYNC_RETURN_CODE_MESSAGE: Final[str] = (
+        f"Unknown rsync return code: {process_output.returncode}."
+    )
+    raise ValueError(UNKNOWN_RSYNC_RETURN_CODE_MESSAGE)
+
+
+def _log_failed_deployment(site_name: str, deployment_outcome: CaughtException | None) -> None:
+    site_name_logger: LoggerAdapter[Logger] = LoggerAdapter(
+        extra_context_logger,
+        {"extra_context": site_name},
+    )
+    deployment_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
+        extra_context_logger,
+        {"extra_context": site_name, "low_priority_extra_context": "Deployment Failed"},
+    )
+
+    match deployment_outcome:
+        case None:
+            return
+
+        case RsyncError():
+            deployment_failed_logger.error(
+                "Rsync subprocess failed with return code: %d.", deployment_outcome.return_code
+            )
+            site_name_logger.info(
+                "Rsync subprocess stderr:\n%s", f"{deployment_outcome.stderr.strip()}\n"
+            )
+            return
+
+        case _:
+            traceback_messages: Sequence[str] = traceback.format_exception(deployment_outcome)
+
+            deployment_failed_logger.error(traceback_messages[-1].strip())
+            site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
+            if isinstance(deployment_outcome, CalledProcessError):
+                site_name_logger.info(
+                    "%s subprocess stdout:\n%s",
+                    deployment_outcome.cmd[0],
+                    f"{deployment_outcome.stdout.strip()}\n",
+                )
+                site_name_logger.info(
+                    "%s subprocess stderr:\n%s",
+                    deployment_outcome.cmd[0],
+                    f"{deployment_outcome.stderr.strip()}\n",
+                )
 
 
 @overload
@@ -197,8 +281,8 @@ def deploy_all_sites(
     """
     Deploy all static websites.
 
-    This is done by copying the built and rendered contents of each site's `deploy/` directory
-    to the specified remote server.
+    This is done by copying the built and rendered contents of each site's `deploy/site-name`
+    directory to the specified remote server.
     """
     dry_run_logger: Final[LoggerAdapter[Logger] | Logger] = (
         LoggerAdapter(
@@ -250,6 +334,7 @@ def deploy_all_sites(
             TypeError,
             OSError,
             CalledProcessError,
+            RsyncError,
         ) as caught_exception:
             deployed_sites[FORMATTED_SITE_NAME] = caught_exception
             continue
@@ -259,41 +344,10 @@ def deploy_all_sites(
     site_name: str
     deployment_outcome: CaughtException | None
     for site_name, deployment_outcome in deployed_sites.items():
-        site_name_logger: LoggerAdapter[Logger] = LoggerAdapter(
-            extra_context_logger,
-            {"extra_context": site_name},
-        )
-        deployment_failed_logger: LoggerAdapter[Logger] = LoggerAdapter(
-            extra_context_logger,
-            {"extra_context": f"{site_name} | Deployment Failed"},
-        )
+        _log_failed_deployment(site_name, deployment_outcome)
 
-        if deployment_outcome is None:
-            continue
-
-        traceback_messages: Sequence[str] = traceback.format_exception(deployment_outcome)
-
-        deployment_failed_logger.error(traceback_messages[-1].strip())
-        site_name_logger.debug("%s\n", "".join(traceback_messages[:-1]).strip())
-        if isinstance(deployment_outcome, CalledProcessError):
-            site_name_logger.info(
-                "%s subprocess stdout:\n%s",
-                deployment_outcome.cmd[0],
-                f"{deployment_outcome.stdout.strip()}\n",
-            )
-            site_name_logger.info(
-                "%s subprocess stderr:\n%s",
-                deployment_outcome.cmd[0],
-                f"{deployment_outcome.stderr.strip()}\n",
-            )
-
-    deployed_site_names: AbstractSet[str] = {
+    return {
         site_name
         for site_name, deployment_outcome in deployed_sites.items()
         if deployment_outcome is None
     }
-
-    if deployed_site_names:
-        logger.info("Deploying all sites completed successfully.")
-
-    return deployed_site_names

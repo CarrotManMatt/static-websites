@@ -10,8 +10,16 @@ lazy from typing import Final
 
 lazy from git import InvalidGitRepositoryError, PathLike, Repo
 
+lazy from deploy import RsyncError
+
 type CaughtException = (
-    ValueError | RuntimeError | AttributeError | TypeError | OSError | CalledProcessError
+    ValueError
+    | RuntimeError
+    | AttributeError
+    | TypeError
+    | OSError
+    | CalledProcessError
+    | RsyncError
 )
 
 
