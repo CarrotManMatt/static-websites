@@ -9,7 +9,7 @@ __all__: Sequence[str] = (
 
 lazy from collections.abc import Iterable, Mapping, Sequence
 lazy from collections.abc import Set as AbstractSet
-lazy from typing import Final
+lazy from typing import Final, cast
 
 import htpy as h
 lazy from markupsafe import Markup
@@ -132,7 +132,7 @@ def component_base(  # noqa: PLR0913
         del stylesheets_extend
 
     if extra_html_tag_properties is None:
-        extra_html_tag_properties = {}
+        extra_html_tag_properties = cast("dict[str, h.Attribute]", {})
 
     return h.html(lang="en-GB", **extra_html_tag_properties)[
         copyright_comment,

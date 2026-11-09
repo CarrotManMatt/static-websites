@@ -20,32 +20,29 @@ LOG_LEVEL_MAPS: Final[
 
 class _LowPriorityExtraFormatter(logging.Formatter):
     @overload
-    @override
     def __init__(
         self, fmt: str, *, style: Literal["%", "{", "$"], show_low_priority_extras: bool
     ) -> None: ...
 
     @overload
-    @override
     def __init__(
         self,
         fmt: str | None = ...,
         datefmt: str | None = ...,
         style: Literal["%", "{", "$"] = ...,
-        validate: bool = ...,
         *,
+        validate: bool = ...,
         show_low_priority_extras: bool,
         defaults: Mapping[str, object] | None = ...,
     ) -> None: ...
 
-    @override
     def __init__(
         self,
         fmt: str | None = None,
         datefmt: str | None = None,
         style: Literal["%", "{", "$"] = "%",
-        validate: bool = True,
         *,
+        validate: bool = True,
         defaults: Mapping[str, object] | None = None,
         show_low_priority_extras: bool | None = None,
     ) -> None:

@@ -26,7 +26,6 @@ extra_context_logger: Final[Logger] = logging.getLogger(
 class RsyncError(Exception):
     """Custom exception for rsync subprocess deployment errors."""
 
-    @override
     def __init__(self, return_code: int, stderr: str) -> None:
         self._return_code: int = return_code
         self._stderr: str = stderr
@@ -249,11 +248,11 @@ def _log_failed_deployment(site_name: str, deployment_outcome: CaughtException |
 def deploy_all_sites(
     site_paths: AbstractSet[Path],
     *,
-    remote_hostname: Hostname,
+    dry_run: Literal[True],
     verbosity: Literal[0, 1, 2, 3] = ...,
     remote_username: Username | None = ...,
+    remote_hostname: Hostname | None = ...,
     remote_directory: Path | None = ...,
-    dry_run: Literal[False] = ...,
 ) -> AbstractSet[str]: ...
 
 
@@ -261,11 +260,11 @@ def deploy_all_sites(
 def deploy_all_sites(
     site_paths: AbstractSet[Path],
     *,
-    dry_run: Literal[True],
+    remote_hostname: Hostname,
     verbosity: Literal[0, 1, 2, 3] = ...,
     remote_username: Username | None = ...,
-    remote_hostname: Hostname | None = ...,
     remote_directory: Path | None = ...,
+    dry_run: bool = ...,
 ) -> AbstractSet[str]: ...
 
 

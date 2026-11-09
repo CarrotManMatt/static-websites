@@ -6,7 +6,7 @@ import abc
 from typing import override
 lazy from collections.abc import Iterator, Sequence
 lazy from collections.abc import Set as AbstractSet
-lazy from typing import Final
+lazy from typing import Final, cast
 
 from typed_classproperties import classproperty
 
@@ -19,7 +19,6 @@ class BaseError(BaseException, abc.ABC):
     def DEFAULT_MESSAGE(cls) -> str:
         """The message to be displayed alongside this exception class if none is provided."""
 
-    @override
     def __init__(self, message: str | None = None) -> None:
         """Initialise a new exception with the given error message."""
         self.message: str = message or self.DEFAULT_MESSAGE
@@ -31,7 +30,7 @@ class BaseError(BaseException, abc.ABC):
         """Generate a developer-focused representation of the exception's attributes."""
         formatted: str = self.message
 
-        attributes: dict[str, object] = self.__dict__
+        attributes: dict[str, object] = cast("dict[str, object]", self.__dict__)
         attributes.pop("message")
         if attributes:
             formatted += f""" ({

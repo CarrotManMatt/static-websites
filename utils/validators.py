@@ -53,7 +53,6 @@ class SimpleValidator[T](abc.ABC):
     def _validate(cls, value: T) -> None:
         """Perform custom validation on the wrapped value."""
 
-    @override
     def __init__(self, value: T, /) -> None:
         """Validate and store the cleaned wrapped value."""
         self.validate(value)

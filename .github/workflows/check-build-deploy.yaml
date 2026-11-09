@@ -63,46 +63,6 @@ jobs:
             - name: Run Flake8
               run: uv run -- flake8
 
-    mypy:  # yamllint disable-line rule:key-ordering
-        env:
-            UV_FROZEN: "true"
-            UV_NO_SYNC: "true"
-            UV_PYTHON_DOWNLOADS: never
-        name: Type-check code with mypy
-        needs: [uv-check]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v7
-              with:
-                persist-credentials: false
-
-            - name: Set up Python
-              uses: actions/setup-python@v7
-              with:
-                python-version-file: .python-version
-
-            - name: Install uv
-              uses: astral-sh/setup-uv@v10.3.3
-              with:
-                enable-cache: true
-
-            - name: Install mypy from locked dependencies
-              run: uv sync --no-group dev --group type-check
-
-            - id: store-hashed-python-version
-              name: Store hashed Python version
-              run: echo "hashed_python_version=$(uv run -- python -VV | sha256sum | cut -d' ' -f1)"
-                >> "$GITHUB_OUTPUT"
-
-            - uses: actions/cache@v6
-              with:
-                key: mypy|${{steps.store-hashed-python-version.outputs.hashed_python_version}}
-                path: ./.mypy_cache
-
-            - name: Run mypy
-              run: uv run -- mypy .
-
     pre-commit-PUSH:  # yamllint disable-line rule:key-ordering
         if: github.event_name != 'pull_request'
 
@@ -170,6 +130,36 @@ jobs:
             - name: Run ruff check
               run: uv run -- ruff check --no-fix --output-format=github
 
+    ty:  # yamllint disable-line rule:key-ordering
+        env:
+            UV_FROZEN: "true"
+            UV_NO_SYNC: "true"
+            UV_PYTHON_DOWNLOADS: never
+        name: Type-check code with ty
+        needs: [uv-check]
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                persist-credentials: false
+
+            - name: Set up Python
+              uses: actions/setup-python@v7
+              with:
+                python-version-file: .python-version
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v10.3.3
+              with:
+                enable-cache: true
+
+            - name: Install ty from locked dependencies
+              run: uv sync --no-group dev --group type-check
+
+            - name: Run ty
+              run: uv run -- ty check --output-format=github
+
     build-and-deploy:  # yamllint disable-line rule:key-ordering
         env:
             UV_FROZEN: "true"
@@ -185,16 +175,16 @@ jobs:
                 || github.event_name == 'workflow_dispatch'
             )
             && needs.flake8.result == 'success'
-            && needs.mypy.result =='success'
             && (
                 needs.pre-commit-PUSH.result == 'success'
                 || needs.pre-commit-PULL_REQUEST.result == 'success'
             )
             && needs.ruff-lint.result == 'success'
+            && needs.ty.result =='success'
             && needs.uv-check.result == 'success'
 
         name: Build and deploy all websites
-        needs: [flake8, mypy, pre-commit-PUSH, pre-commit-PULL_REQUEST, ruff-lint, uv-check]
+        needs: [flake8, pre-commit-PUSH, pre-commit-PULL_REQUEST, ruff-lint, ty, uv-check]
         runs-on: ubuntu-latest
 
         steps:

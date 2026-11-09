@@ -3,19 +3,20 @@
 __all__: Sequence[str] = ("run",)
 
 import logging
-from typing import overload
+from typing import TYPE_CHECKING, overload
 lazy import os
 lazy import sys
 lazy from collections.abc import Sequence
 lazy from collections.abc import Set as AbstractSet
 lazy from logging import Logger
 lazy from pathlib import Path
-lazy from typing import Final, Literal
+lazy from typing import Final, Literal, TypedDict
 
 lazy import build
 lazy import cleanup
 lazy import deploy
 lazy from utils import logging_setup, validators
+lazy from utils.validators import Hostname
 
 logger: Final[Logger] = logging.getLogger("static-websites-builder")
 ENVIRONMENT_VARIABLE_PREFIX: Final[str] = "STATIC_WEBSITES_BUILDER_"
@@ -101,6 +102,33 @@ def _get_validated_string_environment_variable[T: validators.SimpleValidator[str
     return validator(raw_value)
 
 
+if TYPE_CHECKING:
+
+    class _DryRunHostname(TypedDict):
+        dry_run: Literal[True]
+        remote_hostname: Hostname | None
+
+    class _NonDryRunHostname(TypedDict):
+        dry_run: bool
+        remote_hostname: Hostname
+
+
+def _validate_dry_run_and_remote_hostname_pair(
+    *, dry_run: bool, remote_hostname: Hostname | None
+) -> _DryRunHostname | _NonDryRunHostname:
+    if not dry_run:
+        if remote_hostname is None:
+            MISSING_REMOTE_IP_MESSAGE: Final[str] = (
+                f'No "{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP" was specified '
+                f"when using {ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN=False."
+            )
+            raise RuntimeError(MISSING_REMOTE_IP_MESSAGE)
+
+        return {"dry_run": dry_run, "remote_hostname": remote_hostname}
+
+    return {"dry_run": dry_run, "remote_hostname": remote_hostname}
+
+
 def run() -> int:
     """Run the static websites builder and deployment script."""
     if sys.argv[1:]:
@@ -118,12 +146,9 @@ def run() -> int:
     remote_hostname: validators.Hostname | None = _get_validated_string_environment_variable(
         "REMOTE_IP", validators.Hostname
     )
-    if not dry_run and remote_hostname is None:
-        MISSING_REMOTE_IP_MESSAGE: Final[str] = (
-            f'No "{ENVIRONMENT_VARIABLE_PREFIX}REMOTE_IP" was specified '
-            f"when using {ENVIRONMENT_VARIABLE_PREFIX}DRY_RUN=False."
-        )
-        raise RuntimeError(MISSING_REMOTE_IP_MESSAGE)
+    _validate_dry_run_and_remote_hostname_pair(
+        dry_run=dry_run, remote_hostname=remote_hostname
+    )
 
     remote_username: validators.Username | None = _get_validated_string_environment_variable(
         "REMOTE_USERNAME", validators.Username
@@ -139,13 +164,14 @@ def run() -> int:
             logger.warning("All sites failed to build. (Or no sites exist.)")
             return 1
 
-        deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(  # type: ignore[call-overload]  # ty: ignore[no-matching-overload]  # noqa: CAR123
+        deployed_site_names: AbstractSet[str] = deploy.deploy_all_sites(
             built_site_paths,
             verbosity=verbosity,
-            remote_hostname=remote_hostname,
             remote_username=remote_username,
             remote_directory=remote_directory,
-            dry_run=dry_run,
+            **_validate_dry_run_and_remote_hostname_pair(
+                dry_run=dry_run, remote_hostname=remote_hostname
+            ),
         )
 
         if not deployed_site_names:
