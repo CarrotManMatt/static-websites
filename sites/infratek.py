@@ -445,8 +445,9 @@ PAGES_MAP: Final[Mapping[PurePosixPath, h.HTMLElement]] = frozendict(
                     as_="font",
                     crossorigin="anonymous",
                 ),
-                h.link(rel="preload", href="/static/images/Consultancy_0.png", as_="image"),
-                h.link(rel="preload", href="/static/images/Consultancy_1.png", as_="image"),
+                h.link(rel="preload", href="/static/images/Consultancy_0.webp", as_="image"),
+                h.link(rel="preload", href="/static/images/Consultancy_1.webp", as_="image"),
+                h.link(rel="preload", href="/static/images/Tabletop.webp", as_="image"),
             ),
             extra_head=(
                 h.script(id="vike_globalContext", type="application/json")["{}"],
